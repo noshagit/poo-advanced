@@ -22,6 +22,12 @@ Cette section détaille les choix techniques qui justifient l'aspect "Avancé" d
 
 ### 1\. Architecture Globale
 
+```plantuml
+@startuml
+' Diagramme de classes
+@enduml
+```
+
 
 ### 2\. Design Patterns utilisés
 
