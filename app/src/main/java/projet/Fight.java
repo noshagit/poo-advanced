@@ -6,12 +6,19 @@ public class Fight {
     public void attack(Champion attacker, Champion defender) {
         Weapon attackerWeapon = attacker.getWeapon();
         Weapon defenderWeapon = defender.getWeapon();
+        float diffRatio;
         
-        if (attackerWeapon.getAttackSpeed() < defenderWeapon.getAttackSpeed()) {
-            attacker.takeDamage(defenderWeapon);
+        if (attacker.getMoveSpeed() < defender.getMoveSpeed()) {
+            diffRatio = defender.getMoveSpeed() / attacker.getMoveSpeed();
+            for (int i = 0; i < diffRatio; i++) {
+                attacker.takeDamage(defenderWeapon);
+            }
             defender.takeDamage(attackerWeapon);
         } else {
-            defender.takeDamage(attackerWeapon);
+            diffRatio = attacker.getMoveSpeed() / defender.getMoveSpeed();
+            for (int i = 0; i < diffRatio; i++) {
+                defender.takeDamage(defenderWeapon);
+            }
             attacker.takeDamage(defenderWeapon);
         }
     }
