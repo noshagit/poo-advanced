@@ -112,7 +112,7 @@ public class Champion {
                 if (chance < 25) {
                     this.health = 0;
                 } else if (chance > 25 && chance < 40) {
-                    this.weapon = new Weapon("Gambling Blade", 50, 0.1);
+                    this.weapon = new Weapon("Gambling Blade", 50, 1);
                 } else {
                     this.health += 15;
                 }

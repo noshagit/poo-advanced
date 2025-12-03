@@ -3,9 +3,9 @@ package projet.weapon;
 public class Weapon{
     private String nom;
     private int degats;
-    private double attackSpeed;
+    private int attackSpeed;
 
-    public Weapon(String nom, int degats, double attackSpeed){
+    public Weapon(String nom, int degats, int attackSpeed){
         this.nom = nom;
         this.degats = degats;
         this.attackSpeed = attackSpeed;
@@ -18,8 +18,8 @@ public class Weapon{
         return degats;
     }
 
-    public double getAttackSpeed(){
-        return (double)attackSpeed;
+    public int getAttackSpeed(){
+        return attackSpeed;
     }
 
 }

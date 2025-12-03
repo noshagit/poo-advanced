@@ -2,6 +2,6 @@ package projet.weapon;
 
 public class Fist extends Weapon{
     public Fist(){
-        super("Fist", 2, 10);
+        super("Fist", 2, 100);
     }
 }
