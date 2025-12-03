@@ -7,8 +7,10 @@ public class Fight {
         
         if (attackerWeapon.getAttackSpeed() < defenderWeapon.getAttackSpeed()) {
             attacker.takeDamage(defenderWeapon);
+            defender.takeDamage(attackerWeapon);
         } else {
             defender.takeDamage(attackerWeapon);
+            attacker.takeDamage(defenderWeapon);
         }
     }
 

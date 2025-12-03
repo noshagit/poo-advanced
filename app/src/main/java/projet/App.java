@@ -20,7 +20,7 @@ public class App {
             userName = scanner.nextLine();
         }
         
-        System.out.println("Enter weapon choice (1. Fist \n 2. Sword \n 3. Axe): \n");
+        System.out.println("Enter weapon choice : \n 1. Fist \n 2. Sword \n 3. Axe \n");
 
         String weaponChoice = scanner.nextLine();
         int weaponChoiceInt = Integer.parseInt(weaponChoice);
