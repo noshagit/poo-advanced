@@ -69,79 +69,79 @@ public class App {
 
         Champion player = new Champion(userName, 100, playerWeapon, playerArmor);
 
-        scanner.close();
 
         while(true){
 
-        Fight fight = new Fight();
-        Champion[] enemies = new Champion[]{enemy1, enemy2, enemy3, enemy4};
+            Fight fight = new Fight();
+            Champion[] enemies = new Champion[]{enemy1, enemy2, enemy3, enemy4};
 
-        java.util.Random rand = new java.util.Random();
+            java.util.Random rand = new java.util.Random();
 
-        while (fight.aliveVerification(player)) {
-            Champion enemy;
-            int lvl = player.getLevel();
-            double r = rand.nextDouble();
+            while (fight.aliveVerification(player)) {
+                Champion enemy;
+                int lvl = player.getLevel();
+                double r = rand.nextDouble();
 
-            if (lvl < 5) {
-                enemy = enemies[0];
-            } else if (lvl >= 5 && lvl < 10) {
-                enemy = rand.nextBoolean() ? enemies[0] : enemies[1];
-            } else if (lvl >= 10 && lvl < 20) {
-                if (r < 0.75) {
+                if (lvl < 5) {
+                    enemy = enemies[0];
+                } else if (lvl >= 5 && lvl < 10) {
                     enemy = rand.nextBoolean() ? enemies[0] : enemies[1];
+                } else if (lvl >= 10 && lvl < 20) {
+                    if (r < 0.75) {
+                        enemy = rand.nextBoolean() ? enemies[0] : enemies[1];
+                    } else {
+                        enemy = enemies[2];
+                    }
                 } else {
-                    enemy = enemies[2];
-                }
-            } else {
-                if (r < 0.70) {
-                    enemy = rand.nextBoolean() ? enemies[0] : enemies[1];
-                } else if (r < 0.95) {
-                    enemy = enemies[2];
-                } else {
-                    enemy = enemies[3];
-                }
-            }
-
-            System.out.println("\n--- New fight: " + enemy.getName() + " ---");
-            while (fight.aliveVerification(player) && fight.aliveVerification(enemy)) {
-                System.out.println("\nChoose an action:");
-                System.out.println("1. Attack");
-                System.out.println("2. Display statistics");
-
-                String action = scanner.nextLine().trim();
-                if (action.equals("1")) {
-                    fight.attack(player, enemy);
-                } else if (action.equals("2")) {
-                    System.out.println(player.getName() + " - Health: " + player.getHealth() + " | Weapon: " + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: " + player.getXp() + " | Level: " + player.getLevel());
-                    System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: " + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName());
-                    continue;
-                } else {
-                    System.out.println("Invalid action, try again.");
-                    continue;
+                    if (r < 0.70) {
+                        enemy = rand.nextBoolean() ? enemies[0] : enemies[1];
+                    } else if (r < 0.95) {
+                        enemy = enemies[2];
+                    } else {
+                        enemy = enemies[3];
+                    }
                 }
 
-                System.out.println("After the exchange: " + player.getName() + " Health = " + player.getHealth() + " | " + enemy.getName() + " Health = " + enemy.getHealth());
+                System.out.println("\n--- New fight: " + enemy.getName() + " ---");
+                while (fight.aliveVerification(player) && fight.aliveVerification(enemy)) {
+                    System.out.println("\nChoose an action:");
+                    System.out.println("1. Attack");
+                    System.out.println("2. Display statistics");
+
+                    String action = scanner.nextLine().trim();
+                    if (action.equals("1")) {
+                        fight.attack(player, enemy);
+                    } else if (action.equals("2")) {
+                        System.out.println(player.getName() + " - Health: " + player.getHealth() + " | Weapon: " + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: " + player.getXp() + " | Level: " + player.getLevel());
+                        System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: " + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName());
+                        continue;
+                    } else {
+                        System.out.println("Invalid action, try again.");
+                        continue;
+                    }
+
+                    System.out.println("After the exchange: " + player.getName() + " Health = " + player.getHealth() + " | " + enemy.getName() + " Health = " + enemy.getHealth());
+                }
+
+                if (!fight.aliveVerification(player)) {
+                    System.out.println("\nYou are dead. Game over.");
+                    scanner.close();
+                    break;
+                }
+
+                if (fight.aliveVerification(enemy)) {
+                    System.out.println("\nYou defeated " + enemy.getName() + "!");
+                    player.gainXp(50);
+                    System.out.println("You gain 50 XP. XP: " + player.getXp() + " | Level: " + player.getLevel());
+                    player.setWeapon(player.getOldWeapon());
+                } else {
+                    System.out.println("Moving to the next opponent.");
+                }
             }
 
-            if (!fight.aliveVerification(player)) {
-                System.out.println("\nYou are dead. Game over.");
-                break;
+            if (fight.aliveVerification(player)) {
+                System.out.println("\nEnd of battles. " + player.getName() + " survives with " + player.getHealth() + " health points.");
             }
-
-            if (fight.aliveVerification(enemy)) {
-                System.out.println("\nYou defeated " + enemy.getName() + "!");
-                player.gainXp(50);
-                System.out.println("You gain 50 XP. XP: " + player.getXp() + " | Level: " + player.getLevel());
-                player.setWeapon(player.getOldWeapon());
-            } else {
-                System.out.println("Moving to the next opponent.");
-            }
-        }
-
-        if (fight.aliveVerification(player)) {
-            System.out.println("\nEnd of battles. " + player.getName() + " survives with " + player.getHealth() + " health points.");
-        }
         }
     }
 }
