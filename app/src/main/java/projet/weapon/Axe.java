@@ -1,4 +1,4 @@
-package projet;
+package projet.weapon;
 
 public class Axe extends Weapon{
     public Axe(){

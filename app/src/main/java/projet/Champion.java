@@ -2,6 +2,9 @@ package projet;
 
 import java.util.Random;
 
+import projet.armor.Armor;
+import projet.weapon.Weapon;
+
 public class Champion {
     private String name;
     private int health;

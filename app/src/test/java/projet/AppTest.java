@@ -2,6 +2,17 @@ package projet;
 
 import java.util.Scanner;
 
+import projet.armor.Armor;
+import projet.armor.IronArmour;
+import projet.armor.Naked;
+import projet.armor.WoodenArmour;
+import projet.weapon.Axe;
+import projet.weapon.Cancer;
+import projet.weapon.Fist;
+import projet.weapon.Log;
+import projet.weapon.Sword;
+import projet.weapon.Weapon;
+
 public class AppTest{
 
     public static void main(String[] args) {

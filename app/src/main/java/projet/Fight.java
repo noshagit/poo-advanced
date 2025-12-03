@@ -1,5 +1,7 @@
 package projet;
 
+import projet.weapon.Weapon;
+
 public class Fight {
     public void attack(Champion attacker, Champion defender) {
         Weapon attackerWeapon = attacker.getWeapon();

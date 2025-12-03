@@ -1,4 +1,4 @@
-package projet;
+package projet.armor;
 
 public class IronArmour extends Armor {
     public IronArmour() {
