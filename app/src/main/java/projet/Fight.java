@@ -6,7 +6,7 @@ public class Fight {
     public void attack(Champion attacker, Champion defender) {
         Weapon attackerWeapon = attacker.getWeapon();
         Weapon defenderWeapon = defender.getWeapon();
-        int diffRatio = (int)(defender.getMoveSpeed() + attacker.getMoveSpeed()) / 2;;
+        int diffRatio = (defender.getMoveSpeed() + attacker.getMoveSpeed()) / 2;
         
         if (attacker.getMoveSpeed() < defender.getMoveSpeed()) {
             System.out.println("DiffRatio: " + diffRatio);

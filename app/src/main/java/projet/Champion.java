@@ -94,8 +94,8 @@ public class Champion {
         }
     }
 
-    public float getMoveSpeed() {
-        return (float) this.weapon.getAttackSpeed() / (this.armor.getWeight() / 10);
+    public int getMoveSpeed() {
+        return this.weapon.getAttackSpeed() / (this.armor.getWeight() / 10);
     }
 
     public Inventory getInventory() {

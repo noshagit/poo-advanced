@@ -196,6 +196,7 @@ public class App {
 
                         player.setWeapon(player.getOldWeapon());
                     }
+                    clearConsole();
                 }
 
                 if (fight.aliveVerification(player)) {
