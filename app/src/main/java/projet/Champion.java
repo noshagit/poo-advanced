@@ -72,6 +72,10 @@ public class Champion {
         return xp;
     }
 
+    public int getBaseHealth() {
+        return baseHealth;
+    }
+
     public void gainXp(int xpGained) {
         this.xp += xpGained;
         if (this.xp >= 100) {
@@ -115,6 +119,15 @@ public class Champion {
             }
             this.inventory.removePotion(potion);
         }
+    }
+
+    public boolean hasPotion(String potionName) {
+        for (Potion p : this.inventory.getPotions()) {
+            if (p.getName().equals(potionName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void resetHealth() {

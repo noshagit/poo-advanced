@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import projet.armor.*;
 import projet.weapon.*;
+import java.util.Random;
 
 public class App {
 
@@ -12,6 +13,7 @@ public class App {
         Champion enemy2 = new Champion("Orc", 80, new Axe(), new WoodenArmour());
         Champion enemy3 = new Champion("Troll", 120, new Log(), new Naked());
         Champion enemy4 = new Champion("Kawaleck", 200, new Cancer(), new IronArmour());
+        boolean revival = true;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -110,7 +112,11 @@ public class App {
                 enemy2.resetHealth();
                 enemy3.resetHealth();
                 enemy4.resetHealth();
+
+
                 System.out.println("\n--- New fight: " + enemy.getName() + " ---");
+
+
                 while (fight.aliveVerification(player) && fight.aliveVerification(enemy)) {
                     System.out.println("\nChoose an action:");
                     System.out.println("1. Attack");
@@ -132,18 +138,49 @@ public class App {
                 }
 
                 if (!fight.aliveVerification(player)) {
+                    if (revival == true) {
+                        System.out.println("You have been given a second chance !");
+                        player.setHealth(player.getBaseHealth()/2);
+                        revival = false;
+                    } else {
                     System.out.println("\nYou are dead. Game over.");
                     scanner.close();
                     break;
+                    }
                 }
 
                 if (!fight.aliveVerification(enemy)) {
                     System.out.println("\nYou defeated " + enemy.getName() + "!");
-                    player.gainXp(50);
-                    System.out.println("You gain 50 XP. XP: " + player.getXp() + " | Level: " + player.getLevel());
+                    switch (enemy.getName()) {
+                        case "Goblin":
+                            player.gainXp(10);
+                            break;
+                        case "Orc":
+                            player.gainXp(20);
+                            break;
+                        case "Troll":
+                            player.gainXp(30);
+                            break;
+                        case "Kawaleck":
+                            player.gainXp(50);
+                            break;
+                    }
+                    System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel());
+                    Random randpotion = new Random();
+                    int newPotion = randpotion.nextInt(100);
+
+                    if (newPotion < 40) {
+                        System.out.println("You found a health potion! Health restored by 20 points.");
+                        player.getInventory().addPotion(new Potion("Health Potion"));
+                    } else if (newPotion >= 40 && newPotion < 60 ) {
+                        System.out.println("You found a gambling potion");
+                        player.getInventory().addPotion(new Potion("Gambling Potion"));
+                    } else {
+                        System.out.println("You found Nothing.");
+                    }
+
+
                     player.setWeapon(player.getOldWeapon());
-                } else {
-                    System.out.println("Moving to the next opponent.");
                 }
             }
 
