@@ -168,20 +168,7 @@ public class App {
 
                     if (!fight.aliveVerification(enemy)) {
                         System.out.println("\nYou defeated " + enemy.getName() + "!");
-                        switch (enemy.getName()) {
-                            case "Goblin":
-                                player.gainXp(10);
-                                break;
-                            case "Orc":
-                                player.gainXp(20);
-                                break;
-                            case "Troll":
-                                player.gainXp(30);
-                                break;
-                            case "Kawaleck":
-                                player.gainXp(50);
-                                break;
-                        }
+                        player.gainXp(enemy.getXpReward());
                         System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel());
                         Random randpotion = new Random();
                         int newPotion = randpotion.nextInt(100);

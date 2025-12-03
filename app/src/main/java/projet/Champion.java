@@ -77,11 +77,12 @@ public class Champion {
     }
 
     public void gainXp(int xpGained) {
-        int actualXp = xpGained / (level / 10);
-        this.xp += actualXp;
+        float actualXp = xpGained / Math.min(((float) level / 10), 1);
+        this.xp += (int) actualXp;
         if (this.xp >= 100) {
             this.level += 1;
-            this.xp = this.xp - 100;
+            this.xp = 0;
+            System.out.println("You leveled up!");
         }
     }
 
