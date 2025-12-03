@@ -11,10 +11,12 @@ public class Champion {
     private int level;
     private Inventory inventory;
     private Weapon oldWeapon;
+    private int baseHealth;
 
     public Champion(String name, int health, Weapon weapon, Armor armor) {
         this.name = name;
-        this.health = 100;
+        this.health = health;
+        this.baseHealth = health;
         this.weapon = weapon;
         this.oldWeapon = weapon;
         this.armor = armor;
@@ -110,5 +112,9 @@ public class Champion {
             }
             this.inventory.removePotion(potion);
         }
+    }
+
+    public void resetHealth() {
+        this.health = this.baseHealth;
     }
 }

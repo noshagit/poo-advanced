@@ -102,6 +102,11 @@ public class App {
                     }
                 }
 
+                //player.resetHealth();
+                enemy1.resetHealth();
+                enemy2.resetHealth();
+                enemy3.resetHealth();
+                enemy4.resetHealth();
                 System.out.println("\n--- New fight: " + enemy.getName() + " ---");
                 while (fight.aliveVerification(player) && fight.aliveVerification(enemy)) {
                     System.out.println("\nChoose an action:");
@@ -129,7 +134,7 @@ public class App {
                     break;
                 }
 
-                if (fight.aliveVerification(enemy)) {
+                if (!fight.aliveVerification(enemy)) {
                     System.out.println("\nYou defeated " + enemy.getName() + "!");
                     player.gainXp(50);
                     System.out.println("You gain 50 XP. XP: " + player.getXp() + " | Level: " + player.getLevel());
