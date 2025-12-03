@@ -20,7 +20,7 @@ public class Fight {
             diffRatio = (int)(attacker.getMoveSpeed() + defender.getMoveSpeed())/2;
             System.out.println("DiffRatio: " + diffRatio);
             for (int i = 0; i < diffRatio; i++) {
-                defender.takeDamage(defenderWeapon);
+                defender.takeDamage(attackerWeapon);
                 System.out.println("Attacker Health after hit " + (i+1) + ": " + attacker.getHealth());
             }
             attacker.takeDamage(defenderWeapon);
