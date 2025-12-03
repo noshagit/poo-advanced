@@ -69,6 +69,10 @@ public class App {
 
         Champion player = new Champion(userName, 100, playerWeapon, playerArmor);
 
+        scanner.close();
+
+        while(true){
+
         Fight fight = new Fight();
         Champion[] enemies = new Champion[]{enemy1, enemy2, enemy3, enemy4};
 
@@ -138,7 +142,6 @@ public class App {
         if (fight.aliveVerification(player)) {
             System.out.println("\nEnd of battles. " + player.getName() + " survives with " + player.getHealth() + " health points.");
         }
-        
-        scanner.close();
+        }
     }
 }
