@@ -8,6 +8,21 @@ import java.util.Random;
 
 public class App {
 
+    public static void clearConsole() {
+        try {
+            String os = System.getProperty("os.name").toLowerCase();
+
+            if (os.contains("win")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            System.out.println("Impossible de nettoyer le terminal : " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         Champion enemy1 = new Champion("Goblin", 50, new Sword(), new Naked());
         Champion enemy2 = new Champion("Orc", 80, new Axe(), new WoodenArmour());
@@ -24,7 +39,7 @@ public class App {
             System.out.println("Username cannot be empty. Enter username: ");
             userName = scanner.nextLine();
         }
-        
+
         System.out.println("Enter weapon choice : \n 1. Fist \n 2. Sword \n 3. Axe \n");
 
         String weaponChoice = scanner.nextLine();
@@ -74,11 +89,10 @@ public class App {
 
         Champion player = new Champion(userName, 100, playerWeapon, playerArmor);
 
-
-        while(true){
+        while (true) {
 
             Fight fight = new Fight();
-            Champion[] enemies = new Champion[]{enemy1, enemy2, enemy3, enemy4};
+            Champion[] enemies = new Champion[] { enemy1, enemy2, enemy3, enemy4 };
 
             java.util.Random rand = new java.util.Random();
 
@@ -107,15 +121,13 @@ public class App {
                     }
                 }
 
-                //player.resetHealth();
+                // player.resetHealth();
                 enemy1.resetHealth();
                 enemy2.resetHealth();
                 enemy3.resetHealth();
                 enemy4.resetHealth();
 
-
                 System.out.println("\n--- New fight: " + enemy.getName() + " ---");
-
 
                 while (fight.aliveVerification(player) && fight.aliveVerification(enemy)) {
                     System.out.println("\nChoose an action:");
@@ -126,66 +138,70 @@ public class App {
                     if (action.equals("1")) {
                         fight.attack(player, enemy);
                     } else if (action.equals("2")) {
-                        System.out.println(player.getName() + " - Health: " + player.getHealth() + " | Weapon: " + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: " + player.getXp() + " | Level: " + player.getLevel());
-                        System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: " + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName());
+                        System.out.println(player.getName() + " - Health: " + player.getHealth() + " | Weapon: "
+                                + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
+                                + player.getXp() + " | Level: " + player.getLevel());
+                        System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "
+                                + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName());
                         continue;
                     } else {
                         System.out.println("Invalid action, try again.");
                         continue;
                     }
 
-                    System.out.println("After the exchange: " + player.getName() + " Health = " + player.getHealth() + " | " + enemy.getName() + " Health = " + enemy.getHealth());
-                }
+                    System.out.println("After the exchange: " + player.getName() + " Health = " + player.getHealth()
+                            + " | " + enemy.getName() + " Health = " + enemy.getHealth());
 
-                if (!fight.aliveVerification(player)) {
-                    if (revival == true) {
-                        System.out.println("You have been given a second chance !");
-                        player.setHealth(player.getBaseHealth()/2);
-                        revival = false;
-                    } else {
-                    System.out.println("\nYou are dead. Game over.");
-                    scanner.close();
-                    break;
+                    if (!fight.aliveVerification(player)) {
+                        if (revival == true) {
+                            System.out.println("You have been given a second chance !");
+                            player.setHealth(player.getBaseHealth() / 2);
+                            revival = false;
+                        } else {
+                            System.out.println("\nYou are dead. Game over.");
+                            scanner.close();
+                            break;
+                        }
+                    }
+
+                    if (!fight.aliveVerification(enemy)) {
+                        System.out.println("\nYou defeated " + enemy.getName() + "!");
+                        switch (enemy.getName()) {
+                            case "Goblin":
+                                player.gainXp(10);
+                                break;
+                            case "Orc":
+                                player.gainXp(20);
+                                break;
+                            case "Troll":
+                                player.gainXp(30);
+                                break;
+                            case "Kawaleck":
+                                player.gainXp(50);
+                                break;
+                        }
+                        System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel());
+                        Random randpotion = new Random();
+                        int newPotion = randpotion.nextInt(100);
+
+                        if (newPotion < 40) {
+                            System.out.println("You found a health potion! Health restored by 20 points.");
+                            player.getInventory().addPotion(new Potion("Health Potion"));
+                        } else if (newPotion >= 40 && newPotion < 60) {
+                            System.out.println("You found a gambling potion");
+                            player.getInventory().addPotion(new Potion("Gambling Potion"));
+                        } else {
+                            System.out.println("You found Nothing.");
+                        }
+
+                        player.setWeapon(player.getOldWeapon());
                     }
                 }
 
-                if (!fight.aliveVerification(enemy)) {
-                    System.out.println("\nYou defeated " + enemy.getName() + "!");
-                    switch (enemy.getName()) {
-                        case "Goblin":
-                            player.gainXp(10);
-                            break;
-                        case "Orc":
-                            player.gainXp(20);
-                            break;
-                        case "Troll":
-                            player.gainXp(30);
-                            break;
-                        case "Kawaleck":
-                            player.gainXp(50);
-                            break;
-                    }
-                    System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel());
-                    Random randpotion = new Random();
-                    int newPotion = randpotion.nextInt(100);
-
-                    if (newPotion < 40) {
-                        System.out.println("You found a health potion! Health restored by 20 points.");
-                        player.getInventory().addPotion(new Potion("Health Potion"));
-                    } else if (newPotion >= 40 && newPotion < 60 ) {
-                        System.out.println("You found a gambling potion");
-                        player.getInventory().addPotion(new Potion("Gambling Potion"));
-                    } else {
-                        System.out.println("You found Nothing.");
-                    }
-
-
-                    player.setWeapon(player.getOldWeapon());
+                if (fight.aliveVerification(player)) {
+                    System.out.println("\nEnd of battles. " + player.getName() + " survives with " + player.getHealth()
+                            + " health points.");
                 }
-            }
-
-            if (fight.aliveVerification(player)) {
-                System.out.println("\nEnd of battles. " + player.getName() + " survives with " + player.getHealth() + " health points.");
             }
         }
     }
