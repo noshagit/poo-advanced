@@ -2,6 +2,6 @@ package projet.armor;
 
 public class IronArmour extends Armor {
     public IronArmour() {
-        super("Iron Armour", 10, 100);
+        super("Iron Armour", 10, 1000);
     }
 }

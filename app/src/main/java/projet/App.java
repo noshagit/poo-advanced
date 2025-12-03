@@ -8,21 +8,6 @@ import java.util.Random;
 
 public class App {
 
-    public static void clearConsole() {
-        try {
-            String os = System.getProperty("os.name").toLowerCase();
-
-            if (os.contains("win")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            System.out.println("Impossible de nettoyer le terminal : " + e.getMessage());
-        }
-    }
-
     public static void main(String[] args) {
         Champion enemy1 = new Champion("Goblin", 50, new Sword(), new Naked());
         Champion enemy2 = new Champion("Orc", 80, new Axe(), new WoodenArmour());
@@ -185,7 +170,7 @@ public class App {
                         int newPotion = randpotion.nextInt(100);
 
                         if (newPotion < 40) {
-                            System.out.println("You found a health potion! Health restored by 20 points.");
+                            System.out.println("You found a health potion!");
                             player.getInventory().addPotion(new Potion("Health Potion"));
                         } else if (newPotion >= 40 && newPotion < 60) {
                             System.out.println("You found a gambling potion");
@@ -196,7 +181,6 @@ public class App {
 
                         player.setWeapon(player.getOldWeapon());
                     }
-                    clearConsole();
                 }
 
                 if (fight.aliveVerification(player)) {

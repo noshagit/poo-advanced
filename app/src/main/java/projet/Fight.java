@@ -9,17 +9,13 @@ public class Fight {
         int diffRatio = (defender.getMoveSpeed() + attacker.getMoveSpeed()) / 2;
         
         if (attacker.getMoveSpeed() < defender.getMoveSpeed()) {
-            System.out.println("DiffRatio: " + diffRatio);
             for (int i = 0; i < diffRatio; i++) {
                 attacker.takeDamage(defenderWeapon);
-                System.out.println("Attacker Health after hit " + (i+1) + ": " + attacker.getHealth());
             }
             defender.takeDamage(attackerWeapon);
         } else {
-            System.out.println("DiffRatio: " + diffRatio);
             for (int i = 0; i < diffRatio; i++) {
                 defender.takeDamage(attackerWeapon);
-                System.out.println("Attacker Health after hit " + (i+1) + ": " + defender.getHealth());
             }
             attacker.takeDamage(defenderWeapon);
         }

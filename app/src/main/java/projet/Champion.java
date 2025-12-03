@@ -90,7 +90,11 @@ public class Champion {
             int chance = rand.nextInt(150) - 25;
             this.health -= (chance - this.armor.getResistance());
         } else {
-            this.health -= (weapon.getDamages() - this.armor.getResistance());
+            if ((weapon.getDamages() - this.armor.getResistance()) > 2) {
+                this.health -= (weapon.getDamages() - this.armor.getResistance());
+            } else {
+                this.health -= 2;
+            }
         }
     }
 

@@ -2,6 +2,6 @@ package projet.weapon;
 
 public class Axe extends Weapon{
     public Axe(){
-        super("Axe", 20, 10);
+        super("Axe", 9, 4);
     }
 }
