@@ -5,6 +5,7 @@ import java.util.Scanner;
 import projet.armor.*;
 import projet.weapon.*;
 import java.util.Random;
+import projet.enemies.*;
 
 public class App {
 
@@ -24,11 +25,12 @@ public class App {
     }
 
     public static void main(String[] args) {
-        Champion enemy1 = new Champion("Goblin", 50, new Sword(), new Naked());
-        Champion enemy2 = new Champion("Orc", 80, new Axe(), new WoodenArmour());
-        Champion enemy3 = new Champion("Troll", 120, new Log(), new Naked());
-        Champion enemy4 = new Champion("Kawaleck", 200, new Cancer(), new IronArmour());
         boolean revival = true;
+
+        Enemy goblin = new Goblin();
+        Enemy orc = new Orc();
+        Enemy troll = new Troll();
+        Enemy kawaleck = new Kawaleck();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -92,12 +94,12 @@ public class App {
         while (true) {
 
             Fight fight = new Fight();
-            Champion[] enemies = new Champion[] { enemy1, enemy2, enemy3, enemy4 };
-
+            Enemy[] enemies = new Enemy[]{goblin, orc, troll, kawaleck};
+            
             java.util.Random rand = new java.util.Random();
 
             while (fight.aliveVerification(player)) {
-                Champion enemy;
+                Enemy enemy;
                 int lvl = player.getLevel();
                 double r = rand.nextDouble();
 
@@ -121,12 +123,12 @@ public class App {
                     }
                 }
 
-                // player.resetHealth();
-                enemy1.resetHealth();
-                enemy2.resetHealth();
-                enemy3.resetHealth();
-                enemy4.resetHealth();
-
+                //player.resetHealth();
+                goblin.resetHealth();
+                orc.resetHealth();
+                troll.resetHealth();
+                kawaleck.resetHealth();
+                
                 System.out.println("\n--- New fight: " + enemy.getName() + " ---");
 
                 while (fight.aliveVerification(player) && fight.aliveVerification(enemy)) {

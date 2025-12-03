@@ -24,7 +24,7 @@ public class Champion {
         this.oldWeapon = weapon;
         this.armor = armor;
         this.xp = 0;
-        this.level = 0;
+        this.level = 1;
         this.inventory = new Inventory();
     }
 
@@ -77,7 +77,8 @@ public class Champion {
     }
 
     public void gainXp(int xpGained) {
-        this.xp += xpGained;
+        int actualXp = xpGained / (level / 10);
+        this.xp += actualXp;
         if (this.xp >= 100) {
             this.level += 1;
             this.xp = this.xp - 100;
