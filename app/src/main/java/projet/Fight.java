@@ -14,12 +14,11 @@ public class Fight {
             defender.takeDamage(attackerWeapon);
             attacker.takeDamage(defenderWeapon);
         }
+        attackerWeapon.gainXp();
+        System.out.println(attackerWeapon.getXp() + ", " + attackerWeapon.getLevel() + " , " + attackerWeapon.getDamages());
     }
 
     public boolean aliveVerification(Champion champion) {
-        if (champion.getHealth() <= 0) {
-            return false;
-        }
-        return true;
+        return (champion.getHealth() > 0);
     }
 }
