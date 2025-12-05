@@ -1,6 +1,8 @@
-package projet;
+package projet.potions;
 
-public class Potion {
+import projet.Player;
+
+public abstract class Potion {
     private String name;
 
     public Potion(String name) {
@@ -10,4 +12,7 @@ public class Potion {
     public String getName() {
         return name;
     }
+
+    public abstract void use(Player player);
+
 }

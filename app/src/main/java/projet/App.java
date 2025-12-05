@@ -6,6 +6,7 @@ import projet.armor.*;
 import projet.weapon.*;
 import java.util.Random;
 import projet.enemies.*;
+import projet.potions.*;
 
 public class App {
 
@@ -203,10 +204,10 @@ public class App {
 
                         if (newPotion < 40) {
                             System.out.println("You found a health potion!");
-                            player.getInventory().addPotion(new Potion("Health Potion"));
+                            player.getInventory().addPotion(new HealthPotion());
                         } else if (newPotion >= 40 && newPotion < 60) {
                             System.out.println("You found a gambling potion");
-                            player.getInventory().addPotion(new Potion("Gambling Potion"));
+                            player.getInventory().addPotion(new GamblingPotion());
                         } else {
                             System.out.println("You found Nothing.");
                         }

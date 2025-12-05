@@ -1,8 +1,7 @@
 package projet;
 
-import java.util.Random;
-
 import projet.armor.Armor;
+import projet.potions.Potion;
 import projet.weapon.Weapon;
 
 public class Player extends Champion {
@@ -41,23 +40,7 @@ public class Player extends Champion {
 
     public void usePotion(Potion potion) {
         if (this.inventory.getPotions().contains(potion)) {
-            if ("Health Potion".equals(potion.getName())) {
-                this.setHealth(this.getHealth() + 10);
-            } else if ("Gambling Potion".equals(potion.getName())) {
-                Random rand = new Random();
-                int chance = rand.nextInt(100);
-                if (chance < 25) {
-                    this.setHealth(0);
-                    System.out.println("Oh no! The gambling potion backfired and caused instant death!");
-                } else if (chance > 25 && chance < 40) {
-                    this.setWeapon(new Weapon("Gambling Blade", 50, 1));
-                    System.out.println("Lucky you! The gambling potion transformed your weapon into the Gambling Blade!");
-                } else {
-                    this.setHealth(this.getHealth() + 15);
-                    System.out.println("You gained 15 health from the gambling potion!");
-                }
-                this.inventory.removePotion(potion);
-            }
+            potion.use(this);
         }
     }
 

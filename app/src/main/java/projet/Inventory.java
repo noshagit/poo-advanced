@@ -1,6 +1,9 @@
 package projet;
 
 import java.util.List;
+
+import projet.potions.Potion;
+
 import java.util.ArrayList;
 
 public class Inventory {
