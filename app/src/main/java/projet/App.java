@@ -139,22 +139,31 @@ public class App {
                                 }
                             }
                             System.out.println("Total Health Potion: " + healthCount + " | Total Gambling Potion: " + gamblingCount);
-                            System.out.print("Choose a potion to use (enter the name): ");
+                            System.out.print("Choose a potion (name or index): ");
                             String potionChoice = scanner.nextLine().trim();
-                            int potionIndex;
-                            try {
-                                potionIndex = Integer.parseInt(potionChoice);
-                            } catch (NumberFormatException e) {
-                                System.out.println("Choix invalide.");
-                                continue;
+
+                            Potion selectedPotion = null;
+                            for (Potion p : potions) {
+                                if (p.getName().equalsIgnoreCase(potionChoice)) {
+                                    selectedPotion = p;
+                                    break;
+                                }
                             }
 
-                            if (potionIndex < 1 || potionIndex > potions.size()) {
-                                System.out.println("Choix de potion invalide.");
-                                continue;
+                            if (selectedPotion == null) {
+                                try {
+                                    int index = Integer.parseInt(potionChoice);
+                                    if (index >= 1 && index <= potions.size()) {
+                                        selectedPotion = potions.get(index - 1);
+                                    } else {
+                                        System.out.println("Invalid index.");
+                                        continue;
+                                    }
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Invalid potion name.");
+                                    continue;
+                                }
                             }
-
-                            Potion selectedPotion = potions.get(potionIndex - 1);
                             player.usePotion(selectedPotion);
                         }
                     } else if (action.equals("3")) {

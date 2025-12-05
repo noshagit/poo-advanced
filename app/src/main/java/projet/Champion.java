@@ -117,10 +117,13 @@ public class Champion {
                 int chance = rand.nextInt(100);
                 if (chance < 25) {
                     this.health = 0;
+                    System.out.println("Oh no! The gambling potion backfired and caused instant death!");
                 } else if (chance > 25 && chance < 40) {
                     this.weapon = new Weapon("Gambling Blade", 50, 1);
+                    System.out.println("Lucky you! The gambling potion transformed your weapon into the Gambling Blade!");
                 } else {
                     this.health += 15;
+                    System.out.println("You gained 15 health from the gambling potion!");
                 }
                 this.inventory.removePotion(potion);
             }
