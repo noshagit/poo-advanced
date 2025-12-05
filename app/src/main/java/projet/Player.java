@@ -29,6 +29,7 @@ public class Player extends Champion {
         this.xp += (int) actualXp;
         if (this.xp >= 100) {
             this.level += 1;
+            this.setHealth(this.getHealth() + 10);
             this.xp = 0;
             System.out.println("You leveled up!");
         }

@@ -17,8 +17,4 @@ public class Fight {
         attackerWeapon.gainXp();
         System.out.println(attackerWeapon.getXp() + ", " + attackerWeapon.getLevel() + " , " + attackerWeapon.getDamages());
     }
-
-    public boolean aliveVerification(Champion champion) {
-        return (champion.getHealth() > 0);
-    }
 }
