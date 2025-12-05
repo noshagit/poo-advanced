@@ -31,13 +31,12 @@ public class Player extends Champion {
         return maxHealth;
     }
 
-    public void gainXp(int xpGained) {
+    public void gainXp(int xpGained, Scanner scanner) {
         float actualXp = xpGained / Math.min(((float) level / 10), 1);
         this.xp += (int) actualXp;
         if (this.xp >= 100) {
             this.level += 1;
             this.xp = 0;
-            Scanner scanner = new Scanner(System.in);
             System.out.println("You leveled up!");
             System.out.println("1. Increase your max health by 10 \n2. Heal 40 health points.\nWould you like to : ");
             int choice = scanner.nextInt();

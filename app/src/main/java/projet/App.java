@@ -60,7 +60,7 @@ public class App {
                     }
 
                     if (enemy.getHealth() <= 0) {
-                        defeatEnemy(enemy, player);
+                        defeatEnemy(enemy, player, scanner);
                     }
                 }
 
@@ -225,9 +225,9 @@ public class App {
         return false;
     }
 
-    public static void defeatEnemy(Enemy enemy, Player player) {
+    public static void defeatEnemy(Enemy enemy, Player player, Scanner scanner) {
         System.out.println("\nYou defeated " + enemy.getName() + "!");
-        player.gainXp(enemy.getXpReward());
+        player.gainXp(enemy.getXpReward(), scanner);
         System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel());
         Random randpotion = new Random();
         int newPotion = randpotion.nextInt(100);
