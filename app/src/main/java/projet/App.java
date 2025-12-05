@@ -139,29 +139,24 @@ public class App {
                                 }
                             }
                             System.out.println("Total Health Potion: " + healthCount + " | Total Gambling Potion: " + gamblingCount);
-                        }
-                        System.out.print("Choose a potion to use (enter the name): ");
-                        String potionChoice = scanner.nextLine().trim();
-                        int potionIndex;
-                        try {
-                            potionIndex = Integer.parseInt(potionChoice);
-                        } catch (NumberFormatException e) {
-                            System.out.println("Choix invalide.");
-                            continue;
-                        }
+                            System.out.print("Choose a potion to use (enter the name): ");
+                            String potionChoice = scanner.nextLine().trim();
+                            int potionIndex;
+                            try {
+                                potionIndex = Integer.parseInt(potionChoice);
+                            } catch (NumberFormatException e) {
+                                System.out.println("Choix invalide.");
+                                continue;
+                            }
 
-                        if (potions == null || potions.isEmpty()) {
-                            System.out.println("Aucune potion disponible.");
-                            continue;
-                        }
+                            if (potionIndex < 1 || potionIndex > potions.size()) {
+                                System.out.println("Choix de potion invalide.");
+                                continue;
+                            }
 
-                        if (potionIndex < 1 || potionIndex > potions.size()) {
-                            System.out.println("Choix de potion invalide.");
-                            continue;
+                            Potion selectedPotion = potions.get(potionIndex - 1);
+                            player.usePotion(selectedPotion);
                         }
-
-                        Potion selectedPotion = potions.get(potionIndex - 1);
-                        player.usePotion(selectedPotion);
                     } else if (action.equals("3")) {
                         System.out.println(player.getName() + " - Health: " + player.getHealth() + " | Weapon: "
                                 + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
