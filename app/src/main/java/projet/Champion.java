@@ -5,14 +5,11 @@ import java.util.Random;
 import projet.armor.Armor;
 import projet.weapon.Weapon;
 
-public class Champion {
+public abstract class Champion {
     private String name;
     private int health;
     private Weapon weapon;
     private Armor armor;
-    private int xp;
-    private int level;
-    private final Inventory inventory;
     private final Weapon oldWeapon;
     private final int baseHealth;
 
@@ -23,9 +20,6 @@ public class Champion {
         this.weapon = weapon;
         this.oldWeapon = weapon;
         this.armor = armor;
-        this.xp = 0;
-        this.level = 1;
-        this.inventory = new Inventory();
     }
 
     public Weapon getOldWeapon() {
@@ -48,6 +42,10 @@ public class Champion {
         this.health = health;
     }
 
+    public void resetHealth() {
+        this.health = this.baseHealth;
+    }
+
     public Weapon getWeapon() {
         return weapon;
     }
@@ -64,26 +62,8 @@ public class Champion {
         this.armor = armor;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
-    public int getXp() {
-        return xp;
-    }
-
     public int getBaseHealth() {
         return baseHealth;
-    }
-
-    public void gainXp(int xpGained) {
-        float actualXp = xpGained / Math.min(((float) level / 10), 1);
-        this.xp += (int) actualXp;
-        if (this.xp >= 100) {
-            this.level += 1;
-            this.xp = 0;
-            System.out.println("You leveled up!");
-        }
     }
 
     public void takeDamage(Weapon weapon) {
@@ -102,41 +82,5 @@ public class Champion {
 
     public int getMoveSpeed() {
         return this.weapon.getAttackSpeed() / (this.armor.getWeight() / 10);
-    }
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public void usePotion(Potion potion) {
-        if (this.inventory.getPotions().contains(potion)) {
-            if ("Health Potion".equals(potion.getName())) {
-                this.health += 20;
-            } else if ("Gambling Potion".equals(potion.getName())) {
-                Random rand = new Random();
-                int chance = rand.nextInt(100);
-                if (chance < 25) {
-                    this.health = 0;
-                } else if (chance > 25 && chance < 40) {
-                    this.weapon = new Weapon("Gambling Blade", 50, 1);
-                } else {
-                    this.health += 15;
-                }
-                this.inventory.removePotion(potion);
-            }
-        }
-    }
-
-    public boolean hasPotion(String potionName) {
-        for (Potion p : this.inventory.getPotions()) {
-            if (p.getName().equals(potionName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void resetHealth() {
-        this.health = this.baseHealth;
     }
 }
