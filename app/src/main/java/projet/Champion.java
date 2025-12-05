@@ -115,12 +115,14 @@ public class Champion {
             } else if (potion.getName() == "Gambling Potion") {
                 Random rand = new Random();
                 int chance = rand.nextInt(100);
-                if (chance < 25) {
+                if (chance < 5) {
                     this.health = 0;
-                } else if (chance > 25 && chance < 40) {
+                } else if (chance >= 5 && chance < 20) {
                     this.weapon = new Weapon("Gambling Blade", 50, 1);
+                } else if (chance >= 20 && chance < 60) {
+                    this.health -= 30;
                 } else {
-                    this.health += 15;
+                    this.health += 30;
                 }
             }
             this.inventory.removePotion(potion);

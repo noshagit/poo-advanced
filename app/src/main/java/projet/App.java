@@ -19,21 +19,21 @@ public class App {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter username: ");
+        System.out.print("Enter username: ");
         String userName = scanner.nextLine();
 
         while (userName.isEmpty()) {
-            System.out.println("Username cannot be empty. Enter username: ");
+            System.out.print("Username cannot be empty. Enter username: ");
             userName = scanner.nextLine();
         }
 
-        System.out.println("Enter weapon choice : \n 1. Fist \n 2. Sword \n 3. Axe \n");
-
+        System.out.print("1. Fist \n2. Sword \n3. Axe \nEnter weapon choice: ");
         String weaponChoice = scanner.nextLine();
+
         int weaponChoiceInt = Integer.parseInt(weaponChoice);
 
         while ((weaponChoiceInt < 1 || weaponChoiceInt > 3)) {
-            System.out.println("Invalid weapon choice. Enter weapon choice (1. Fist, 2. Sword, 3. Axe):");
+            System.out.print("Invalid weapon choice. Enter weapon choice (1. Fist, 2. Sword, 3. Axe): ");
             weaponChoice = scanner.nextLine();
             weaponChoiceInt = Integer.parseInt(weaponChoice);
         }
@@ -50,14 +50,13 @@ public class App {
                 playerWeapon = new Axe();
         }
 
-        System.out.println("Choose your armor: \n 1. Naked \n 2. WoodenArmour \n 3. IronArmour: \n");
+        System.out.print("1. Naked \n2. WoodenArmour \n3. IronArmour: \nChoose your armor:");
 
         String armorChoice = scanner.nextLine();
         int choiceInt = Integer.parseInt(armorChoice);
 
         while (choiceInt != 1 && choiceInt != 2 && choiceInt != 3) {
-            System.out.println(
-                    "Invalid armor choice. Choose your armor: \n 1. Naked \n 2. WoodenArmour \n 3. IronArmour: \n");
+            System.out.print("Invalid armor choice. Choose your armor: \n 1. Naked \n 2. WoodenArmour \n 3. IronArmour: ");
             armorChoice = scanner.nextLine();
             choiceInt = Integer.parseInt(armorChoice);
         }
@@ -117,14 +116,53 @@ public class App {
                 System.out.println("\n--- New fight: " + enemy.getName() + " ---");
 
                 while (fight.aliveVerification(player) && fight.aliveVerification(enemy)) {
-                    System.out.println("\nChoose an action:");
-                    System.out.println("1. Attack");
-                    System.out.println("2. Display statistics");
+                    System.out.print("1. Attack \n2. Use Potion \n3. Display statistics \nChoose an action: ");
 
                     String action = scanner.nextLine().trim();
                     if (action.equals("1")) {
                         fight.attack(player, enemy);
                     } else if (action.equals("2")) {
+                        System.out.println("Your pockets: ");
+                        java.util.List<Potion> potions = player.getInventory().getPotions();
+                        int healthCount = 0;
+                        int gamblingCount = 0;
+
+                        if (potions == null || potions.isEmpty()) {
+                            System.out.println("No potions available");
+                        } else {
+                            for (int i = 0; i < potions.size(); i++) {
+                                Potion p = potions.get(i);
+                                if ("Health Potion".equals(p.getName())) {
+                                    healthCount++;
+                                } else if ("Gambling Potion".equals(p.getName())) {
+                                    gamblingCount++;
+                                }
+                            }
+                            System.out.println("Total Health Potion: " + healthCount + " | Total Gambling Potion: " + gamblingCount);
+                        }
+                        System.out.print("Choose a potion to use (enter the name): ");
+                        String potionChoice = scanner.nextLine().trim();
+                        int potionIndex;
+                        try {
+                            potionIndex = Integer.parseInt(potionChoice);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Choix invalide.");
+                            continue;
+                        }
+
+                        if (potions == null || potions.isEmpty()) {
+                            System.out.println("Aucune potion disponible.");
+                            continue;
+                        }
+
+                        if (potionIndex < 1 || potionIndex > potions.size()) {
+                            System.out.println("Choix de potion invalide.");
+                            continue;
+                        }
+
+                        Potion selectedPotion = potions.get(potionIndex - 1);
+                        player.usePotion(selectedPotion);
+                    } else if (action.equals("3")) {
                         System.out.println(player.getName() + " - Health: " + player.getHealth() + " | Weapon: "
                                 + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
                                 + player.getXp() + " | Level: " + player.getLevel());
