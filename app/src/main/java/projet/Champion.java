@@ -12,9 +12,9 @@ public class Champion {
     private Armor armor;
     private int xp;
     private int level;
-    private Inventory inventory;
-    private Weapon oldWeapon;
-    private int baseHealth;
+    private final Inventory inventory;
+    private final Weapon oldWeapon;
+    private final int baseHealth;
 
     public Champion(String name, int health, Weapon weapon, Armor armor) {
         this.name = name;
@@ -110,26 +110,20 @@ public class Champion {
 
     public void usePotion(Potion potion) {
         if (this.inventory.getPotions().contains(potion)) {
-            if (potion.getName() == "Health Potion") {
+            if ("Health Potion".equals(potion.getName())) {
                 this.health += 20;
-            } else if (potion.getName() == "Gambling Potion") {
+            } else if ("Gambling Potion".equals(potion.getName())) {
                 Random rand = new Random();
                 int chance = rand.nextInt(100);
-                if (chance < 5) {
+                if (chance < 25) {
                     this.health = 0;
-                    System.out.println("No luck ! The gambling potion was deadly!");
-                } else if (chance >= 5 && chance < 20) {
+                } else if (chance > 25 && chance < 40) {
                     this.weapon = new Weapon("Gambling Blade", 50, 1);
-                    System.out.println("You got the Gambling Blade !");
-                } else if (chance >= 20 && chance < 60) {
-                    this.health -= 30;
-                    System.out.println("Bad luck ! You lost 30 HP.");
                 } else {
-                    this.health += 30;
-                    System.out.println("Good luck ! You gained 30 HP.");
+                    this.health += 15;
                 }
+                this.inventory.removePotion(potion);
             }
-            this.inventory.removePotion(potion);
         }
     }
 

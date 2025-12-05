@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Inventory {
-    private List<Potion> potions;
+    private final List<Potion> potions;
 
     public Inventory() {
         this.potions = new ArrayList<Potion>();
