@@ -55,7 +55,7 @@ public class App {
                         } else {
                             System.out.println("\nYou are dead. Game over.");
                             scanner.close();
-                            break;
+                            return;
                         }
                     }
 
@@ -133,25 +133,27 @@ public class App {
     public static Enemy randEnemy(Player player, Enemy[] enemies, Random rand) {
         int lvl = player.getLevel();
         double r = rand.nextDouble();
-        switch (lvl) {
-            case 0, 1, 2, 3, 4:
-                return enemies[0];
-            case 5, 6, 7, 8, 9:
+        if (lvl < 5) {
+            return enemies[0];
+        }
+        else if (lvl < 10) {
+            return rand.nextBoolean() ? enemies[0] : enemies[1];
+        }
+        else if (lvl < 20) {
+            if (r < 0.75) {
                 return rand.nextBoolean() ? enemies[0] : enemies[1];
-            case 10, 11, 12, 13, 14, 15, 16, 17, 18, 19:
-                if (r < 0.75) {
-                    return rand.nextBoolean() ? enemies[0] : enemies[1];
-                } else {
-                    return enemies[2];
-                }
-            default:
-                if (r < 0.70) {
-                    return rand.nextBoolean() ? enemies[0] : enemies[1];
-                } else if (r < 0.95) {
-                    return enemies[2];
-                } else {
-                    return enemies[3];
-                }
+            } else {
+                return enemies[2];
+            }
+        }
+        else {
+            if (r < 0.70) {
+                return rand.nextBoolean() ? enemies[0] : enemies[1];
+            } else if (r < 0.95) {
+                return enemies[2];
+            } else {
+                return enemies[3];
+            }
         }
     }
 
@@ -212,7 +214,8 @@ public class App {
                 }
                 break;
             case "3":
-                System.out.println(player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: " + player.getHealth() + " | Weapon: "
+                System.out.println(player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: "
+                        + player.getHealth() + " | Weapon: "
                         + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
                         + player.getXp() + " | Level: " + player.getLevel());
                 System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "
