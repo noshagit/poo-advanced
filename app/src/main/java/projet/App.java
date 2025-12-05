@@ -73,7 +73,7 @@ public class App {
                 playerArmor = new IronArmour();
         }
 
-        Champion player = new Champion(userName, 100, playerWeapon, playerArmor);
+        Player player = new Player(userName, 100, playerWeapon, playerArmor);
 
         while (true) {
 
