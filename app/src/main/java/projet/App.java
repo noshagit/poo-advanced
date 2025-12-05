@@ -165,6 +165,7 @@ public class App {
                                 }
                             }
                             player.usePotion(selectedPotion);
+                            player.getInventory().removePotion(selectedPotion);
                         }
                     } else if (action.equals("3")) {
                         System.out.println(player.getName() + " - Health: " + player.getHealth() + " | Weapon: "
