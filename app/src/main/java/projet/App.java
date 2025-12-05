@@ -212,7 +212,7 @@ public class App {
                 }
                 break;
             case "3":
-                System.out.println(player.getName() + " - Health: " + player.getHealth() + " | Weapon: "
+                System.out.println(player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: " + player.getHealth() + " | Weapon: "
                         + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
                         + player.getXp() + " | Level: " + player.getLevel());
                 System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "

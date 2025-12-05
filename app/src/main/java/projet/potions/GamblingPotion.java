@@ -22,7 +22,7 @@ public class GamblingPotion extends Potion {
             player.setWeapon(new Weapon("Gambling Blade", 50, 1));
             System.out.println("Lucky you! The gambling potion transformed your weapon into the Gambling Blade!");
         } else {
-            player.setHealth(player.getHealth() + 15);
+            player.setHealth(Math.max(player.getHealth() + 15, player.getMaxHealth()));
             System.out.println("You gained 15 health from the gambling potion!");
         }
         player.getInventory().removePotion(this);

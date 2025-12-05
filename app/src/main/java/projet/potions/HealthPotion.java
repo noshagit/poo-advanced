@@ -10,7 +10,7 @@ public class HealthPotion extends Potion {
 
     @Override
     public void use(Player player) {
-        player.setHealth(player.getHealth() + 10);
+        player.setHealth(Math.max(player.getHealth() + 30, player.getMaxHealth()));
     }
     
 }
