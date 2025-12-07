@@ -17,6 +17,8 @@ public class Player extends Champion {
         this.xp = 0;
         this.level = 1;
         this.inventory = new Inventory();
+        inventory.addWeapon(weapon);
+        inventory.addArmor(armor);
     }
 
     public int getLevel() {
