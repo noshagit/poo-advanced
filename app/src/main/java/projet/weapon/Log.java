@@ -2,6 +2,6 @@ package projet.weapon;
 
 public class Log extends Weapon {
     public Log() {
-        super("Log", 35, 2);
+        super("Log", 35, 200);
     }
 }
