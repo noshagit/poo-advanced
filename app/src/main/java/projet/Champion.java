@@ -85,11 +85,18 @@ public abstract class Champion {
      */
     public void takeDamage(Weapon weapon) {
         Random rand = new Random();
+        boolean critChance = rand.nextInt(100) > 85;
+        int critDefense = 0;
+        if (critChance) {
+            System.out.println(this.getName() + " blocks part of the damage!");
+            critDefense = weapon.getDamages() / 4;
+        }
+        int damageAfterArmor = weapon.getDamages() - this.armor.getResistance() - critDefense;
+
         if (weapon.getName().equals("Gambling Blade")) {
             int chance = rand.nextInt(150) - 25;
             this.health -= (chance - this.armor.getResistance());
         } else {
-            int damageAfterArmor = weapon.getDamages() - this.armor.getResistance();
             if (damageAfterArmor > 2) {
                 this.health -= damageAfterArmor;
             } else {
