@@ -9,6 +9,6 @@ public class CriticalPotion extends Potion {
 
     @Override
     public void use(Player player) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAh");
+        player.setExtraCrit(10);
     }
 }
