@@ -7,12 +7,27 @@ package projet;
 import java.util.Random;
 import java.util.Scanner;
 
-/* GAME CLASSES */
-
-import projet.armor.*;
-import projet.weapon.*;
-import projet.enemies.*;
-import projet.potions.*;
+import projet.armor.Armor;
+import projet.armor.IronArmour;
+import projet.armor.Naked;
+import projet.armor.WoodenArmour;
+import projet.enemies.Enemy;
+import projet.enemies.Goblin;
+import projet.enemies.Kawaleck;
+import projet.enemies.Minotaur;
+import projet.enemies.Orc;
+import projet.enemies.Reaper;
+import projet.enemies.Skeleton;
+import projet.enemies.Slime;
+import projet.enemies.StoneGolem;
+import projet.enemies.Troll;
+import projet.potions.GamblingPotion;
+import projet.potions.HealthPotion;
+import projet.potions.Potion;
+import projet.weapon.Axe;
+import projet.weapon.Fist;
+import projet.weapon.Sword;
+import projet.weapon.Weapon;
 
 /**
  * The main application class for the game.
@@ -98,6 +113,8 @@ public class App {
                         defeatEnemy(enemy, player, scanner);
                         System.out.println();
                     }
+                    player.setExtraArmor(0);
+                    player.setExtraDamage(0);
                 }
 
                 if (player.getHealth() > 0) {
@@ -127,26 +144,31 @@ public class App {
         String actionChoice = scanner.nextLine();
 
         while (!"1".equals(actionChoice)) {
-            if ("2".equals(actionChoice)) {
-                System.out.println();
-                player.checkInventory(scanner);
-            } else if ("3".equals(actionChoice)) {
-                while (true) {
+            switch (actionChoice) {
+                case "1" -> {
+                    System.out.println("Continuing the fight...");
+                }
+                case "2" -> {
                     System.out.println();
-                    System.out.print("Are you sure? There is no save option. (y/n): ");
-                    String confirmation = scanner.nextLine().trim();
-                    if ("y".equalsIgnoreCase(confirmation)) {
-                        System.out.println("Exiting game...");
-                        scanner.close();
-                        System.exit(0);
-                    } else if ("n".equalsIgnoreCase(confirmation)) {
-                        break;
-                    } else {
-                        System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                    player.checkInventory(scanner);
+                }
+                case "3" -> {
+                    while (true) {
+                        System.out.println();
+                        System.out.print("Are you sure? There is no save option. (y/n): ");
+                        String confirmation = scanner.nextLine().trim();
+                        if ("y".equalsIgnoreCase(confirmation)) {
+                            System.out.println("Exiting game...");
+                            scanner.close();
+                            System.exit(0);
+                        } else if ("n".equalsIgnoreCase(confirmation)) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                        }
                     }
                 }
-            } else {
-                System.out.println("Invalid choice. Please choose again.");
+                default -> System.out.println("Invalid choice. Please choose again.");
             }
             System.out.println("1. continue fighting\n2. check my inventory\n3. Leave the game\nChoose an action: ");
             System.out.print("> ");
@@ -258,37 +280,37 @@ public class App {
      */
     public static Enemy randEnemy(Player player, Random rand) {
         int lvl = player.getLevel();
-        int randomIndex; 
+        int randomIndex;
 
         if (lvl < 2) {
             return new Slime();
-        } else if (lvl >=2 && lvl < 5) {
+        } else if (lvl >= 2 && lvl < 5) {
             Enemy[] possibleEnemies = { new Goblin(), new Slime() };
             randomIndex = rand.nextInt(possibleEnemies.length);
             return possibleEnemies[randomIndex];
-        } else if ( lvl >= 5 && lvl < 9) {
+        } else if (lvl >= 5 && lvl < 9) {
             Enemy[] possibleEnemies = { new Goblin(), new Skeleton(), new Slime() };
             randomIndex = rand.nextInt(possibleEnemies.length);
             return possibleEnemies[randomIndex];
-        } else if ( lvl >= 9 && lvl < 15) {
+        } else if (lvl >= 9 && lvl < 15) {
             Enemy[] possibleEnemies = { new Goblin(), new Orc(), new Skeleton() };
             randomIndex = rand.nextInt(possibleEnemies.length);
             return possibleEnemies[randomIndex];
-        } else if ( lvl >= 15 && lvl < 20) {
+        } else if (lvl >= 15 && lvl < 20) {
             Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Skeleton() };
             randomIndex = rand.nextInt(possibleEnemies.length);
             return possibleEnemies[randomIndex];
-        } else if ( lvl >= 20 && lvl < 30) {
+        } else if (lvl >= 20 && lvl < 30) {
             Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Troll() };
             randomIndex = rand.nextInt(possibleEnemies.length);
             return possibleEnemies[randomIndex];
-        } else if ( lvl >= 30 && lvl < 50) {
+        } else if (lvl >= 30 && lvl < 50) {
             Enemy[] possibleEnemies = { new Troll(), new StoneGolem(), new Minotaur() };
             randomIndex = rand.nextInt(possibleEnemies.length);
             return possibleEnemies[randomIndex];
         } else {
             return new Minotaur();
-        } 
+        }
     }
 
     /**

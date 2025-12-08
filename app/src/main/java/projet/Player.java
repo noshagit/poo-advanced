@@ -4,8 +4,6 @@ package projet;
 
 import java.util.Scanner;
 
-/* GAME CLASSES */
-
 import projet.armor.Armor;
 import projet.potions.Potion;
 import projet.weapon.Weapon;
@@ -19,6 +17,8 @@ public class Player extends Champion {
     private final Inventory inventory;
     private int maxHealth;
     private Weapon oldWeapon;
+    private int ExtraArmor = 0;
+    private int extraDamage = 0;
 
     public Player(String name, int health, Weapon weapon, Armor armor) {
         super(name, health, weapon, armor);
@@ -39,6 +39,21 @@ public class Player extends Champion {
 
     public int getMaxHealth() {
         return maxHealth;
+    }
+
+    public int getExtraArmor() {
+        return this.ExtraArmor;
+    }
+
+    public void setExtraArmor(int extraArmor) {
+        this.ExtraArmor = extraArmor;
+    }
+    public int getExtraDamage() {
+        return this.extraDamage;
+    }
+
+    public void setExtraDamage(int extraDamage) {
+        this.extraDamage = extraDamage;
     }
 
     /**

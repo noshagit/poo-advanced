@@ -5,8 +5,7 @@ package projet;
 /* IMPORTS */
 import java.util.Random;
 
-/* GAME CLASSES */
-
+import projet.enemies.Enemy;
 import projet.weapon.Weapon;
 
 /**
@@ -18,9 +17,11 @@ public class Fight {
      * @param attacker The champion who is attacking. ( The player )
      * @param defender The champion who is defending. ( The monster )
      */
-    public void attack(Champion attacker, Champion defender) {
+    public void attack(Player attacker, Enemy defender) {
         Weapon attackerWeapon = attacker.getWeapon();
         Weapon defenderWeapon = defender.getWeapon();
+
+        attackerWeapon.addDamages(attacker.getExtraDamage());
 
         Random rand = new Random();
         

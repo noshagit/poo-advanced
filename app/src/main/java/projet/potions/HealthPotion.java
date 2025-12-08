@@ -8,12 +8,11 @@ import projet.Player;
 public class HealthPotion extends Potion {
 
     public HealthPotion() {
-        super("Health Potion");
+        super("Health");
     }
 
     @Override
     public void use(Player player) {
-        player.setHealth(Math.max(player.getHealth() + 30, player.getMaxHealth()));
+        player.setHealth(Math.min(player.getHealth() + 15, player.getMaxHealth()));
     }
-    
 }
