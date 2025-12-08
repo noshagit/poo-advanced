@@ -7,28 +7,10 @@ package projet;
 import java.util.Random;
 import java.util.Scanner;
 
-import projet.armor.Armor;
-import projet.armor.IronArmour;
-import projet.armor.Naked;
-import projet.armor.WoodenArmour;
-import projet.enemies.Enemy;
-import projet.enemies.Goblin;
-import projet.enemies.Kawaleck;
-import projet.enemies.Minotaur;
-import projet.enemies.Orc;
-import projet.enemies.Reaper;
-import projet.enemies.Skeleton;
-import projet.enemies.Slime;
-import projet.enemies.StoneGolem;
-import projet.enemies.Troll;
-import projet.potions.GamblingPotion;
-import projet.potions.HealthPotion;
-import projet.potions.Potion;
-import projet.weapon.Axe;
-import projet.weapon.Fist;
-import projet.weapon.Sword;
-import projet.weapon.Weapon;
-
+import projet.armor.*;
+import projet.enemies.*;
+import projet.potions.*;
+import projet.weapon.*;
 /**
  * The main application class for the game.
  */
