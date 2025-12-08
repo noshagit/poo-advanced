@@ -28,11 +28,16 @@ public class App {
     public static void gameLoop() {
         boolean revival = true;
 
-        Enemy goblin = new Goblin();
-        Enemy orc = new Orc();
-        Enemy troll = new Troll();
-        Enemy kawaleck = new Kawaleck();
-        Enemy[] enemies = new Enemy[] { goblin, orc, troll, kawaleck };
+        Enemy[] enemies = {
+            new Slime(),
+            new Goblin(),
+            new Skeleton(),
+            new Orc(),
+            new Reaper(),
+            new Troll(),
+            new StoneGolem(),
+            new Minotaur()
+        };
 
         Scanner scanner = new Scanner(System.in);
         Player player = createPlayer(scanner);
