@@ -32,6 +32,18 @@ public class Weapon{
         return level;
     }
 
+    public void addDamages(int degats){
+        this.degats += degats;
+    }
+
+    public void setDamages(int degats){
+        this.degats = degats;
+    }
+
+    public void subDamages(int damage){
+        this.degats -= damage;
+    }
+
     /**
      * Increases the weapon's experience points and levels up if necessary.
      */

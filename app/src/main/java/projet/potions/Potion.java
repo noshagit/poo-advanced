@@ -8,7 +8,7 @@ import projet.Player;
 
 /** Abstract class representing a potion. */
 public abstract class Potion {
-    private String name;
+    private final String name;
 
     public Potion(String name) {
         this.name = name;

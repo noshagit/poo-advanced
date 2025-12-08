@@ -4,8 +4,6 @@ package projet.potions;
 
 import java.util.Random;
 
-/* GAME CLASSES */
-
 import projet.Player;
 import projet.weapon.Weapon;
 
@@ -13,7 +11,7 @@ import projet.weapon.Weapon;
 public class GamblingPotion extends Potion {
 
     public GamblingPotion() {
-        super("Gambling Potion");
+        super("Gambling");
     }
     
     @Override
