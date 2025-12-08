@@ -18,6 +18,7 @@ public abstract class Champion {
     private Weapon weapon;
     private Armor armor;
     private final int baseHealth;
+    private int extraCrit = 0;
 
     public Champion(String name, int health, Weapon weapon, Armor armor) {
         this.name = name;
@@ -67,19 +68,30 @@ public abstract class Champion {
         return baseHealth;
     }
 
+    public int getExtraCrit() {
+        int extra = this.extraCrit;
+        this.extraCrit = 0;
+        return extra;
+    }
+
+    public void setExtraCrit(int extraCrit) {
+        this.extraCrit = extraCrit;
+    }
+
     /**
      * Inflicts damage to the champion based on the weapon used.
      *
      * @param weapon The weapon used to inflict damage.
      */
     public void takeDamage(Weapon weapon) {
+        Random rand = new Random();
         if (weapon.getName().equals("Gambling Blade")) {
-            Random rand = new Random();
             int chance = rand.nextInt(150) - 25;
             this.health -= (chance - this.armor.getResistance());
         } else {
-            if ((weapon.getDamages() - this.armor.getResistance()) > 2) {
-                this.health -= (weapon.getDamages() - this.armor.getResistance());
+            int damageAfterArmor = weapon.getDamages() - this.armor.getResistance();
+            if (damageAfterArmor > 2) {
+                this.health -= damageAfterArmor;
             } else {
                 this.health -= 2;
             }
