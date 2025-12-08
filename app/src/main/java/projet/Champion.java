@@ -1,10 +1,17 @@
 package projet;
 
+/* IMPORTS */
+
 import java.util.Random;
+
+/* GAME CLASSES */
 
 import projet.armor.Armor;
 import projet.weapon.Weapon;
 
+/**
+ * The base class for all champions (players and enemies).
+ */
 public abstract class Champion {
     private String name;
     private int health;
@@ -66,6 +73,11 @@ public abstract class Champion {
         return baseHealth;
     }
 
+    /**
+     * Inflicts damage to the champion based on the weapon used.
+     *
+     * @param weapon The weapon used to inflict damage.
+     */
     public void takeDamage(Weapon weapon) {
         if (weapon.getName().equals("Gambling Blade")) {
             Random rand = new Random();
@@ -80,6 +92,11 @@ public abstract class Champion {
         }
     }
 
+    /**
+     * Gets the champion's movement speed.
+     *
+     * @return The movement speed, calculated based on weapon attack speed and armor weight.
+     */
     public int getMoveSpeed() {
         return this.weapon.getAttackSpeed() / (this.armor.getWeight() / 10);
     }

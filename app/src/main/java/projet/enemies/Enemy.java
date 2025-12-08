@@ -1,9 +1,12 @@
 package projet.enemies;
 
+/* GAME CLASSES */
+
 import projet.Champion;
 import projet.armor.Armor;
 import projet.weapon.Weapon;
 
+/** Abstract class representing an enemy. */
 public abstract class Enemy extends Champion {
     private int xpReward;
 

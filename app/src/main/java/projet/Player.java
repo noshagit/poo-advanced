@@ -1,10 +1,18 @@
 package projet;
 
+/* IMPORTS */
+
+import java.util.Scanner;
+
+/* GAME CLASSES */
+
 import projet.armor.Armor;
 import projet.potions.Potion;
 import projet.weapon.Weapon;
-import java.util.Scanner;
 
+/**
+ * The player class representing the user in the game.
+ */
 public class Player extends Champion {
     private int xp;
     private int level;
@@ -31,6 +39,11 @@ public class Player extends Champion {
         return maxHealth;
     }
 
+    /**
+     * Increases the player's experience points and handles leveling up.
+     * @param xpGained The amount of experience points gained.
+     * @param scanner The scanner to read user input.
+     */
     public void gainXp(int xpGained, Scanner scanner) {
         float actualXp = xpGained / Math.min(((float) level / 10), 1);
         this.xp += (int) actualXp;
@@ -41,13 +54,13 @@ public class Player extends Champion {
             System.out.println("1. Increase your max health by 10 \n2. Heal 40 health points.\nWould you like to : ");
             int choice = scanner.nextInt();
 
-            switch (choice){
-                case 1 :
+            switch (choice) {
+                case 1:
                     this.maxHealth += 10;
                     this.setHealth(this.getHealth() + 10);
                     System.out.println("Your max health increased to " + this.maxHealth);
                     break;
-                case 2 :
+                case 2:
                     this.setHealth(Math.min(this.getHealth() + 40, this.maxHealth));
                     System.out.println("You healed 40 health points. Current health: " + this.getHealth());
             }
@@ -58,12 +71,101 @@ public class Player extends Champion {
         return inventory;
     }
 
+    /**
+     * Checks and displays the contents of the player's inventory with input options.
+     */
+    public void checkInventory() {
+        Scanner scanner = new Scanner(System.in);
+        boolean back = false;
+        while (!back) {
+            System.out.println("What would you like to see?");
+            System.out.println("1. Potions");
+            System.out.println("2. Weapons");
+            System.out.println("3. Armors");
+            System.out.println("4. Back");
+            System.out.print("> ");
+
+            int choice;
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+            } else {
+                scanner.nextLine();
+                System.out.println("Invalid input.");
+                continue;
+            }
+
+            switch (choice) {
+                case 1: {
+                    if (inventory.getPotions().isEmpty()) {
+                        System.out.println("You don't have any potions in your backpack");
+                    } else {
+                        int healthCount = 0;
+                        int gamblingCount = 0;
+                        for (Potion p : inventory.getPotions()) {
+                            String name = p.getName();
+                            if ("Health Potion".equals(name)) {
+                                healthCount++;
+                            } else if ("Gambling Potion".equals(name)) {
+                                gamblingCount++;
+                            }
+                        }
+                        System.out.println("Potions:");
+                        System.out.println("  Health Potion: " + healthCount);
+                        System.out.println("  Gambling Potion: " + gamblingCount);
+                    }
+                    System.out.println("Press Enter to return to the menu...");
+                    scanner.nextLine();
+                    break;
+                }
+                case 2: {
+                    System.out.println("Weapons:");
+                    if (inventory.getWeapons().isEmpty()) {
+                        System.out.println("You don't have any weapons in your backpack");
+                    } else {
+                        inventory.getWeapons().forEach(weapon -> System.out.println("  - " + weapon.getName()));
+                    }
+                    System.out.println("Press Enter to return to the menu...");
+                    scanner.nextLine();
+                    break;
+                }
+                case 3: {
+                    System.out.println("Armors:");
+                    if (inventory.getArmors().isEmpty()) {
+                        System.out.println("You don't have any armors in your backpack");
+                    } else {
+                        inventory.getArmors().forEach(armor -> System.out.println("  - " + armor.getName()));
+                    }
+                    System.out.println("Press Enter to return to the menu...");
+                    scanner.nextLine();
+                    break;
+                }
+                case 4:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+
+    /**
+     * Uses a potion from the inventory.
+     *
+     * @param potion The potion to use.
+     */
     public void usePotion(Potion potion) {
         if (this.inventory.getPotions().contains(potion)) {
             potion.use(this);
         }
     }
 
+    /**
+     * Checks if the player has a specific potion in their inventory.
+     *
+     * @param potionName The name of the potion to check for.
+     * @return True if the potion is found, false otherwise.
+     */
     public boolean hasPotion(String potionName) {
         for (Potion p : this.inventory.getPotions()) {
             if (p.getName().equals(potionName)) {

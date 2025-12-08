@@ -1,8 +1,18 @@
 package projet;
 
+/* GAME CLASSES */
+
 import projet.weapon.Weapon;
 
+/**
+ * The class responsible for handling fights between champions.
+ */
 public class Fight {
+    /**
+     * Executes an attack sequence between two champions.
+     * @param attacker The champion who is attacking. ( The player )
+     * @param defender The champion who is defending. ( The monster )
+     */
     public void attack(Champion attacker, Champion defender) {
         Weapon attackerWeapon = attacker.getWeapon();
         Weapon defenderWeapon = defender.getWeapon();

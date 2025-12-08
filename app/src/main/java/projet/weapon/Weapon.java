@@ -32,6 +32,9 @@ public class Weapon{
         return level;
     }
 
+    /**
+     * Increases the weapon's experience points and levels up if necessary.
+     */
     public void gainXp(){
         this.xp += 10;
         if (this.xp >= 100){

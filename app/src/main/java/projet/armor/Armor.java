@@ -1,5 +1,6 @@
 package projet.armor;
 
+/** Class representing armor equipment. */
 public class Armor {
     private String name;
     private int resistance;

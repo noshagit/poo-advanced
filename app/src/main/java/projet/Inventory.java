@@ -1,12 +1,15 @@
 package projet;
 
+/* IMPORTS */
+
 import java.util.List;
+import java.util.ArrayList;
+
+/* GAME CLASSES */
 
 import projet.potions.Potion;
 import projet.armor.Armor;
 import projet.weapon.Weapon;
-
-import java.util.ArrayList;
 
 public class Inventory {
     private final List<Potion> potions;
@@ -53,22 +56,5 @@ public class Inventory {
 
     public void removeArmor(Armor armor) {
         this.armors.remove(armor);
-    }
-
-    public void listInventory() {
-        System.out.println("Potions:");
-        for (Potion potion : potions) {
-            System.out.println("- " + potion.getName() + "\n");
-        }
-
-        System.out.println("Weapons:");
-        for (Weapon weapon : weapons) {
-            System.out.println("- " + weapon.getName() + "\n");
-        }
-
-        System.out.println("Armors:");
-        for (Armor armor : armors) {
-            System.out.println("- " + armor.getName());
-        }
     }
 }

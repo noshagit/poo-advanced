@@ -1,7 +1,10 @@
 package projet.potions;
 
+/* GAME CLASSES */
+
 import projet.Player;
 
+/** Abstract class representing a potion. */
 public abstract class Potion {
     private String name;
 
@@ -14,5 +17,4 @@ public abstract class Potion {
     }
 
     public abstract void use(Player player);
-
 }

@@ -1,16 +1,21 @@
 package projet.potions;
 
+/* IMPORTS */
+
 import java.util.Random;
+
+/* GAME CLASSES */
 
 import projet.Player;
 import projet.weapon.Weapon;
 
+/** Class representing a gambling potion. */
 public class GamblingPotion extends Potion {
 
     public GamblingPotion() {
         super("Gambling Potion");
     }
-
+    
     @Override
     public void use(Player player) {
         Random rand = new Random();

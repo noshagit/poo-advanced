@@ -1,7 +1,10 @@
 package projet.potions;
 
+/* GAME CLASSES */
+
 import projet.Player;
 
+/** Class representing a health potion. */
 public class HealthPotion extends Potion {
 
     public HealthPotion() {

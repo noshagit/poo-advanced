@@ -1,16 +1,29 @@
 package projet;
 
+/* IMPORTS */
+
 import java.util.Random;
 import java.util.Scanner;
+
+/* GAME CLASSES */
 
 import projet.armor.*;
 import projet.weapon.*;
 import projet.enemies.*;
 import projet.potions.*;
 
+/**
+ * The main application class for the game.
+ */
 public class App {
-
     public static void main(String[] args) {
+        gameLoop();
+    }
+
+    /**
+     * The main game loop handling player actions and enemy encounters.
+     */
+    public static void gameLoop() {
         boolean revival = true;
 
         Enemy goblin = new Goblin();
@@ -68,10 +81,53 @@ public class App {
                     System.out.println("\nEnd of battles. " + player.getName() + " survives with " + player.getHealth()
                             + " health points.");
                 }
+
+                AfterFight(player);
             }
         }
     }
 
+    /**
+     * AfterFight handles the actions a player can take after a fight.
+     * 
+     * @param player The player who has just fought.
+     */
+    public static void AfterFight(Player player) {
+        System.out.println("1. check my inventory\n2. continue fighting\n3. Leave the game\nChoose an action: ");
+        Scanner scanner = new Scanner(System.in);
+        String actionChoice = scanner.nextLine();
+
+        while (!"2".equals(actionChoice)) {
+            if ("1".equals(actionChoice)) {
+                player.checkInventory();
+            } else if ("3".equals(actionChoice)) {
+                while (true) {
+                    System.out.print("Are you sure? There is no save option. (y/n): ");
+                    String confirmation = scanner.nextLine().trim();
+                    if ("y".equalsIgnoreCase(confirmation)) {
+                        System.out.println("Exiting game...");
+                        System.exit(0);
+                    } else if ("n".equalsIgnoreCase(confirmation)) {
+                        break;
+                    } else {
+                        System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                    }
+                }
+            } else {
+                System.out.println("Invalid choice. Please choose again.");
+            }
+
+            System.out.println("1. check my inventory\n2. continue fighting\n3. Leave the game\nChoose an action: ");
+            actionChoice = scanner.nextLine();
+        }
+    }
+
+    /**
+     * createPlayer handles the creation of a new player.
+     * 
+     * @param scanner The scanner to read user input.
+     * @return The created Player object.
+     */
     public static Player createPlayer(Scanner scanner) {
         System.out.print("Enter username: ");
         String userName = scanner.nextLine();
@@ -130,23 +186,28 @@ public class App {
         return new Player(userName, 100, playerWeapon, playerArmor);
     }
 
+    /**
+     * randEnemy selects a random enemy based on the player's level.
+     * 
+     * @param player  The player whose level is considered.
+     * @param enemies The array of possible enemies.
+     * @param rand    The random number generator.
+     * @return A randomly selected enemy.
+     */
     public static Enemy randEnemy(Player player, Enemy[] enemies, Random rand) {
         int lvl = player.getLevel();
         double r = rand.nextDouble();
         if (lvl < 5) {
             return enemies[0];
-        }
-        else if (lvl < 10) {
+        } else if (lvl < 10) {
             return rand.nextBoolean() ? enemies[0] : enemies[1];
-        }
-        else if (lvl < 20) {
+        } else if (lvl < 20) {
             if (r < 0.75) {
                 return rand.nextBoolean() ? enemies[0] : enemies[1];
             } else {
                 return enemies[2];
             }
-        }
-        else {
+        } else {
             if (r < 0.70) {
                 return rand.nextBoolean() ? enemies[0] : enemies[1];
             } else if (r < 0.95) {
@@ -157,10 +218,20 @@ public class App {
         }
     }
 
+    /**
+     * chooseAction allows the player to choose an action during a fight.
+     * 
+     * @param player  The player who is fighting.
+     * @param enemy   The enemy being fought.
+     * @param fight   The fight instance.
+     * @param scanner The scanner for user input.
+     * @return true if the action was successful, false otherwise.
+     */
     public static boolean chooseAction(Player player, Enemy enemy, Fight fight, Scanner scanner) {
         System.out.print("1. Attack \n2. Use Potion \n3. Display statistics \nChoose an action: ");
 
         String action = scanner.nextLine().trim();
+        System.out.println();
         switch (action) {
             case "1":
                 fight.attack(player, enemy);
@@ -173,6 +244,7 @@ public class App {
 
                 if (potions == null || potions.isEmpty()) {
                     System.out.println("No potions available");
+                    return true;
                 } else {
                     for (int i = 0; i < potions.size(); i++) {
                         Potion p = potions.get(i);
@@ -184,33 +256,41 @@ public class App {
                     }
                     System.out.println("Total Health Potion: " + healthCount + " | Total Gambling Potion: "
                             + gamblingCount);
-                    System.out.print("Choose a potion (name or index): ");
-                    String potionChoice = scanner.nextLine().trim();
+                    System.out.println("Choose a potion by name or index, or enter 'b' to go back:");
 
-                    Potion selectedPotion = null;
-                    for (Potion p : potions) {
-                        if (p.getName().equalsIgnoreCase(potionChoice)) {
-                            selectedPotion = p;
-                            break;
-                        }
-                    }
-
-                    if (selectedPotion == null) {
-                        try {
-                            int index = Integer.parseInt(potionChoice);
-                            if (index >= 1 && index <= potions.size()) {
-                                selectedPotion = potions.get(index - 1);
-                            } else {
-                                System.out.println("Invalid index.");
-                                return true;
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println("Invalid potion name.");
+                    while (true) {
+                        String potionChoice = scanner.nextLine().trim();
+                        if (potionChoice.equalsIgnoreCase("b") || potionChoice.equalsIgnoreCase("back")) {
                             return true;
                         }
+
+                        Potion selectedPotion = null;
+                        for (Potion p : potions) {
+                            if (p.getName().equalsIgnoreCase(potionChoice)) {
+                                selectedPotion = p;
+                                break;
+                            }
+                        }
+
+                        if (selectedPotion == null) {
+                            try {
+                                int index = Integer.parseInt(potionChoice);
+                                if (index >= 1 && index <= potions.size()) {
+                                    selectedPotion = potions.get(index - 1);
+                                } else {
+                                    System.out.println("Invalid index. Try again or enter 'b' to go back:");
+                                    continue;
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid potion name. Try again or enter 'b' to go back:");
+                                continue;
+                            }
+                        }
+
+                        player.usePotion(selectedPotion);
+                        player.getInventory().removePotion(selectedPotion);
+                        break;
                     }
-                    player.usePotion(selectedPotion);
-                    player.getInventory().removePotion(selectedPotion);
                 }
                 break;
             case "3":
@@ -225,9 +305,16 @@ public class App {
                 System.out.println("Invalid action, try again.");
                 return true;
         }
+        System.out.println();
         return false;
     }
 
+    /**
+     * defeatEnemy handles the actions to take when an enemy is defeated.
+     * @param enemy The enemy that was defeated.
+     * @param player The player who defeated the enemy.
+     * @param scanner The scanner to read user input.
+     */
     public static void defeatEnemy(Enemy enemy, Player player, Scanner scanner) {
         System.out.println("\nYou defeated " + enemy.getName() + "!");
         player.gainXp(enemy.getXpReward(), scanner);
