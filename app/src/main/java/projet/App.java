@@ -7,26 +7,10 @@ package projet;
 import java.util.Random;
 import java.util.Scanner;
 
-import projet.armor.Armor;
-import projet.armor.IronArmour;
-import projet.armor.Naked;
-import projet.armor.WoodenArmour;
-import projet.enemies.Enemy;
-import projet.enemies.Goblin;
-import projet.enemies.Minotaur;
-import projet.enemies.Orc;
-import projet.enemies.Reaper;
-import projet.enemies.Skeleton;
-import projet.enemies.Slime;
-import projet.enemies.StoneGolem;
-import projet.enemies.Troll;
-import projet.potions.GamblingPotion;
-import projet.potions.HealthPotion;
-import projet.potions.Potion;
-import projet.weapon.Axe;
-import projet.weapon.Fist;
-import projet.weapon.Sword;
-import projet.weapon.Weapon;
+import projet.potions.*;
+import projet.armor.*;
+import projet.enemies.*;
+import projet.weapon.*;
 
 /**
  * The main application class for the game.
@@ -443,7 +427,7 @@ public class App {
         System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel());
         System.out.println();
 
-        NewPotion(player);
+        NewPotion(player, enemy);
 
         NewWeapon(player, enemy, scanner);
 
@@ -455,15 +439,65 @@ public class App {
      * 
      * @param player The player to receive the potion.
      */
-    public static void NewPotion(Player player) {
+    public static void NewPotion(Player player, Enemy enemy) {
         Random randpotion = new Random();
         int newPotion = randpotion.nextInt(100);
-        if (newPotion < 40) {
+        if (newPotion < 30) {
             System.out.println("You found a health potion!");
             player.getInventory().addPotion(new HealthPotion());
-        } else if (newPotion >= 40 && newPotion < 60) {
+        } else if (newPotion >= 30 && newPotion < 50) {
             System.out.println("You found a gambling potion");
             player.getInventory().addPotion(new GamblingPotion());
+        } else if (newPotion >= 50 && newPotion < 70) {
+            System.out
+                    .println("You found a critical potion and a health potion!");
+            player.getInventory().addPotion(new CriticalPotion());
+            player.getInventory().addPotion(new HealthPotion());
+        }
+
+        switch (enemy.getName()) {
+            case "Skeleton" -> {
+                if (newPotion < 30) {
+                    System.out.println("You found a bone skin potion!");
+                    player.getInventory().addPotion(new BoneSkinPotion());
+                }
+            }
+            case "Minotaur" -> {
+                if (newPotion < 15) {
+                    System.out.println("You found a Labyrinth Mighty Soup!");
+                    player.getInventory().addPotion(new LabyrintheMightySoup());
+                }
+            }
+            case "Slime" -> {
+                if (newPotion < 30) {
+                    System.out.println("You found a Slime Pudding!");
+                    player.getInventory().addPotion(new SlimePudding());
+                }
+            }
+            // case "Goblin" -> {
+            //     if (newPotion < 20) {
+            //         System.out.println("You found a !");
+            //         player.getInventory().addPotion(new ());
+            //     }
+            // }
+            case "Orc" -> {
+                if (newPotion < 20) {
+                    System.out.println("You found a Berserk Potion!");
+                    player.getInventory().addPotion(new BerserkPotion());
+                }
+            }
+            // case "Troll" -> {
+            //     if (newPotion < 15) {
+            //         System.out.println("You found a ");
+            //         player.getInventory().addPotion(new ());
+            //     }
+            // }
+            case "Reaper" -> {
+                if (newPotion < 25) {
+                    System.out.println("You found a Soul Elixir!");
+                    player.getInventory().addPotion(new SoulElixir());
+                }
+            }
         }
         System.out.println();
     }

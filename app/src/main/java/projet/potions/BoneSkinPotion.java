@@ -6,7 +6,6 @@ import projet.Player;
 
 /** Class representing a BoneSkinPotion potion. */
 public class BoneSkinPotion extends Potion {
-
     public BoneSkinPotion() {
         super("Bone Skin");
     }
