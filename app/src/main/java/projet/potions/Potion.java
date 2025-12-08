@@ -1,5 +1,7 @@
 package projet.potions;
 
+/* TODO : Add more potion types */
+
 /* GAME CLASSES */
 
 import projet.Player;

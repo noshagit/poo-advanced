@@ -1,79 +1,125 @@
-# Projet Fil Rouge : \<Votre Projet\>
+# Projet Fil Rouge — Jeu Java (Console)
 
 > **Auteurs :**
 >
->   * [Nom Prénom Etudiant 1]
->   * [Nom Prénom Etudiant 2]
->   * [Nom Prénom Etudiant 3]
+>  - VIGNE Nathaël
+>  - LUCIEN-REINETTE Quentin
+>  - BEN HAMOU Ilian
 >
-> **Date :** [Date de rendu]
+> **Date :** 15/12/2025
 
------
+---
 
-## 📝 Description du Projet
+## 📝 Description
 
-Ce projet est une implémentation du célèbre jeu du **Morpion** (Tic-Tac-Toe) réalisée dans le cadre du module de Programmation Orientée Objet Avancée.
+Jeu d'aventure-console développé en Java. Le joueur incarne un Champion qui peut équiper des armes et armures, gérer un inventaire, affronter des ennemis et gagner de l'expérience. Le coeur du gameplay repose sur les classes : `Champion`, `Player`, `Weapon`, `Armor`, `Inventory` et `Fight`.
 
------
+Le projet est conçu pour la programmation orientée objet avancée (POOA) : modularité, gestion d'inventaire, niveaux et progression d'armes.
 
-## 🏗️ Architecture et Conception (POOA)
+---
 
-Cette section détaille les choix techniques qui justifient l'aspect "Avancé" de la programmation.
+## 🏗️ Architecture et Conception
 
-### 1\. Architecture Globale
+- Langage : Java (Gradle)
+- Build : Gradle (wrapper fourni)
+- Entrées : console (Scanner)
 
-```plantuml
-@startuml
-' Diagramme de classes
-@enduml
-```
+Principales responsabilités :
+- `Champion` : structure de base pour tout combattant (vie, moveSpeed, armes, armures)
+- `Player` : extension de `Champion` avec inventaire et gestion de niveau
+- `Weapon` / `Armor` : objets équipables avec expérience et niveaux
+- `Inventory` : stockage des armes, armures et potions
+- `Fight` : logique de combat entre champions
 
+Design notes : le code favorise la séparation des responsabilités et la testabilité unitaire.
 
-### 2\. Design Patterns utilisés
-
-Voici les patrons de conception mis en œuvre pour répondre aux exigences de flexibilité :
-
-
------
+---
 
 ## ✨ Fonctionnalités
 
-  - [x] Grille de jeu standard (3x3).
-  - [ ] Grille de taille variable (NxN).
+- Gestion d'un inventaire (armes, armures, potions)
+- Échange (swap) d'équipement entre personnage et inventaire
+- Combat entre le joueur et des ennemis avec logique de vitesse et d'attaques
+- Progression d'armes (XP / niveau)
 
------
+---
 
-## 🚀 Installation et Lancement
+## 🚀 Prérequis
 
-Ce projet utilise **Gradle** pour la gestion des dépendances et la compilation.
+- JDK 17 ou supérieur (recommandé JDK 21)
+- Git (optionnel)
 
-### Prérequis
+---
 
-  * JDK 21 ou supérieur.
-  * Git.
+## 🚀 Installer et Lancer
 
-### Cloner le projet
+Le projet utilise le wrapper Gradle fourni (`gradlew` / `gradlew.bat`). Ouvrez un terminal à la racine du projet.
 
-### Lancer le Projet (Console / GUI)
+Sur Windows (PowerShell / cmd) :
 
+- Construire le projet :
 
+  .\gradlew.bat build
 
-### Lancer les tests unitaires
+- Lancer les tests unitaires :
 
+  .\gradlew.bat test
 
------
+- Lancer l'application (si la tâche `run` est configurée) :
 
-## 📂 Structure du Projet
+  .\gradlew.bat run
+
+Si `run` n'est pas disponible, vous pouvez exécuter l'artifact JAR généré :
+
+- Trouvez le JAR dans `build/libs/` puis :
+
+  java -jar build\libs\<nom-du-jar>.jar
+
+---
+
+## 🧪 Tests
+
+Les tests unitaires se trouvent sous `src/test/java`. Lancez :
+
+  .\gradlew.bat test
+
+Les rapports sont générés dans `build/reports/tests/`.
+
+---
+
+## 📂 Structure du projet
 
 ```
 src
 ├── main
-...
+│   └── java
+│       └── projet
+│           ├── App.java
+│           ├── Champion.java
+│           ├── Player.java
+│           ├── Fight.java
+│           ├── Inventory.java
+│           ├── weapon/
+│           ├── armor/
+│           └── enemies/
+└── test
 ```
 
------
+---
 
-## 🛠️ Difficultés Rencontrées et Améliorations
+## 🛠️ Améliorations prévues
 
+- Implémenter les chances de coup critique
+- Ajouter un système de sauvegarde / chargement
+- Améliorer la logique d'IA des ennemis
+- Interface graphique (optionnelle)
 
-## Méthodologie et Outils Utilisés
+---
+
+## Contribution
+
+Forkez le repo, créez une branche feature et ouvrez une pull request. Respectez les conventions de nommage et commentez vos modifications.
+
+---
+
+Bonne exploration !

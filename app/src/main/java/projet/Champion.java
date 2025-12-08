@@ -17,7 +17,6 @@ public abstract class Champion {
     private int health;
     private Weapon weapon;
     private Armor armor;
-    private final Weapon oldWeapon;
     private final int baseHealth;
 
     public Champion(String name, int health, Weapon weapon, Armor armor) {
@@ -25,12 +24,7 @@ public abstract class Champion {
         this.health = health;
         this.baseHealth = health;
         this.weapon = weapon;
-        this.oldWeapon = weapon;
         this.armor = armor;
-    }
-
-    public Weapon getOldWeapon() {
-        return oldWeapon;
     }
 
     public String getName() {

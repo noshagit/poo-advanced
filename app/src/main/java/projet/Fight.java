@@ -1,5 +1,7 @@
 package projet;
 
+/* TODO : Critical strike chances implementation */
+
 /* GAME CLASSES */
 
 import projet.weapon.Weapon;
@@ -25,6 +27,5 @@ public class Fight {
             attacker.takeDamage(defenderWeapon);
         }
         attackerWeapon.gainXp();
-        System.out.println(attackerWeapon.getXp() + ", " + attackerWeapon.getLevel() + " , " + attackerWeapon.getDamages());
     }
 }

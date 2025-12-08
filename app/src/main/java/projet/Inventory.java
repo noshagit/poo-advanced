@@ -1,5 +1,7 @@
 package projet;
 
+/* TODO : Limited inventory space */
+
 /* IMPORTS */
 
 import java.util.List;

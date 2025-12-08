@@ -1,5 +1,7 @@
 package projet;
 
+/* TODO : Modify randEnemy with new enemies selection logic */
+
 /* IMPORTS */
 
 import java.util.Random;
@@ -36,10 +38,16 @@ public class App {
         Player player = createPlayer(scanner);
         Fight fight = new Fight();
 
+        System.out.println("Welcome " + player.getName() + "! Let the battles begin!");
+        System.out.println();
+        System.out.println("============================");
+        System.out.println();
+
         while (true) {
             java.util.Random rand = new java.util.Random();
 
             while (player.getHealth() > 0) {
+                int fightCount = 0;
                 Enemy enemy;
 
                 enemy = randEnemy(player, enemies, rand);
@@ -48,7 +56,8 @@ public class App {
                     e.resetHealth();
                 }
 
-                System.out.println("\n--- New fight: " + enemy.getName() + " ---");
+                System.out.println("\n--- Fight number " + ++fightCount + ": " + enemy.getName() + " ---");
+                System.out.println();
 
                 while (player.getHealth() > 0 && enemy.getHealth() > 0) {
 
@@ -56,17 +65,25 @@ public class App {
                     if (skip) {
                         continue;
                     }
+                    System.out.println("============================");
+                    System.out.println();
 
-                    System.out.println("After the exchange: " + player.getName() + " Health = " + player.getHealth()
+                    System.out.println("After the exchange: " + player.getName() + "'s Health = " + player.getHealth()
                             + " | " + enemy.getName() + " Health = " + enemy.getHealth());
+
+                    System.out.println();
+                    System.out.println("============================");
+                    System.out.println();
 
                     if (player.getHealth() <= 0) {
                         if (revival == true) {
                             System.out.println("You have been given a second chance !");
+                            System.out.println();
                             player.setHealth(player.getBaseHealth() / 2);
                             revival = false;
                         } else {
                             System.out.println("\nYou are dead. Game over.");
+                            System.out.println();
                             scanner.close();
                             return;
                         }
@@ -74,15 +91,21 @@ public class App {
 
                     if (enemy.getHealth() <= 0) {
                         defeatEnemy(enemy, player, scanner);
+                        System.out.println();
                     }
                 }
 
                 if (player.getHealth() > 0) {
                     System.out.println("\nEnd of battles. " + player.getName() + " survives with " + player.getHealth()
                             + " health points.");
+                    System.out.println();
                 }
 
+                System.out.println();
                 AfterFight(player);
+                System.out.println();
+                fightCount++;
+                player.setWeapon(player.getOldWeapon());
             }
         }
     }
@@ -93,15 +116,18 @@ public class App {
      * @param player The player who has just fought.
      */
     public static void AfterFight(Player player) {
-        System.out.println("1. check my inventory\n2. continue fighting\n3. Leave the game\nChoose an action: ");
+        System.out.println("1. continue fighting\n2. check my inventory\n3. Leave the game\nChoose an action: ");
+        System.out.print("> ");
         Scanner scanner = new Scanner(System.in);
         String actionChoice = scanner.nextLine();
 
-        while (!"2".equals(actionChoice)) {
-            if ("1".equals(actionChoice)) {
+        while (!"1".equals(actionChoice)) {
+            if ("2".equals(actionChoice)) {
+                System.out.println();
                 player.checkInventory();
             } else if ("3".equals(actionChoice)) {
                 while (true) {
+                    System.out.println();
                     System.out.print("Are you sure? There is no save option. (y/n): ");
                     String confirmation = scanner.nextLine().trim();
                     if ("y".equalsIgnoreCase(confirmation)) {
@@ -116,9 +142,10 @@ public class App {
             } else {
                 System.out.println("Invalid choice. Please choose again.");
             }
-
-            System.out.println("1. check my inventory\n2. continue fighting\n3. Leave the game\nChoose an action: ");
+            System.out.println("1. continue fighting\n2. check my inventory\n3. Leave the game\nChoose an action: ");
+            System.out.print("> ");
             actionChoice = scanner.nextLine();
+            System.out.println();
         }
     }
 
@@ -129,23 +156,39 @@ public class App {
      * @return The created Player object.
      */
     public static Player createPlayer(Scanner scanner) {
-        System.out.print("Enter username: ");
+        System.out.println();
+        System.out.println();
+        System.out.println("============================");
+        System.out.println();
+        System.out.println("Enter username: ");
+        System.out.print("> ");
         String userName = scanner.nextLine();
+        System.out.println();
 
         while (userName.isEmpty()) {
-            System.out.print("Username cannot be empty. Enter username: ");
+            System.out.println("Username cannot be empty. Enter username: ");
+            System.out.print("> ");
             userName = scanner.nextLine();
+            System.out.println();
         }
 
-        System.out.print("1. Fist \n2. Sword \n3. Axe \nEnter weapon choice: ");
-        String weaponChoice = scanner.nextLine();
+        System.out.println("============================");
+        System.out.println();
+        System.out.println("Choose your weapon:");
+        System.out.println();
+        System.out.println("1. Fist \n2. Sword \n3. Axe");
+        System.out.print("> ");
 
+        String weaponChoice = scanner.nextLine();
         int weaponChoiceInt = Integer.parseInt(weaponChoice);
+        System.out.println();
 
         while ((weaponChoiceInt < 1 || weaponChoiceInt > 3)) {
-            System.out.print("Invalid weapon choice. Enter weapon choice (1. Fist, 2. Sword, 3. Axe): ");
+            System.out.println("Invalid weapon choice. Enter weapon choice (1. Fist, 2. Sword, 3. Axe): ");
+            System.out.print("> ");
             weaponChoice = scanner.nextLine();
             weaponChoiceInt = Integer.parseInt(weaponChoice);
+            System.out.println();
         }
 
         Weapon playerWeapon = new Fist();
@@ -160,16 +203,24 @@ public class App {
                 playerWeapon = new Axe();
         }
 
-        System.out.print("1. Naked \n2. WoodenArmour \n3. IronArmour: \nChoose your armor:");
+        System.out.println("============================");
+        System.out.println();
+        System.out.println("Choose your armor:");
+        System.out.println();
+        System.out.println("1. Naked \n2. WoodenArmour \n3. IronArmour");
+        System.out.print("> ");
 
         String armorChoice = scanner.nextLine();
         int armorChoiceInt = Integer.parseInt(armorChoice);
+        System.out.println();
 
         while (armorChoiceInt < 1 || armorChoiceInt > 3) {
-            System.out.print(
+            System.out.println(
                     "Invalid armor choice. Choose your armor: \n 1. Naked \n 2. WoodenArmour \n 3. IronArmour: ");
+            System.out.print("> ");
             armorChoice = scanner.nextLine();
             armorChoiceInt = Integer.parseInt(armorChoice);
+            System.out.println();
         }
 
         Armor playerArmor = new Naked();
@@ -183,6 +234,11 @@ public class App {
             case 3:
                 playerArmor = new IronArmour();
         }
+
+        System.out.println();
+        System.out.println("============================");
+        System.out.println();
+
         return new Player(userName, 100, playerWeapon, playerArmor);
     }
 
@@ -228,24 +284,35 @@ public class App {
      * @return true if the action was successful, false otherwise.
      */
     public static boolean chooseAction(Player player, Enemy enemy, Fight fight, Scanner scanner) {
-        System.out.print("1. Attack \n2. Use Potion \n3. Display statistics \nChoose an action: ");
+        System.out.println("1. Attack \n2. Use Potion \n3. Display statistics \nChoose an action: ");
+        System.out.print("> ");
 
         String action = scanner.nextLine().trim();
         System.out.println();
+
         switch (action) {
             case "1":
                 fight.attack(player, enemy);
                 break;
             case "2":
+                System.out.println();
+                System.out.println("============================");
+                System.out.println();
                 System.out.println("Your pockets: ");
                 java.util.List<Potion> potions = player.getInventory().getPotions();
                 int healthCount = 0;
                 int gamblingCount = 0;
-
                 if (potions == null || potions.isEmpty()) {
+
                     System.out.println("No potions available");
+                    System.out.println();
+                    System.out.println("============================");
+                    System.out.println();
                     return true;
                 } else {
+                    System.out.println();
+                    System.out.println("============================");
+                    System.out.println();
                     for (int i = 0; i < potions.size(); i++) {
                         Potion p = potions.get(i);
                         if ("Health Potion".equals(p.getName())) {
@@ -257,6 +324,8 @@ public class App {
                     System.out.println("Total Health Potion: " + healthCount + " | Total Gambling Potion: "
                             + gamblingCount);
                     System.out.println("Choose a potion by name or index, or enter 'b' to go back:");
+                    System.out.print("> ");
+                    System.out.println();
 
                     while (true) {
                         String potionChoice = scanner.nextLine().trim();
@@ -279,6 +348,8 @@ public class App {
                                     selectedPotion = potions.get(index - 1);
                                 } else {
                                     System.out.println("Invalid index. Try again or enter 'b' to go back:");
+                                    System.out.print("> ");
+                                    System.out.println();
                                     continue;
                                 }
                             } catch (NumberFormatException e) {
@@ -289,49 +360,140 @@ public class App {
 
                         player.usePotion(selectedPotion);
                         player.getInventory().removePotion(selectedPotion);
+
+                        System.out.println();
+                        System.out.println("============================");
+                        System.out.println();
+
                         break;
                     }
                 }
                 break;
             case "3":
+                System.out.println("============================");
+                System.out.println();
                 System.out.println(player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: "
                         + player.getHealth() + " | Weapon: "
                         + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
                         + player.getXp() + " | Level: " + player.getLevel());
                 System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "
                         + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName());
+                System.out.println();
+                System.out.println("============================");
+                System.out.println();
                 return true;
             default:
                 System.out.println("Invalid action, try again.");
                 return true;
         }
-        System.out.println();
         return false;
     }
 
     /**
      * defeatEnemy handles the actions to take when an enemy is defeated.
-     * @param enemy The enemy that was defeated.
-     * @param player The player who defeated the enemy.
+     * 
+     * @param enemy   The enemy that was defeated.
+     * @param player  The player who defeated the enemy.
      * @param scanner The scanner to read user input.
      */
     public static void defeatEnemy(Enemy enemy, Player player, Scanner scanner) {
         System.out.println("\nYou defeated " + enemy.getName() + "!");
         player.gainXp(enemy.getXpReward(), scanner);
         System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel());
+        System.out.println();
+
+        NewPotion(player);
+
+        NewWeapon(player, enemy);
+
+        // NewArmor(player, enemy);
+    }
+
+    /**
+     * NewPotion randomly gives the player a new potion after defeating an enemy.
+     * 
+     * @param player The player to receive the potion.
+     */
+    public static void NewPotion(Player player) {
         Random randpotion = new Random();
         int newPotion = randpotion.nextInt(100);
-
         if (newPotion < 40) {
             System.out.println("You found a health potion!");
             player.getInventory().addPotion(new HealthPotion());
         } else if (newPotion >= 40 && newPotion < 60) {
             System.out.println("You found a gambling potion");
             player.getInventory().addPotion(new GamblingPotion());
-        } else {
-            System.out.println("You found Nothing.");
         }
-
-        player.setWeapon(player.getOldWeapon());
+        System.out.println();
     }
+
+    /**
+     * NewWeapon randomly gives the player a new weapon after defeating an enemy.
+     * 
+     * @param player The player to receive the weapon.
+     * @param enemy  The enemy that was defeated.
+     */
+    public static void NewWeapon(Player player, Enemy enemy) {
+        Random randweapon = new Random();
+        int newWeapon = randweapon.nextInt(100);
+
+        if (newWeapon < 20) {
+            Weapon droppedWeapon = enemy.getWeapon();
+            System.out.println("The enemy dropped a " + droppedWeapon.getName() + "!");
+            System.out.println("Do you want to take it? (y/n): ");
+            System.out.print("> ");
+            Scanner scanner = new Scanner(System.in);
+            String choice;
+            while (true) {
+                choice = scanner.nextLine().trim();
+                if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
+                    break;
+                }
+                System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                System.out.print("> ");
+            }
+            System.out.println();
+
+            if (choice.equalsIgnoreCase("y")) {
+                player.getInventory().addWeapon(droppedWeapon);
+                System.out.println("You put the " + droppedWeapon.getName() + " in your inventory.");
+            }
+        }
+        System.out.println();
+    }
+
+    // /**
+    // * NewArmor randomly gives the player a new armor after defeating an enemy.
+    // *
+    // * @param player The player to receive the armor.
+    // * @param enemy The enemy that was defeated.
+    // */
+    // public static void NewArmor(Player player, Enemy enemy) {
+    // Random randarmor = new Random();
+    // int newArmor = randarmor.nextInt(100);
+
+    // if (newArmor < 20) {
+    // Armor droppedArmor = enemy.getArmor();
+    // System.out.println("The enemy dropped a " + droppedArmor.getName() + "!");
+    // System.out.println("Do you want to take it? (y/n): ");
+    // Scanner scanner = new Scanner(System.in);
+    // String choice;
+    // while (true) {
+    // choice = scanner.nextLine().trim();
+    // if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
+    // break;
+    // }
+    // System.out.println("Invalid input. Please enter 'y' or 'n'.");
+    // System.out.print("> ");
+    // }
+    // System.out.println();
+
+    // if (choice.equalsIgnoreCase("y")) {
+    // player.getInventory().addArmor(droppedArmor);
+    // System.out.println("You put the " + droppedArmor.getName() + " in your
+    // inventory.");
+    // }
+    // }
+    // System.out.println();
+    // }
 }
