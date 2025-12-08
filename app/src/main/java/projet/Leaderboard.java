@@ -12,12 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class Leaderboard {
-    private Map<String, Integer> board;
+    private Map<String, Integer> board = new HashMap<>();
     private final String filePath = "leaderboard.json";
-
-    public Leaderboard() {
-        this.board = new HashMap<>();
-    }
 
     public Map<String, Integer> getScores() {
         return this.board;
