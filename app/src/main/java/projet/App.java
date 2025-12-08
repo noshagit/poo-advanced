@@ -113,7 +113,7 @@ public class App {
     /**
      * AfterFight handles the actions a player can take after a fight.
      * 
-     * @param player The player who has just fought.
+     * @param player  The player who has just fought.
      * @param scanner The scanner to read user input.
      */
     public static void AfterFight(Player player, Scanner scanner) {
@@ -407,7 +407,7 @@ public class App {
 
         NewWeapon(player, enemy, scanner);
 
-        NewArmor(player, enemy);
+        NewArmor(player, enemy, scanner);
     }
 
     /**
@@ -431,8 +431,8 @@ public class App {
     /**
      * NewWeapon randomly gives the player a new weapon after defeating an enemy.
      * 
-     * @param player The player to receive the weapon.
-     * @param enemy  The enemy that was defeated.
+     * @param player  The player to receive the weapon.
+     * @param enemy   The enemy that was defeated.
      * @param scanner The scanner to read user input.
      */
     public static void NewWeapon(Player player, Enemy enemy, Scanner scanner) {
@@ -464,36 +464,36 @@ public class App {
     }
 
     /**
-    * NewArmor randomly gives the player a new armor after defeating an enemy.
-    *
-    * @param player The player to receive the armor.
-    * @param enemy The enemy that was defeated.
-    */
-    public static void NewArmor(Player player, Enemy enemy) {
-    Random randarmor = new Random();
-    int newArmor = randarmor.nextInt(100);
+     * NewArmor randomly gives the player a new armor after defeating an enemy.
+     *
+     * @param player  The player to receive the armor.
+     * @param enemy   The enemy that was defeated.
+     * @param scanner The scanner to read user input.
+     */
+    public static void NewArmor(Player player, Enemy enemy, Scanner scanner) {
+        Random randarmor = new Random();
+        int newArmor = randarmor.nextInt(100);
 
-    if (newArmor < 20) {
-    Armor droppedArmor = enemy.getArmor();
-    System.out.println("The enemy dropped a " + droppedArmor.getName() + "!");
-    System.out.println("Do you want to take it? (y/n): ");
-    Scanner scanner = new Scanner(System.in);
-    String choice;
-    while (true) {
-    choice = scanner.nextLine().trim();
-    if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
-    break;
-    }
-    System.out.println("Invalid input. Please enter 'y' or 'n'.");
-    System.out.print("> ");
-    }
-    System.out.println();
+        if (newArmor < 20) {
+            Armor droppedArmor = enemy.getArmor();
+            System.out.println("The enemy dropped a " + droppedArmor.getName() + "!");
+            System.out.println("Do you want to take it? (y/n): ");
+            String choice;
+            while (true) {
+                choice = scanner.nextLine().trim();
+                if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
+                    break;
+                }
+                System.out.println("Invalid input. Please enter 'y' or 'n'.");
+                System.out.print("> ");
+            }
+            System.out.println();
 
-    if (choice.equalsIgnoreCase("y")) {
-    player.getInventory().addArmor(droppedArmor);
-    System.out.println("You put the " + droppedArmor.getName() + " in your inventory.");
-    }
-    }
-    System.out.println();
+            if (choice.equalsIgnoreCase("y")) {
+                player.getInventory().addArmor(droppedArmor);
+                System.out.println("You put the " + droppedArmor.getName() + " in your inventory.");
+            }
+        }
+        System.out.println();
     }
 }
