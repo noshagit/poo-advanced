@@ -1,26 +1,12 @@
 package projet.enemies;
 
-import java.util.List;
-
-import projet.armor.Armor;
-import projet.armor.LeatherArmor;
+import projet.armor.Naked;
 import projet.weapon.Fist;
-import projet.weapon.Sword;
-import projet.weapon.Weapon;
 
 public class Slime extends Enemy {
-    List<Weapon> possibleWeapons = List.of(
-        new Sword()
-    );
-
-    List<Armor> possibleArmors = List.of(
-        new LeatherArmor()
-    );
 
     public Slime() {
-        super("Slime", 30, new Fist(), new LeatherArmor());
-        this.setWeapon(RandomWeaponDrop(possibleWeapons));
-        this.setArmor(RandomArmorDrop(possibleArmors));
+        super("Slime", 30, new Fist(), new Naked());
         this.setXpReward(5);
     }
 }

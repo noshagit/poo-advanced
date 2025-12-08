@@ -2,25 +2,26 @@ package projet.enemies;
 
 import java.util.List;
 
-import projet.armor.Armor;
-import projet.armor.LeatherArmor;
-import projet.weapon.Fist;
-import projet.weapon.Sword;
-import projet.weapon.Weapon;
+import projet.armor.*;
+import projet.weapon.*;
 
 public class Minotaur extends Enemy {
     List<Weapon> possibleWeapons = List.of(
-        new Sword()
+        new Sword(),
+        new Hammer(),
+        new Axe()
     );
 
     List<Armor> possibleArmors = List.of(
-        new LeatherArmor()
+        new MythrilArmor(),
+        new KevlarArmor()
     );
     
     public Minotaur() {
-        super("Minotaur", 200, new Fist(), new LeatherArmor());
+        super("Minotaur", 200, new Hammer(), new MythrilArmor());
         this.setWeapon(RandomWeaponDrop(possibleWeapons));
         this.setArmor(RandomArmorDrop(possibleArmors));
+        this.getWeapon().setLevel(30);
         this.setXpReward(50);
     }
 }
