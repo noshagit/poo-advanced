@@ -152,9 +152,7 @@ public class Player extends Champion {
                                     + w.getXp() + ")");
                         }
                         System.out.println(
-                                "Current weapon: " + (this.getWeapon() != null ? this.getWeapon().getName() : "none"));
-                        System.out.println(
-                                "Old weapon: " + (this.getOldWeapon() != null ? this.getOldWeapon().getName() : "none"));
+                                "Current weapon: " + (this.getOldWeapon() != null ? this.getOldWeapon().getName() : "none"));
                         System.out.println("Enter the index of the weapon to swap with oldWeapon, or type 'back' to cancel:");
                         String input = scanner.nextLine().trim();
 
