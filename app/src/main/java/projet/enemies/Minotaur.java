@@ -1,11 +1,27 @@
 package projet.enemies;
 
-import projet.weapon.Hammer;
-import projet.armor.ChainmailArmor;
+import java.util.List;
+
+import projet.armor.Armor;
+import projet.armor.LeatherArmor;
+import projet.weapon.Fist;
+import projet.weapon.Sword;
+import projet.weapon.Weapon;
 
 public class Minotaur extends Enemy {
+    List<Weapon> possibleWeapons = List.of(
+        new Sword()
+    );
+
+    List<Armor> possibleArmors = List.of(
+        new LeatherArmor()
+    );
+
+    Armor armor = RandomArmorDrop(possibleArmors);
     public Minotaur() {
-        super("Minotaur", 200, new Hammer(), new ChainmailArmor());
+        super("Minotaur", 200, new Fist(), new LeatherArmor());
+        this.setWeapon(RandomWeaponDrop(possibleWeapons));
+        this.setArmor(RandomArmorDrop(possibleArmors));
         this.setXpReward(50);
     }
 }
