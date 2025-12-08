@@ -87,8 +87,7 @@ public class Player extends Champion {
      * Checks and displays the contents of the player's inventory with input
      * options.
      */
-    public void checkInventory() {
-        Scanner scanner = new Scanner(System.in);
+    public void checkInventory(Scanner scanner) {
         boolean back = false;
         while (!back) {
             System.out.println("What would you like to see?");

@@ -102,7 +102,7 @@ public class App {
                 }
 
                 System.out.println();
-                AfterFight(player);
+                AfterFight(player, scanner);
                 System.out.println();
                 fightCount++;
                 player.setWeapon(player.getOldWeapon());
@@ -114,17 +114,17 @@ public class App {
      * AfterFight handles the actions a player can take after a fight.
      * 
      * @param player The player who has just fought.
+     * @param scanner The scanner to read user input.
      */
-    public static void AfterFight(Player player) {
+    public static void AfterFight(Player player, Scanner scanner) {
         System.out.println("1. continue fighting\n2. check my inventory\n3. Leave the game\nChoose an action: ");
         System.out.print("> ");
-        Scanner scanner = new Scanner(System.in);
         String actionChoice = scanner.nextLine();
 
         while (!"1".equals(actionChoice)) {
             if ("2".equals(actionChoice)) {
                 System.out.println();
-                player.checkInventory();
+                player.checkInventory(scanner);
             } else if ("3".equals(actionChoice)) {
                 while (true) {
                     System.out.println();
@@ -132,6 +132,7 @@ public class App {
                     String confirmation = scanner.nextLine().trim();
                     if ("y".equalsIgnoreCase(confirmation)) {
                         System.out.println("Exiting game...");
+                        scanner.close();
                         System.exit(0);
                     } else if ("n".equalsIgnoreCase(confirmation)) {
                         break;
@@ -404,7 +405,7 @@ public class App {
 
         NewPotion(player);
 
-        NewWeapon(player, enemy);
+        NewWeapon(player, enemy, scanner);
 
         NewArmor(player, enemy);
     }
@@ -432,8 +433,9 @@ public class App {
      * 
      * @param player The player to receive the weapon.
      * @param enemy  The enemy that was defeated.
+     * @param scanner The scanner to read user input.
      */
-    public static void NewWeapon(Player player, Enemy enemy) {
+    public static void NewWeapon(Player player, Enemy enemy, Scanner scanner) {
         Random randweapon = new Random();
         int newWeapon = randweapon.nextInt(100);
 
@@ -442,7 +444,6 @@ public class App {
             System.out.println("The enemy dropped a " + droppedWeapon.getName() + "!");
             System.out.println("Do you want to take it? (y/n): ");
             System.out.print("> ");
-            Scanner scanner = new Scanner(System.in);
             String choice;
             while (true) {
                 choice = scanner.nextLine().trim();
