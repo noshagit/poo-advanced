@@ -16,8 +16,7 @@ public class Minotaur extends Enemy {
     List<Armor> possibleArmors = List.of(
         new LeatherArmor()
     );
-
-    Armor armor = RandomArmorDrop(possibleArmors);
+    
     public Minotaur() {
         super("Minotaur", 200, new Fist(), new LeatherArmor());
         this.setWeapon(RandomWeaponDrop(possibleWeapons));

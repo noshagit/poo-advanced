@@ -17,7 +17,6 @@ public class Reaper extends Enemy {
         new LeatherArmor()
     );
 
-    Armor armor = RandomArmorDrop(possibleArmors);
     public Reaper() {
         super("Reaper", 100, new Fist(), new LeatherArmor());
         this.setWeapon(RandomWeaponDrop(possibleWeapons));

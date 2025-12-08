@@ -13,13 +13,10 @@ public class Orc extends Enemy {
         new Sword()
     );
 
-    Weapon weapon = RandomWeaponDrop(possibleWeapons);
-
     List<Armor> possibleArmors = List.of(
         new LeatherArmor()
     );
 
-    Armor armor = RandomArmorDrop(possibleArmors);
     public Orc() {
         super("Orc", 80, new Fist(), new LeatherArmor());
         this.setWeapon(RandomWeaponDrop(possibleWeapons));
