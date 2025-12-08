@@ -406,7 +406,7 @@ public class App {
 
         NewWeapon(player, enemy);
 
-        // NewArmor(player, enemy);
+        NewArmor(player, enemy);
     }
 
     /**
