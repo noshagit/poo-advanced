@@ -59,7 +59,7 @@ public class App {
                     e.resetHealth();
                 }
 
-                System.out.println("\n--- Fight number " + ++fightCount + ": " + enemy.getName() + " ---");
+                System.out.println("\n--- Fight number " + fightCount + ": " + enemy.getName() + " ---");
                 System.out.println();
 
                 while (player.getHealth() > 0 && enemy.getHealth() > 0) {
@@ -338,16 +338,74 @@ public class App {
                     System.out.println();
                     System.out.println("============================");
                     System.out.println();
+                    int criticalCount = 0;
+                    int labyrinthMithySoupCount = 0;
+                    int slimePuddingCount = 0;
+                    int soulElixirCount = 0;
+                    int boneSkinCount = 0;
+                    int berserkCount = 0;
+
                     for (int i = 0; i < potions.size(); i++) {
                         Potion p = potions.get(i);
-                        if ("Health Potion".equals(p.getName())) {
+                        if (p == null || p.getName() == null) continue;
+                        String name = p.getName().trim();
+
+                        if ("Health".equalsIgnoreCase(name)) {
                             healthCount++;
-                        } else if ("Gambling Potion".equals(p.getName())) {
+                        } else if ("Gambling".equalsIgnoreCase(name)) {
                             gamblingCount++;
+                        } else if ("Critical".equalsIgnoreCase(name)) {
+                            criticalCount++;
+                        } else if ("Labyrinth Mithy Soup".equalsIgnoreCase(name)
+                                || "Labyrinthe Mighty Soup".equalsIgnoreCase(name)
+                                || "LabyrintheMightySoup".equalsIgnoreCase(name)) {
+                            labyrinthMithySoupCount++;
+                        } else if ("Slime Pudding".equalsIgnoreCase(name)) {
+                            slimePuddingCount++;
+                        } else if ("Soul Elixir".equalsIgnoreCase(name)) {
+                            soulElixirCount++;
+                        } else if ("Bone Skin".equalsIgnoreCase(name)
+                                || "Bone Skin Potion".equalsIgnoreCase(name)
+                                || "BoneSkinPotion".equalsIgnoreCase(name)) {
+                            boneSkinCount++;
+                        } else if ("Berserk".equalsIgnoreCase(name) || "Berserk Potion".equalsIgnoreCase(name)) {
+                            berserkCount++;
                         }
                     }
-                    System.out.println("Total Health Potion: " + healthCount + " | Total Gambling Potion: "
-                            + gamblingCount);
+
+                    int totalPotions = healthCount + gamblingCount + criticalCount + labyrinthMithySoupCount
+                            + slimePuddingCount + soulElixirCount + boneSkinCount + berserkCount;
+
+                    if (totalPotions == 0) {
+                        System.out.println("  No potions in the inventory");
+                    } else {
+                        System.out.println("Potions:");
+                        if (healthCount > 0) {
+                            System.out.println("  Health : " + healthCount);
+                        }
+                        if (gamblingCount > 0) {
+                            System.out.println("  Gambling : " + gamblingCount);
+                        }
+                        if (criticalCount > 0) {
+                            System.out.println("  Critical Strike : " + criticalCount);
+                        }
+                        if (labyrinthMithySoupCount > 0) {
+                            System.out.println("  Labyrinth Mithy Soup : " + labyrinthMithySoupCount);
+                        }
+                        if (slimePuddingCount > 0) {
+                            System.out.println("  Slime Pudding: " + slimePuddingCount);
+                        }
+                        if (soulElixirCount > 0) {
+                            System.out.println("  Soul Elixir: " + soulElixirCount);
+                        }
+                        if (boneSkinCount > 0) {
+                            System.out.println("  Bone Skin: " + boneSkinCount);
+                        }
+                        if (berserkCount > 0) {
+                            System.out.println("  Berserk: " + berserkCount);
+                        }
+                    }
+
                     System.out.println("Choose a potion by name or index, or enter 'b' to go back:");
                     System.out.print("> ");
                     System.out.println();
