@@ -11,6 +11,7 @@ import projet.armor.*;
 import projet.enemies.*;
 import projet.potions.*;
 import projet.weapon.*;
+
 /**
  * The main application class for the game.
  */
@@ -26,19 +27,18 @@ public class App {
         boolean revival = true;
 
         Enemy[] enemies = {
-            new Slime(),
-            new Goblin(),
-            new Skeleton(),
-            new Orc(),
-            new Reaper(),
-            new Troll(),
-            new StoneGolem(),
-            new Minotaur()
+                new Slime(),
+                new Goblin(),
+                new Skeleton(),
+                new Orc(),
+                new Reaper(),
+                new Troll(),
+                new StoneGolem(),
+                new Minotaur()
         };
 
         Scanner scanner = new Scanner(System.in);
         Player player = createPlayer(scanner);
-        Fight fight = new Fight();
 
         System.out.println("Welcome " + player.getName() + "! Let the battles begin!");
         System.out.println();
@@ -46,36 +46,30 @@ public class App {
         System.out.println();
 
         while (true) {
-            java.util.Random rand = new java.util.Random();
-
             while (player.getHealth() > 0) {
                 int fightCount = 0;
                 Enemy enemy;
 
-                enemy = randEnemy(player, rand);
+                enemy = Fight.randEnemy(player);
 
                 for (Enemy e : enemies) {
                     e.resetHealth();
                 }
 
-                System.out.println("\n--- Fight number " + ++fightCount + ": " + enemy.getName() + " ---");
-                System.out.println();
+                System.out.println("\n--- Fight number " + ++fightCount + ": " + enemy.getName() + " ---\n");
 
                 while (player.getHealth() > 0 && enemy.getHealth() > 0) {
 
-                    boolean skip = chooseAction(player, enemy, fight, scanner);
-                    if (skip) {
+                    boolean isFight = Fight.chooseAction(player, enemy, scanner);
+                    if (!isFight) { // skip post-fight updates if no fight occurred
                         continue;
                     }
-                    System.out.println("============================");
-                    System.out.println();
+                    System.out.println("============================\n");
 
                     System.out.println("After the exchange: " + player.getName() + "'s Health = " + player.getHealth()
                             + " | " + enemy.getName() + " Health = " + enemy.getHealth());
 
-                    System.out.println();
-                    System.out.println("============================");
-                    System.out.println();
+                    System.out.println("\n============================\n");
 
                     if (player.getHealth() <= 0) {
                         if (revival == true) {
@@ -136,8 +130,7 @@ public class App {
                 }
                 case "3" -> {
                     while (true) {
-                        System.out.println();
-                        System.out.print("Are you sure? There is no save option. (y/n): ");
+                        System.out.print("\nAre you sure? There is no save option. (y/n): ");
                         String confirmation = scanner.nextLine().trim();
                         if ("y".equalsIgnoreCase(confirmation)) {
                             System.out.println("Exiting game...");
@@ -166,11 +159,8 @@ public class App {
      * @return The created Player object.
      */
     public static Player createPlayer(Scanner scanner) {
-        System.out.println();
-        System.out.println();
-        System.out.println("============================");
-        System.out.println();
-        System.out.println("Enter username: ");
+        System.out.println("\n\n============================\n"
+                + "Enter username: ");
         System.out.print("> ");
         String userName = scanner.nextLine();
         System.out.println();
@@ -182,232 +172,70 @@ public class App {
             System.out.println();
         }
 
-        System.out.println("============================");
-        System.out.println();
-        System.out.println("Choose your weapon:");
-        System.out.println();
-        System.out.println("1. Fist \n2. Sword \n3. Axe");
+        System.out.println("============================\n"
+                + "Choose your weapon:\n"
+                + "\n1. Fist"
+                + "\n2. Sword"
+                + "\n3. Axe");
         System.out.print("> ");
 
         String weaponChoice = scanner.nextLine();
-        int weaponChoiceInt = Integer.parseInt(weaponChoice);
         System.out.println();
 
-        while ((weaponChoiceInt < 1 || weaponChoiceInt > 3)) {
+        while (!"1".equals(weaponChoice) && !"2".equals(weaponChoice) && !"3".equals(weaponChoice)) {
             System.out.println("Invalid weapon choice. Enter weapon choice (1. Fist, 2. Sword, 3. Axe): ");
             System.out.print("> ");
             weaponChoice = scanner.nextLine();
-            weaponChoiceInt = Integer.parseInt(weaponChoice);
             System.out.println();
         }
 
         Weapon playerWeapon = new Fist();
-        switch (weaponChoiceInt) {
-            case 1:
+        switch (weaponChoice) {
+            case "1":
                 playerWeapon = new Fist();
                 break;
-            case 2:
+            case "2":
                 playerWeapon = new Sword();
                 break;
-            case 3:
+            case "3":
                 playerWeapon = new Axe();
         }
 
-        System.out.println("============================");
-        System.out.println();
-        System.out.println("Choose your armor:");
-        System.out.println();
-        System.out.println("1. Naked \n2. WoodenArmour \n3. IronArmour");
+        System.out.println("============================\n"
+                + "\nChoose your armor:\n"
+                + "\n1. Naked"
+                + "\n2. WoodenArmour"
+                + "\n3. IronArmour");
         System.out.print("> ");
 
         String armorChoice = scanner.nextLine();
-        int armorChoiceInt = Integer.parseInt(armorChoice);
         System.out.println();
 
-        while (armorChoiceInt < 1 || armorChoiceInt > 3) {
-            System.out.println(
-                    "Invalid armor choice. Choose your armor: \n 1. Naked \n 2. WoodenArmour \n 3. IronArmour: ");
+        while (!"1".equals(armorChoice) && !"2".equals(armorChoice) && !"3".equals(armorChoice)) {
+            System.out.println("Invalid armor choice. Choose your armor:"
+                    + "\n 1. Naked"
+                    + "\n 2. WoodenArmour"
+                    + "\n 3. IronArmour: ");
             System.out.print("> ");
             armorChoice = scanner.nextLine();
-            armorChoiceInt = Integer.parseInt(armorChoice);
             System.out.println();
         }
 
         Armor playerArmor = new Naked();
-        switch (armorChoiceInt) {
-            case 1:
+        switch (armorChoice) {
+            case "1":
                 playerArmor = new Naked();
                 break;
-            case 2:
+            case "2":
                 playerArmor = new WoodenArmour();
                 break;
-            case 3:
+            case "3":
                 playerArmor = new IronArmour();
         }
 
-        System.out.println();
-        System.out.println("============================");
-        System.out.println();
+        System.out.println("\n============================\n");
 
         return new Player(userName, 100, playerWeapon, playerArmor);
-    }
-
-    /**
-     * randEnemy selects a random enemy based on the player's level.
-     * 
-     * @param player  The player whose level is considered.
-     * @param enemies The array of possible enemies.
-     * @param rand    The random number generator.
-     * @return A randomly selected enemy.
-     */
-    public static Enemy randEnemy(Player player, Random rand) {
-        int lvl = player.getLevel();
-        int randomIndex;
-
-        if (lvl < 2) {
-            return new Slime();
-        } else if (lvl >= 2 && lvl < 5) {
-            Enemy[] possibleEnemies = { new Goblin(), new Slime() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 5 && lvl < 9) {
-            Enemy[] possibleEnemies = { new Goblin(), new Skeleton(), new Slime() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 9 && lvl < 15) {
-            Enemy[] possibleEnemies = { new Goblin(), new Orc(), new Skeleton() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 15 && lvl < 20) {
-            Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Skeleton() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 20 && lvl < 30) {
-            Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Troll() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 30 && lvl < 50) {
-            Enemy[] possibleEnemies = { new Troll(), new StoneGolem(), new Minotaur() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else {
-            return new Minotaur();
-        }
-    }
-
-    /**
-     * chooseAction allows the player to choose an action during a fight.
-     * 
-     * @param player  The player who is fighting.
-     * @param enemy   The enemy being fought.
-     * @param fight   The fight instance.
-     * @param scanner The scanner for user input.
-     * @return true if the action was successful, false otherwise.
-     */
-    public static boolean chooseAction(Player player, Enemy enemy, Fight fight, Scanner scanner) {
-        System.out.println("1. Attack \n2. Use Potion \n3. Display statistics \nChoose an action: ");
-        System.out.print("> ");
-
-        String action = scanner.nextLine().trim();
-        System.out.println();
-
-        switch (action) {
-            case "1":
-                fight.attack(player, enemy);
-                break;
-            case "2":
-                System.out.println();
-                System.out.println("============================");
-                System.out.println();
-                System.out.println("Your pockets: ");
-                java.util.List<Potion> potions = player.getInventory().getPotions();
-                int healthCount = 0;
-                int gamblingCount = 0;
-                if (potions == null || potions.isEmpty()) {
-
-                    System.out.println("No potions available");
-                    System.out.println();
-                    System.out.println("============================");
-                    System.out.println();
-                    return true;
-                } else {
-                    System.out.println();
-                    System.out.println("============================");
-                    System.out.println();
-                    for (int i = 0; i < potions.size(); i++) {
-                        Potion p = potions.get(i);
-                        if ("Health Potion".equals(p.getName())) {
-                            healthCount++;
-                        } else if ("Gambling Potion".equals(p.getName())) {
-                            gamblingCount++;
-                        }
-                    }
-                    System.out.println("Total Health Potion: " + healthCount + " | Total Gambling Potion: "
-                            + gamblingCount);
-                    System.out.println("Choose a potion by name or index, or enter 'b' to go back:");
-                    System.out.print("> ");
-                    System.out.println();
-
-                    while (true) {
-                        String potionChoice = scanner.nextLine().trim();
-                        if (potionChoice.equalsIgnoreCase("b") || potionChoice.equalsIgnoreCase("back")) {
-                            return true;
-                        }
-
-                        Potion selectedPotion = null;
-                        for (Potion p : potions) {
-                            if (p.getName().equalsIgnoreCase(potionChoice)) {
-                                selectedPotion = p;
-                                break;
-                            }
-                        }
-
-                        if (selectedPotion == null) {
-                            try {
-                                int index = Integer.parseInt(potionChoice);
-                                if (index >= 1 && index <= potions.size()) {
-                                    selectedPotion = potions.get(index - 1);
-                                } else {
-                                    System.out.println("Invalid index. Try again or enter 'b' to go back:");
-                                    System.out.print("> ");
-                                    System.out.println();
-                                    continue;
-                                }
-                            } catch (NumberFormatException e) {
-                                System.out.println("Invalid potion name. Try again or enter 'b' to go back:");
-                                continue;
-                            }
-                        }
-
-                        player.usePotion(selectedPotion);
-                        player.getInventory().removePotion(selectedPotion);
-
-                        System.out.println();
-                        System.out.println("============================");
-                        System.out.println();
-
-                        break;
-                    }
-                }
-                break;
-            case "3":
-                System.out.println("============================");
-                System.out.println();
-                System.out.println(player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: "
-                        + player.getHealth() + " | Weapon: "
-                        + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
-                        + player.getXp() + " | Level: " + player.getLevel());
-                System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "
-                        + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName());
-                System.out.println();
-                System.out.println("============================");
-                System.out.println();
-                return true;
-            default:
-                System.out.println("Invalid action, try again.");
-                return true;
-        }
-        return false;
     }
 
     /**
@@ -420,8 +248,7 @@ public class App {
     public static void defeatEnemy(Enemy enemy, Player player, Scanner scanner) {
         System.out.println("\nYou defeated " + enemy.getName() + "!");
         player.gainXp(enemy.getXpReward(), scanner);
-        System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel());
-        System.out.println();
+        System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel() + "\n");
 
         NewPotion(player);
 
@@ -461,8 +288,8 @@ public class App {
 
         if (newWeapon < 20) {
             Weapon droppedWeapon = enemy.getWeapon();
-            System.out.println("The enemy dropped a " + droppedWeapon.getName() + "!");
-            System.out.println("Do you want to take it? (y/n): ");
+            System.out.println("The enemy dropped a " + droppedWeapon.getName() + "!"
+                    + "\nDo you want to take it? (y/n): ");
             System.out.print("> ");
             String choice;
             while (true) {
@@ -496,8 +323,8 @@ public class App {
 
         if (newArmor < 20) {
             Armor droppedArmor = enemy.getArmor();
-            System.out.println("The enemy dropped a " + droppedArmor.getName() + "!");
-            System.out.println("Do you want to take it? (y/n): ");
+            System.out.println("The enemy dropped a " + droppedArmor.getName() + "!"
+                    + "\nDo you want to take it? (y/n): ");
             String choice;
             while (true) {
                 choice = scanner.nextLine().trim();
