@@ -1,30 +1,69 @@
 package projet;
 
 import java.util.Map;
+import java.util.HashMap;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class Leaderboard {
+    private Map<String, Integer> board;
+    private final String filePath = "leaderboard.json";
 
-    public static void save() {
-
+    public Leaderboard() {
+        this.board = new HashMap<>();
     }
 
-    public static Map<String, Integer> load() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<Map<String, Integer>> typeRef = new TypeReference<Map<String, Integer>>() {
-        };
-        String json = "{\"Alice\": 1500, \"Bob\": 1200}"; // Example JSON string
-        Map<String, Integer> leaderboard = null;
+    public Map<String, Integer> getScores() {
+        return this.board;
+    }
 
-        try {
-            leaderboard = objectMapper.readValue(json, typeRef);
-        } catch (Exception e) {
+    public void setScore(String player, int score) {
+        this.board.put(player, score);
+        
+        // Keep only top 10 scores
+        if (this.board.size() > 10) {
+            String lowestPlayer = this.board.entrySet().stream()
+                .min(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+            if (lowestPlayer != null) {
+                this.board.remove(lowestPlayer);
+            }
+        }
+        this.save();
+    }
+
+    public void save() {
+        Gson gson = new Gson();
+        try (FileWriter writer = new FileWriter(filePath)) {
+            gson.toJson(this.board, writer);
+        } catch (IOException e) {
             e.printStackTrace();
-            return null;
+        }
+    }
+
+    public void load() {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            // Create empty file if it doesn't exist
+            save();
         }
 
-        return leaderboard;
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader(filePath)) {
+            Type mapType = new TypeToken<Map<String, Integer>>() {
+            }.getType();
+            Map<String, Integer> map = gson.fromJson(reader, mapType);
+            this.board.clear();
+            this.board.putAll(map);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

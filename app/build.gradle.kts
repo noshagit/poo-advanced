@@ -24,7 +24,7 @@ dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
 
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0")
+    implementation("com.google.code.gson:gson:2.13.2")
 
 }
 

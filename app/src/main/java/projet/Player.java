@@ -13,6 +13,7 @@ import projet.weapon.Weapon;
  */
 public class Player extends Champion {
     private int xp;
+    private int totalXp;
     private int level;
     private final Inventory inventory;
     private int maxHealth;
@@ -37,6 +38,10 @@ public class Player extends Champion {
         return xp;
     }
 
+    public int getTotalXp() {
+        return totalXp;
+    }
+
     public int getMaxHealth() {
         return maxHealth;
     }
@@ -48,6 +53,7 @@ public class Player extends Champion {
     public void setExtraArmor(int extraArmor) {
         this.ExtraArmor = extraArmor;
     }
+
     public int getExtraDamage() {
         return this.extraDamage;
     }
@@ -65,14 +71,15 @@ public class Player extends Champion {
     public void gainXp(int xpGained, Scanner scanner) {
         float actualXp = xpGained / Math.min(((float) level / 10), 1);
         this.xp += (int) actualXp;
+        this.totalXp += (int) actualXp;
+
         if (this.xp >= 100) {
             this.level += 1;
             this.xp = 0;
-            System.out.println();
-            System.out.println("You leveled up!");
-            System.out.println();
-            System.out.println("Would you like to : ");
-            System.out.println("1. Increase your max health by 10 \n2. Heal 40 health points");
+            System.out.println("\nYou leveled up!\n"
+                    + "\nWould you like to :"
+                    + "\n 1. Increase your max health by 10"
+                    + "\n 2. Heal 40 health points\n");
             System.out.print("> ");
             int choice = scanner.nextInt();
 
@@ -105,11 +112,11 @@ public class Player extends Champion {
     public void checkInventory(Scanner scanner) {
         boolean back = false;
         while (!back) {
-            System.out.println("What would you like to see?");
-            System.out.println("1. Potions");
-            System.out.println("2. Weapons");
-            System.out.println("3. Armors");
-            System.out.println("4. Back");
+            System.out.println("What would you like to see?"
+                    + "\n 1. Potions"
+                    + "\n 2. Weapons"
+                    + "\n 3. Armors"
+                    + "\n 4. Back");
             System.out.print("> ");
 
             int choice;
@@ -125,9 +132,7 @@ public class Player extends Champion {
             switch (choice) {
                 case 1: {
                     if (inventory.getPotions().isEmpty()) {
-                        System.out.println();
-                        System.out.println("You don't have any potions in your backpack");
-                        System.out.println();
+                        System.out.println("\nYou don't have any potions in your backpack\n");
                     } else {
                         int healthCount = 0;
                         int gamblingCount = 0;
@@ -139,21 +144,19 @@ public class Player extends Champion {
                                 gamblingCount++;
                             }
                         }
-                        System.out.println();
-                        System.out.println("Potions:");
-                        System.out.println("  Health Potion: " + healthCount);
-                        System.out.println("  Gambling Potion: " + gamblingCount);
+                        System.out.println("\nPotions:"
+                                + "\n  Health Potion: " + healthCount
+                                + "\n  Gambling Potion: " + gamblingCount);
                     }
                     System.out.println("Press Enter to return to the menu...");
                     scanner.nextLine();
                     break;
                 }
                 case 2: {
-                    System.out.println();
-                    System.out.println("Weapons:");
+                    System.out.println("\nWeapons:");
                     if (inventory.getWeapons().isEmpty()) {
-                        System.out.println("You don't have any weapons in your backpack");
-                        System.out.println("Press Enter to return to the menu...");
+                        System.out.println("You don't have any weapons in your backpack"
+                                + "\nPress Enter to return to the menu...");
                         scanner.nextLine();
                         break;
                     }
@@ -166,8 +169,9 @@ public class Player extends Champion {
                                     + w.getXp() + ")");
                         }
                         System.out.println(
-                                "Current weapon: " + (this.getOldWeapon() != null ? this.getOldWeapon().getName() : "none"));
-                        System.out.println("Enter the index of the weapon to swap with oldWeapon, or type 'back' to cancel:");
+                                "Current weapon: "
+                                        + (this.getOldWeapon() != null ? this.getOldWeapon().getName() : "none")
+                                        + "\nEnter the index of the weapon to swap with oldWeapon, or type 'back' to cancel:");
                         String input = scanner.nextLine().trim();
 
                         if ("back".equalsIgnoreCase(input)) {
@@ -202,11 +206,10 @@ public class Player extends Champion {
                     break;
                 }
                 case 3: {
-                    System.out.println();
-                    System.out.println("Armors:");
+                    System.out.println("\nArmors:");
                     if (inventory.getArmors().isEmpty()) {
-                        System.out.println("You don't have any armors in your backpack");
-                        System.out.println("Press Enter to return to the menu...");
+                        System.out.println("You don't have any armors in your backpack"
+                                + "\nPress Enter to return to the menu...");
                         scanner.nextLine();
                         break;
                     }
@@ -218,8 +221,8 @@ public class Player extends Champion {
                             System.out.println("  " + i + ": " + a.getName());
                         }
                         System.out.println(
-                                "Current armor: " + (this.getArmor() != null ? this.getArmor().getName() : "none"));
-                        System.out.println("Enter the index of the armor to equip, or type 'back' to cancel:");
+                                "Current armor: " + (this.getArmor() != null ? this.getArmor().getName() : "none")
+                                        + "\nEnter the index of the armor to equip, or type 'back' to cancel:");
                         String input = scanner.nextLine().trim();
 
                         if ("back".equalsIgnoreCase(input)) {
@@ -255,8 +258,7 @@ public class Player extends Champion {
                     System.out.println();
                     break;
                 default:
-                    System.out.println("Invalid choice.");
-                    System.out.println();
+                    System.out.println("Invalid choice.\n");
             }
         }
     }
