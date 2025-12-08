@@ -462,38 +462,37 @@ public class App {
         System.out.println();
     }
 
-    // /**
-    // * NewArmor randomly gives the player a new armor after defeating an enemy.
-    // *
-    // * @param player The player to receive the armor.
-    // * @param enemy The enemy that was defeated.
-    // */
-    // public static void NewArmor(Player player, Enemy enemy) {
-    // Random randarmor = new Random();
-    // int newArmor = randarmor.nextInt(100);
+    /**
+    * NewArmor randomly gives the player a new armor after defeating an enemy.
+    *
+    * @param player The player to receive the armor.
+    * @param enemy The enemy that was defeated.
+    */
+    public static void NewArmor(Player player, Enemy enemy) {
+    Random randarmor = new Random();
+    int newArmor = randarmor.nextInt(100);
 
-    // if (newArmor < 20) {
-    // Armor droppedArmor = enemy.getArmor();
-    // System.out.println("The enemy dropped a " + droppedArmor.getName() + "!");
-    // System.out.println("Do you want to take it? (y/n): ");
-    // Scanner scanner = new Scanner(System.in);
-    // String choice;
-    // while (true) {
-    // choice = scanner.nextLine().trim();
-    // if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
-    // break;
-    // }
-    // System.out.println("Invalid input. Please enter 'y' or 'n'.");
-    // System.out.print("> ");
-    // }
-    // System.out.println();
+    if (newArmor < 20) {
+    Armor droppedArmor = enemy.getArmor();
+    System.out.println("The enemy dropped a " + droppedArmor.getName() + "!");
+    System.out.println("Do you want to take it? (y/n): ");
+    Scanner scanner = new Scanner(System.in);
+    String choice;
+    while (true) {
+    choice = scanner.nextLine().trim();
+    if (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("n")) {
+    break;
+    }
+    System.out.println("Invalid input. Please enter 'y' or 'n'.");
+    System.out.print("> ");
+    }
+    System.out.println();
 
-    // if (choice.equalsIgnoreCase("y")) {
-    // player.getInventory().addArmor(droppedArmor);
-    // System.out.println("You put the " + droppedArmor.getName() + " in your
-    // inventory.");
-    // }
-    // }
-    // System.out.println();
-    // }
+    if (choice.equalsIgnoreCase("y")) {
+    player.getInventory().addArmor(droppedArmor);
+    System.out.println("You put the " + droppedArmor.getName() + " in your inventory.");
+    }
+    }
+    System.out.println();
+    }
 }
