@@ -32,6 +32,11 @@ public class Weapon{
         return level;
     }
 
+    public void setLevel(int maitrise){
+        this.level = maitrise;
+        this.degats += maitrise -1;
+    }
+    
     /**
      * Increases the weapon's experience points and levels up if necessary.
      */
