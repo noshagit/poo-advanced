@@ -1,7 +1,5 @@
 package projet;
 
-/* TODO : Critical strike chances implementation */
-
 /* IMPORTS */
 import java.util.Random;
 
@@ -15,71 +13,72 @@ public class Fight {
     /**
      * Executes an attack sequence between two champions.
      * 
-     * @param attacker The champion who is attacking. ( The player )
-     * @param defender The champion who is defending. ( The monster )
+     * @param player The champion who is attacking. ( The player )
+     * @param enemy The champion who is defending. ( The monster )
      */
-    public void attack(Player attacker, Enemy defender) {
-        Weapon attackerWeapon = attacker.getWeapon();
-        Weapon defenderWeapon = defender.getWeapon();
+    public void attack(Player player, Enemy enemy) {
+        Weapon playerWeapon = player.getWeapon();
+        Weapon enemyWeapon = enemy.getWeapon();
 
-        attackerWeapon.addDamages(attacker.getExtraDamage());
-        attackerWeapon.addDamages(attacker.extraDamageMightySoup());
+        playerWeapon.addDamages(player.getExtraDamage());
+        playerWeapon.addDamages(player.extraDamageMightySoup());
+        enemyWeapon.subDamages(player.getExtraArmorGolem());
 
         Random rand = new Random();
         int isStunned = rand.nextInt(100);
         if (isStunned >= 25) {
-            if (attacker.getMoveSpeed() < defender.getMoveSpeed()) {
-                attacker.takeDamage(defenderWeapon);
-                if ((rand.nextInt(100) + defender.getExtraCrit()) > 75) {
-                    System.out.println(defender.getName() + " lands a critical strike!");
-                    attacker.takeDamage(defenderWeapon);
+            if (player.getMoveSpeed() < enemy.getMoveSpeed()) {
+                player.takeDamage(enemyWeapon);
+                if ((rand.nextInt(100) + enemy.getExtraCrit()) > 75) {
+                    System.out.println(enemy.getName() + " lands a critical strike!");
+                    player.takeDamage(enemyWeapon);
                 }
 
-                defender.takeDamage(attackerWeapon);
-                if (attacker.hasLifeSteal()) {
-                    attacker.addHealth(attackerWeapon.getDamages() / 4);
+                enemy.takeDamage(playerWeapon);
+                if (player.hasLifeSteal()) {
+                    player.addHealth(playerWeapon.getDamages() / 4);
                 }
-                if ((rand.nextInt(100) + attacker.getExtraCrit()) > 75) {
-                    System.out.println(attacker.getName() + " lands a critical strike!");
-                    defender.takeDamage(attackerWeapon);
-                    if (attacker.hasLifeSteal()) {
-                        attacker.addHealth(attackerWeapon.getDamages() / 4);
+                if ((rand.nextInt(100) + player.getExtraCrit()) > 75) {
+                    System.out.println(player.getName() + " lands a critical strike!");
+                    enemy.takeDamage(playerWeapon);
+                    if (player.hasLifeSteal()) {
+                        player.addHealth(playerWeapon.getDamages() / 4);
                     }
                 }
 
             } else {
-                defender.takeDamage(attackerWeapon);
-                if (attacker.hasLifeSteal()) {
-                    attacker.addHealth(attackerWeapon.getDamages() / 4);
+                enemy.takeDamage(playerWeapon);
+                if (player.hasLifeSteal()) {
+                    player.addHealth(playerWeapon.getDamages() / 4);
                 }
-                if ((rand.nextInt(100) + attacker.getExtraCrit()) > 75) {
-                    System.out.println(attacker.getName() + " lands a critical strike!");
-                    defender.takeDamage(attackerWeapon);
-                    if (attacker.hasLifeSteal()) {
-                        attacker.addHealth(attackerWeapon.getDamages() / 4);
+                if ((rand.nextInt(100) + player.getExtraCrit()) > 75) {
+                    System.out.println(player.getName() + " lands a critical strike!");
+                    enemy.takeDamage(playerWeapon);
+                    if (player.hasLifeSteal()) {
+                        player.addHealth(playerWeapon.getDamages() / 4);
                     }
                 }
 
-                attacker.takeDamage(defenderWeapon);
-                if ((rand.nextInt(100) + defender.getExtraCrit()) > 75) {
-                    System.out.println(defender.getName() + " lands a critical strike!");
-                    attacker.takeDamage(defenderWeapon);
+                player.takeDamage(enemyWeapon);
+                if ((rand.nextInt(100) + enemy.getExtraCrit()) > 75) {
+                    System.out.println(enemy.getName() + " lands a critical strike!");
+                    player.takeDamage(enemyWeapon);
                 }
             }
         } else {
-            defender.takeDamage(attackerWeapon);
-            if (attacker.hasLifeSteal()) {
-                attacker.addHealth(attackerWeapon.getDamages() / 4);
+            enemy.takeDamage(playerWeapon);
+            if (player.hasLifeSteal()) {
+                player.addHealth(playerWeapon.getDamages() / 4);
             }
-            if ((rand.nextInt(100) + attacker.getExtraCrit()) > 75) {
-                System.out.println(attacker.getName() + " lands a critical strike!");
-                defender.takeDamage(attackerWeapon);
-                if (attacker.hasLifeSteal()) {
-                    attacker.addHealth(attackerWeapon.getDamages() / 4);
+            if ((rand.nextInt(100) + player.getExtraCrit()) > 75) {
+                System.out.println(player.getName() + " lands a critical strike!");
+                enemy.takeDamage(playerWeapon);
+                if (player.hasLifeSteal()) {
+                    player.addHealth(playerWeapon.getDamages() / 4);
                 }
             }
         }
 
-        attackerWeapon.gainXp();
+        playerWeapon.gainXp();
     }
 }

@@ -22,6 +22,7 @@ public class Player extends Champion {
     private int extraDamageMightySoup = 0;
     private boolean chancetostun = false;
     private boolean lifeSteal = false;
+    private int golemExtraArmor = 0;
 
     public Player(String name, int health, Weapon weapon, Armor armor) {
         super(name, health, weapon, armor);
@@ -94,6 +95,14 @@ public class Player extends Champion {
 
     public int extraDamageMightySoup() {
         return this.extraDamageMightySoup;
+    }
+
+    public void setExtraArmorGolem(int extraArmorGolem) {
+        this.golemExtraArmor = extraArmorGolem;
+    }
+
+    public int getExtraArmorGolem() {
+        return this.golemExtraArmor;
     }
 
     public void extraDamageMightySoup(int extraDamage) {

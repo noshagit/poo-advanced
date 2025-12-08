@@ -1,7 +1,5 @@
 package projet;
 
-/* TODO : Modify randEnemy with new enemies selection logic */
-
 /* IMPORTS */
 
 import java.util.Random;
@@ -114,6 +112,7 @@ public class App {
                 player.setLifeSteal(false);
                 player.chancetostun(false);
                 player.extraDamageMightySoup(0);
+                player.setExtraArmorGolem(0);
             }
         }
     }
@@ -344,6 +343,7 @@ public class App {
                     int soulElixirCount = 0;
                     int boneSkinCount = 0;
                     int berserkCount = 0;
+                    int stoneGolemCount = 0;
 
                     for (int i = 0; i < potions.size(); i++) {
                         Potion p = potions.get(i);
@@ -370,11 +370,15 @@ public class App {
                             boneSkinCount++;
                         } else if ("Berserk".equalsIgnoreCase(name) || "Berserk Potion".equalsIgnoreCase(name)) {
                             berserkCount++;
+                        } else if ("Stone Golem".equalsIgnoreCase(name)
+                                || "Stone Golem Potion".equalsIgnoreCase(name)
+                                || "StoneGolemPotion".equalsIgnoreCase(name)) {
+                            stoneGolemCount++;
                         }
                     }
 
                     int totalPotions = healthCount + gamblingCount + criticalCount + labyrinthMithySoupCount
-                            + slimePuddingCount + soulElixirCount + boneSkinCount + berserkCount;
+                            + slimePuddingCount + soulElixirCount + boneSkinCount + berserkCount + stoneGolemCount;
 
                     if (totalPotions == 0) {
                         System.out.println("  No potions in the inventory");
@@ -403,6 +407,9 @@ public class App {
                         }
                         if (berserkCount > 0) {
                             System.out.println("  Berserk: " + berserkCount);
+                        }
+                        if (stoneGolemCount > 0) {
+                            System.out.println("  Stone Golem: " + stoneGolemCount);
                         }
                     }
 
