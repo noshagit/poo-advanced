@@ -13,7 +13,6 @@ import projet.armor.Naked;
 import projet.armor.WoodenArmour;
 import projet.enemies.Enemy;
 import projet.enemies.Goblin;
-import projet.enemies.Kawaleck;
 import projet.enemies.Minotaur;
 import projet.enemies.Orc;
 import projet.enemies.Reaper;
@@ -128,6 +127,9 @@ public class App {
                 System.out.println();
                 fightCount++;
                 player.setWeapon(player.getOldWeapon());
+                player.setLifeSteal(false);
+                player.chancetostun(false);
+                player.extraDamageMightySoup(0);
             }
         }
     }

@@ -19,6 +19,9 @@ public class Player extends Champion {
     private Weapon oldWeapon;
     private int ExtraArmor = 0;
     private int extraDamage = 0;
+    private int extraDamageMightySoup = 0;
+    private boolean chancetostun = false; 
+    private boolean lifeSteal = false;
 
     public Player(String name, int health, Weapon weapon, Armor armor) {
         super(name, health, weapon, armor);
@@ -27,6 +30,38 @@ public class Player extends Champion {
         this.xp = 0;
         this.level = 1;
         this.inventory = new Inventory();
+    }
+
+    public void addHealth(int health) {
+        this.setHealth(Math.min(this.getHealth() + health, this.maxHealth));
+    }
+
+    public boolean hasNextInt() {
+        return this.lifeSteal;
+    }
+
+    public boolean hasLifeSteal() {
+        return lifeSteal;
+    }
+
+    public boolean hasChanceToStun() {
+        return chancetostun;
+    }
+
+    public void setChanceToStun(boolean chancetostun) {
+        this.chancetostun = chancetostun;
+    }
+
+    public void setLifeSteal(boolean lifeSteal) {
+        this.lifeSteal = lifeSteal;
+    }
+
+    public boolean chancetostun() {
+        return chancetostun;
+    }
+
+    public void chancetostun(boolean chancetostun) {
+        this.chancetostun = chancetostun;
     }
 
     public int getLevel() {
@@ -48,6 +83,7 @@ public class Player extends Champion {
     public void setExtraArmor(int extraArmor) {
         this.ExtraArmor = extraArmor;
     }
+
     public int getExtraDamage() {
         return this.extraDamage;
     }
@@ -56,6 +92,14 @@ public class Player extends Champion {
         this.extraDamage = extraDamage;
     }
 
+    public int extraDamageMightySoup() {
+        return this.extraDamageMightySoup;
+    }
+
+    public void extraDamageMightySoup(int extraDamage) {
+        this.extraDamageMightySoup = extraDamage;
+    }
+    
     /**
      * Increases the player's experience points and handles leveling up.
      * 

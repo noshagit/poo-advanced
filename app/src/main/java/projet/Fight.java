@@ -14,6 +14,7 @@ import projet.weapon.Weapon;
 public class Fight {
     /**
      * Executes an attack sequence between two champions.
+     * 
      * @param attacker The champion who is attacking. ( The player )
      * @param defender The champion who is defending. ( The monster )
      */
@@ -22,6 +23,7 @@ public class Fight {
         Weapon defenderWeapon = defender.getWeapon();
 
         attackerWeapon.addDamages(attacker.getExtraDamage());
+        attackerWeapon.addDamages(attacker.extraDamageMightySoup());
 
         Random rand = new Random();
         
@@ -31,18 +33,30 @@ public class Fight {
                 System.out.println(defender.getName() + " lands a critical strike!");
                 attacker.takeDamage(defenderWeapon);
             }
-            
+
             defender.takeDamage(attackerWeapon);
+            if (attacker.hasLifeSteal()) {
+                attacker.addHealth(attackerWeapon.getDamages() / 4);
+            }
             if ((rand.nextInt(100) + attacker.getExtraCrit()) > 75) {
                 System.out.println(attacker.getName() + " lands a critical strike!");
                 defender.takeDamage(attackerWeapon);
+                if (attacker.hasLifeSteal()) {
+                    attacker.addHealth(attackerWeapon.getDamages() / 4);
+                }
             }
 
         } else {
             defender.takeDamage(attackerWeapon);
+            if (attacker.hasLifeSteal()) {
+                attacker.addHealth(attackerWeapon.getDamages() / 4);
+            }
             if ((rand.nextInt(100) + attacker.getExtraCrit()) > 75) {
                 System.out.println(attacker.getName() + " lands a critical strike!");
                 defender.takeDamage(attackerWeapon);
+                if (attacker.hasLifeSteal()) {
+                    attacker.addHealth(attackerWeapon.getDamages() / 4);
+                }
             }
 
             attacker.takeDamage(defenderWeapon);
