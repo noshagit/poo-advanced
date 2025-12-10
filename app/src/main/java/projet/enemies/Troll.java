@@ -20,4 +20,9 @@ public class Troll extends Enemy {
         this.getWeapon().setLevel(10);
         this.setXpReward(30);
     }
+
+    @Override
+    public int[] getLevelRange() {
+        return new int[]{20, 40};
+    }
 }

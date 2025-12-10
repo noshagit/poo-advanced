@@ -45,4 +45,10 @@ public abstract class Enemy extends Champion {
         int randomIndex = rand.nextInt(possibleArmors.size());
         return possibleArmors.get(randomIndex);
     }
+
+    /**
+     * Returns the level range for this enemy type.
+     * @return An array of two integers [minLevel, maxLevel] representing the level range.
+     */
+    public abstract int[] getLevelRange();
 }

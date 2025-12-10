@@ -27,4 +27,9 @@ public class Orc extends Enemy {
         this.getWeapon().setLevel(6);
         this.setXpReward(20);
     }
+
+    @Override
+    public int[] getLevelRange() {
+        return new int[]{9, 20};
+    }
 }

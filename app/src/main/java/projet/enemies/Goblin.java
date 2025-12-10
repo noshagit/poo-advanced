@@ -27,4 +27,9 @@ public class Goblin extends Enemy {
         this.getWeapon().setLevel(1);
         this.setXpReward(10);
     }
+
+    @Override
+    public int[] getLevelRange() {
+        return new int[]{2, 9};
+    }
 }

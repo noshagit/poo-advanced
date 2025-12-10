@@ -19,4 +19,9 @@ public class Skeleton extends Enemy {
         this.getWeapon().setLevel(3);
         this.setXpReward(15);
     }
+
+    @Override
+    public int[] getLevelRange() {
+        return new int[]{5, 15};
+    }
 }

@@ -8,4 +8,9 @@ public class Kawaleck extends Enemy {
         super("Kawaleck", 200, new Cancer(), new IronArmour());
         this.setXpReward(50);
     }
+
+    @Override
+    public int[] getLevelRange() {
+        return new int[]{100, -100}; // min lvl > max lvl so that it never spawns
+    }
 }

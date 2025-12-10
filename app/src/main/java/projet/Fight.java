@@ -256,42 +256,26 @@ public class Fight {
      * 
      * @param player  The player whose level is considered.
      * @param enemies The array of possible enemies.
-     * @param rand    The random number generator.
      * @return A randomly selected enemy.
      */
-    public static Enemy randEnemy(Player player) {
+    public static Enemy randEnemy(Player player, Enemy[] enemies) {
         Random rand = new Random();
         int lvl = player.getLevel();
-        int randomIndex;
 
-        if (lvl < 2) {
-            return new Slime();
-        } else if (lvl >= 2 && lvl < 5) {
-            Enemy[] possibleEnemies = { new Goblin(), new Slime() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 5 && lvl < 9) {
-            Enemy[] possibleEnemies = { new Goblin(), new Skeleton(), new Slime() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 9 && lvl < 15) {
-            Enemy[] possibleEnemies = { new Goblin(), new Orc(), new Skeleton() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 15 && lvl < 20) {
-            Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Skeleton() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 20 && lvl < 30) {
-            Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Troll() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 30 && lvl < 50) {
-            Enemy[] possibleEnemies = { new Troll(), new StoneGolem(), new Minotaur() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else {
+        // filter enemies that match the player's level range
+        java.util.List<Enemy> validEnemies = new java.util.ArrayList<>();
+        for (Enemy enemy : enemies) {
+            int[] range = enemy.getLevelRange();
+            if (lvl >= range[0] && lvl < range[1]) {
+                validEnemies.add(enemy);
+            }
+        }
+
+        if (validEnemies.isEmpty()) {
             return new Minotaur();
         }
+
+        int randomIndex = rand.nextInt(validEnemies.size());
+        return validEnemies.get(randomIndex);
     }
 }

@@ -54,11 +54,9 @@ public class App {
                 int fightCount = 0;
                 Enemy enemy;
 
-                enemy = Fight.randEnemy(player);
+                enemy = Fight.randEnemy(player, enemies);
 
-                for (Enemy e : enemies) {
-                    e.resetHealth();
-                }
+                enemy.resetHealth();
 
                 System.out.println("\n--- Fight number " + ++fightCount + ": " + enemy.getName() + " ---\n");
 
@@ -252,49 +250,6 @@ public class App {
         System.out.println("\n============================\n");
 
         return new Player(userName, 100, playerWeapon, playerArmor);
-    }
-
-    /**
-     * randEnemy selects a random enemy based on the player's level.
-     * 
-     * @param player  The player whose level is considered.
-     * @param enemies The array of possible enemies.
-     * @param rand    The random number generator.
-     * @return A randomly selected enemy.
-     */
-    public static Enemy randEnemy(Player player, Random rand) {
-        int lvl = player.getLevel();
-        int randomIndex;
-
-        if (lvl < 2) {
-            return new Slime();
-        } else if (lvl >= 2 && lvl < 5) {
-            Enemy[] possibleEnemies = { new Goblin(), new Slime() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 5 && lvl < 9) {
-            Enemy[] possibleEnemies = { new Goblin(), new Skeleton(), new Slime() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 9 && lvl < 15) {
-            Enemy[] possibleEnemies = { new Goblin(), new Orc(), new Skeleton() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 15 && lvl < 20) {
-            Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Skeleton() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 20 && lvl < 30) {
-            Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Troll() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else if (lvl >= 30 && lvl < 50) {
-            Enemy[] possibleEnemies = { new Troll(), new StoneGolem(), new Minotaur() };
-            randomIndex = rand.nextInt(possibleEnemies.length);
-            return possibleEnemies[randomIndex];
-        } else {
-            return new Minotaur();
-        }
     }
 
     /**
