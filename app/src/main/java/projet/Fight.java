@@ -16,7 +16,7 @@ public class Fight {
      * Executes an attack sequence between two champions.
      * 
      * @param player The champion who is attacking. ( The player )
-     * @param enemy The champion who is defending. ( The monster )
+     * @param enemy  The champion who is defending. ( The monster )
      */
     public static void attack(Player player, Enemy enemy) {
         Weapon playerWeapon = player.getWeapon();
@@ -102,28 +102,25 @@ public class Fight {
         switch (action) {
             case "1":
                 attack(player, enemy);
-                break;
+                return true;
             case "2":
                 usePotion(player, scanner);
                 return false;
             case "3":
-                System.out.println("============================");
-                System.out.println();
-                System.out.println(player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: "
+                System.out.println("============================\n"
+                        + player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: "
                         + player.getHealth() + " | Weapon: "
                         + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
-                        + player.getXp() + " | Level: " + player.getLevel());
-                System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "
-                        + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName());
-                System.out.println();
-                System.out.println("============================");
-                System.out.println();
+                        + player.getXp() + " | Level: " + player.getLevel()
+
+                        + "\n" + enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "
+                        + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName()
+                        + "\n\n============================\n");
                 return false;
             default:
                 System.out.println("Invalid action, try again.");
                 return false;
         }
-        return true;
     }
 
     /**
@@ -144,19 +141,81 @@ public class Fight {
                     + "\n============================\n");
             return;
         } else {
-            System.out.println("\n============================\n");
+            System.out.println("\n============================\n\n");
+            int criticalCount = 0;
+            int labyrinthMithySoupCount = 0;
+            int slimePuddingCount = 0;
+            int soulElixirCount = 0;
+            int boneSkinCount = 0;
+            int berserkCount = 0;
+            int stoneGolemCount = 0;
+
             for (int i = 0; i < potions.size(); i++) {
                 Potion p = potions.get(i);
-                if ("Health Potion".equals(p.getName())) {
-                    healthCount++;
-                } else if ("Gambling Potion".equals(p.getName())) {
-                    gamblingCount++;
+                if (p == null || p.getName() == null)
+                    continue;
+                String name = p.getName().trim();
+
+                switch (name.toLowerCase()) {
+                    case "health":
+                        healthCount++;
+                        break;
+                    case "gambling":
+                        gamblingCount++;
+                        break;
+                    case "critical":
+                        criticalCount++;
+                        break;
+                    case "labyrinth mithy soup":
+                    case "labyrinthe mighty soup":
+                    case "labyrinthemightysoup":
+                        labyrinthMithySoupCount++;
+                        break;
+                    case "slime pudding":
+                        slimePuddingCount++;
+                        break;
+                    case "soul elixir":
+                        soulElixirCount++;
+                        break;
+                    case "bone skin":
+                    case "bone skin potion":
+                    case "boneskinpotion":
+                        boneSkinCount++;
+                        break;
+                    case "berserk":
+                    case "berserk potion":
+                        berserkCount++;
+                        break;
+                    case "stone golem":
+                    case "stone golem potion":
+                    case "stonegolempotion":
+                        stoneGolemCount++;
+                        break;
                 }
             }
-            System.out.println("Total Health Potion: " + healthCount
-                    + " | Total Gambling Potion: " + gamblingCount
-                    + "\nChoose a potion by name or index, or enter 'b' to go back:");
+
+            int totalPotions = healthCount + gamblingCount + criticalCount + labyrinthMithySoupCount
+                    + slimePuddingCount + soulElixirCount + boneSkinCount + berserkCount + stoneGolemCount;
+
+            if (totalPotions == 0) {
+                System.out.println("  No potions in the inventory");
+            } else {
+                System.out.println("Potions:");
+                String[] potionNames = {"Health", "Gambling", "Critical Strike", "Labyrinth Mithy Soup", 
+                                       "Slime Pudding", "Soul Elixir", "Bone Skin", "Berserk", "Stone Golem"};
+                int[] potionCounts = {healthCount, gamblingCount, criticalCount, labyrinthMithySoupCount,
+                                     slimePuddingCount, soulElixirCount, boneSkinCount, berserkCount, stoneGolemCount};
+                
+                for (int i = 0; i < potionNames.length; i++) {
+                    if (potionCounts[i] > 0) {
+                        System.out.println("  " + potionNames[i] + ": " + potionCounts[i]);
+                    }
+                }
+            }
+
+            System.out.println("Choose a potion by name or index, or enter 'b' to go back:");
             System.out.print("> ");
+            System.out.println();
 
             while (true) {
                 String potionChoice = scanner.nextLine().trim();
