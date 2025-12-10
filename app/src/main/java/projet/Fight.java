@@ -126,128 +126,59 @@ public class Fight {
         System.out.println("\n============================\n"
                 + "Your pockets: ");
         java.util.List<Potion> potions = player.getInventory().getPotions();
-        int healthCount = 0;
-        int gamblingCount = 0;
-        if (potions == null || potions.isEmpty()) {
 
+        if (potions == null || potions.isEmpty()) {
             System.out.println("No potions available"
                     + "\n============================\n");
             return;
-        } else {
-            System.out.println("\n============================\n\n");
-            int criticalCount = 0;
-            int labyrinthMithySoupCount = 0;
-            int slimePuddingCount = 0;
-            int soulElixirCount = 0;
-            int boneSkinCount = 0;
-            int berserkCount = 0;
-            int stoneGolemCount = 0;
+        }
 
-            for (int i = 0; i < potions.size(); i++) {
-                Potion p = potions.get(i);
-                if (p == null || p.getName() == null)
-                    continue;
-                String name = p.getName().trim();
+        java.util.Map<String, Integer> potionCounts = player.countPotions();
 
-                switch (name.toLowerCase()) {
-                    case "health":
-                        healthCount++;
-                        break;
-                    case "gambling":
-                        gamblingCount++;
-                        break;
-                    case "critical":
-                        criticalCount++;
-                        break;
-                    case "labyrinth mithy soup":
-                    case "labyrinthe mighty soup":
-                    case "labyrinthemightysoup":
-                        labyrinthMithySoupCount++;
-                        break;
-                    case "slime pudding":
-                        slimePuddingCount++;
-                        break;
-                    case "soul elixir":
-                        soulElixirCount++;
-                        break;
-                    case "bone skin":
-                    case "bone skin potion":
-                    case "boneskinpotion":
-                        boneSkinCount++;
-                        break;
-                    case "berserk":
-                    case "berserk potion":
-                        berserkCount++;
-                        break;
-                    case "stone golem":
-                    case "stone golem potion":
-                    case "stonegolempotion":
-                        stoneGolemCount++;
-                        break;
+        System.out.println("\nPotions:");
+        potionCounts.forEach((name, count) -> System.out.println("  " + name + ": " + count));
+
+        System.out.println("Choose a potion by name or index, or enter 'b' to go back:");
+        System.out.print("> ");
+        System.out.println();
+
+        while (true) {
+            String potionChoice = scanner.nextLine().trim();
+            if (potionChoice.equalsIgnoreCase("b") || potionChoice.equalsIgnoreCase("back")) {
+                return;
+            }
+
+            Potion selectedPotion = null;
+            for (Potion p : potions) {
+                if (p.getName().equalsIgnoreCase(potionChoice)) {
+                    selectedPotion = p;
+                    break;
                 }
             }
 
-            int totalPotions = healthCount + gamblingCount + criticalCount + labyrinthMithySoupCount
-                    + slimePuddingCount + soulElixirCount + boneSkinCount + berserkCount + stoneGolemCount;
-
-            if (totalPotions == 0) {
-                System.out.println("  No potions in the inventory");
-            } else {
-                System.out.println("Potions:");
-                String[] potionNames = { "Health", "Gambling", "Critical Strike", "Labyrinth Mithy Soup",
-                        "Slime Pudding", "Soul Elixir", "Bone Skin", "Berserk", "Stone Golem" };
-                int[] potionCounts = { healthCount, gamblingCount, criticalCount, labyrinthMithySoupCount,
-                        slimePuddingCount, soulElixirCount, boneSkinCount, berserkCount, stoneGolemCount };
-
-                for (int i = 0; i < potionNames.length; i++) {
-                    if (potionCounts[i] > 0) {
-                        System.out.println("  " + potionNames[i] + ": " + potionCounts[i]);
-                    }
-                }
-            }
-
-            System.out.println("Choose a potion by name or index, or enter 'b' to go back:");
-            System.out.print("> ");
-            System.out.println();
-
-            while (true) {
-                String potionChoice = scanner.nextLine().trim();
-                if (potionChoice.equalsIgnoreCase("b") || potionChoice.equalsIgnoreCase("back")) {
-                    return;
-                }
-
-                Potion selectedPotion = null;
-                for (Potion p : potions) {
-                    if (p.getName().equalsIgnoreCase(potionChoice)) {
-                        selectedPotion = p;
-                        break;
-                    }
-                }
-
-                if (selectedPotion == null) {
-                    try {
-                        int index = Integer.parseInt(potionChoice);
-                        if (index >= 1 && index <= potions.size()) {
-                            selectedPotion = potions.get(index - 1);
-                        } else {
-                            System.out.println("Invalid index. Try again or enter 'b' to go back:");
-                            System.out.print("> ");
-                            System.out.println();
-                            continue;
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid potion name. Try again or enter 'b' to go back:");
+            if (selectedPotion == null) {
+                try {
+                    int index = Integer.parseInt(potionChoice);
+                    if (index >= 1 && index <= potions.size()) {
+                        selectedPotion = potions.get(index - 1);
+                    } else {
+                        System.out.println("Invalid index. Try again or enter 'b' to go back:");
+                        System.out.print("> ");
+                        System.out.println();
                         continue;
                     }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid potion name. Try again or enter 'b' to go back:");
+                    continue;
                 }
-
-                player.usePotion(selectedPotion);
-                player.getInventory().removePotion(selectedPotion);
-
-                System.out.println("\n============================\n");
-
-                break;
             }
+
+            player.usePotion(selectedPotion);
+            player.getInventory().removePotion(selectedPotion);
+
+            System.out.println("\n============================\n");
+
+            break;
         }
     }
 

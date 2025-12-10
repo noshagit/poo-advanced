@@ -183,87 +183,7 @@ public class Player extends Champion {
 
             switch (choice) {
                 case 1: {
-                    if (inventory.getPotions().isEmpty()) {
-                        System.out.println("\nYou don't have any potions in your backpack\n");
-                    } else {
-                        int healthCount = 0;
-                        int gamblingCount = 0;
-                        int criticalCount = 0;
-                        int labyrinthMithySoupCount = 0;
-                        int slimePuddingCount = 0;
-                        int soulElixirCount = 0;
-                        int boneSkinCount = 0;
-                        int berserkCount = 0;
-
-                        for (Potion p : inventory.getPotions()) {
-                            String name = p.getName();
-
-                            switch (name) {
-                                case "Health":
-                                    healthCount++;
-                                    break;
-                                case "Gambling":
-                                    gamblingCount++;
-                                    break;
-                                case "Critical":
-                                    criticalCount++;
-                                    break;
-                                case "Labyrinth Mithy Soup":
-                                    labyrinthMithySoupCount++;
-                                    break;
-                                case "Slime Pudding":
-                                    slimePuddingCount++;
-                                    break;
-                                case "Soul Elixir":
-                                    soulElixirCount++;
-                                    break;
-                                case "Bone Skin":
-                                    boneSkinCount++;
-                                    break;
-                                case "Berserk":
-                                    berserkCount++;
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        System.out.println();
-
-                        int totalPotions = healthCount + gamblingCount + criticalCount + labyrinthMithySoupCount
-                                + slimePuddingCount + soulElixirCount + boneSkinCount + berserkCount;
-
-                        if (totalPotions == 0) {
-                            System.out.println("  No potions in the inventory");
-                        } else {
-                            System.out.println("Potions:");
-                            if (healthCount > 0) {
-                                System.out.println("  Health : " + healthCount);
-                            }
-                            if (gamblingCount > 0) {
-                                System.out.println("  Gambling : " + gamblingCount);
-                            }
-                            if (criticalCount > 0) {
-                                System.out.println("  Critical Strike: " + criticalCount);
-                            }
-                            if (labyrinthMithySoupCount > 0) {
-                                System.out.println("  Labyrinth Mithy Soup: " + labyrinthMithySoupCount);
-                            }
-                            if (slimePuddingCount > 0) {
-                                System.out.println("  Slime Pudding: " + slimePuddingCount);
-                            }
-                            if (soulElixirCount > 0) {
-                                System.out.println("  Soul Elixir: " + soulElixirCount);
-                            }
-                            if (boneSkinCount > 0) {
-                                System.out.println("  Bone Skin: " + boneSkinCount);
-                            }
-                            if (berserkCount > 0) {
-                                System.out.println("  Berserk: " + berserkCount);
-                            }
-                        }
-                    }
-                    System.out.println("Press Enter to return to the menu...");
-                    scanner.nextLine();
+                    checkPotions(scanner);
                     break;
                 }
                 case 2: {
@@ -286,9 +206,9 @@ public class Player extends Champion {
                         }
                         System.out.println(
                                 "Current weapon: "
-                                        + (this.getOldWeapon() != null ? this.getOldWeapon().getName() : "none"));
-                        System.out.println(
-                                "Enter the index of the weapon to swap with oldWeapon, or type 'back' to cancel:");
+                                        + (this.getOldWeapon() != null ? this.getOldWeapon().getName() : "none")
+
+                                        + "Enter the index of the weapon to swap with the current weapon, or type 'back' to cancel:");
                         String input = scanner.nextLine().trim();
 
                         if ("back".equalsIgnoreCase(input)) {
@@ -380,6 +300,37 @@ public class Player extends Champion {
                     System.out.println("Invalid choice.\n");
             }
         }
+    }
+
+    /**
+     * Counts potions in the inventory by name.
+     *
+     * @return A map of potion names to their counts.
+     */
+    public java.util.Map<String, Integer> countPotions() {
+        java.util.Map<String, Integer> potionCounts = new java.util.HashMap<>();
+        for (Potion p : inventory.getPotions()) {
+            int count = potionCounts.getOrDefault(p.getName(), 0) + 1;
+            potionCounts.put(p.getName(), count);
+        }
+        return potionCounts;
+    }
+
+    /**
+     * Checks and displays the potions in the player's inventory.
+     *
+     * @param scanner The scanner to read user input.
+     */
+    public void checkPotions(Scanner scanner) {
+        if (inventory.getPotions().isEmpty()) {
+            System.out.println("\nYou don't have any potions in your backpack\n");
+        } else {
+            java.util.Map<String, Integer> potionCounts = countPotions();
+            System.out.println("\nPotions:");
+            potionCounts.forEach((name, count) -> System.out.println("  " + name + ": " + count));
+        }
+        System.out.println("Press Enter to return to the menu...");
+        scanner.nextLine();
     }
 
     /**
