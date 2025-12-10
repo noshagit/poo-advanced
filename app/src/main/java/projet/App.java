@@ -2,6 +2,7 @@ package projet;
 
 /* IMPORTS */
 
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,6 +16,13 @@ import projet.weapon.*;
  */
 public class App {
     public static void main(String[] args) {
+        Leaderboard leaderboard = new Leaderboard();
+        Map<String, Integer> scores = leaderboard.getScores();
+        leaderboard.load();
+        System.out.println("Current Leaderboard:");
+        for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
         gameLoop();
     }
 
@@ -25,14 +33,14 @@ public class App {
         boolean revival = true;
 
         Enemy[] enemies = {
-            new Slime(),
-            new Goblin(),
-            new Skeleton(),
-            new Orc(),
-            new Reaper(),
-            new Troll(),
-            new StoneGolem(),
-            new Minotaur()
+                new Slime(),
+                new Goblin(),
+                new Skeleton(),
+                new Orc(),
+                new Reaper(),
+                new Troll(),
+                new StoneGolem(),
+                new Minotaur()
         };
 
         Scanner scanner = new Scanner(System.in);
@@ -86,6 +94,12 @@ public class App {
                             System.out.println("\nYou are dead. Game over.");
                             System.out.println();
                             scanner.close();
+
+                            Leaderboard leaderboard = new Leaderboard();
+                            leaderboard.load();
+                            leaderboard.setScore(player.getName(), player.getXp());
+                            System.out.println("Your score has been recorded in the leaderboard."
+                                    + "\nTotal XP gained: " + player.getTotalXp());
                             return;
                         }
                     }
@@ -140,11 +154,19 @@ public class App {
                 case "3" -> {
                     while (true) {
                         System.out.println();
-                        System.out.print("Are you sure? There is no save option. (y/n): ");
+                        System.out.print("Are you sure? Your score will be saved in the leaderboard. (y/n): ");
                         String confirmation = scanner.nextLine().trim();
                         if ("y".equalsIgnoreCase(confirmation)) {
                             System.out.println("Exiting game...");
                             scanner.close();
+
+                            Leaderboard leaderboard = new Leaderboard();
+                            leaderboard.load();
+                            leaderboard.setScore(player.getName(), player.getXp());
+                            System.out
+                                    .println("Your score has been recorded in the leaderboard."
+                                            + "\nTotal XP gained: " + player.getTotalXp());
+
                             System.exit(0);
                         } else if ("n".equalsIgnoreCase(confirmation)) {
                             break;
