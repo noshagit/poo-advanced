@@ -27,61 +27,54 @@ public class Fight {
         enemyWeapon.subDamages(player.getExtraArmorGolem());
 
         Random rand = new Random();
-        int isStunned = rand.nextInt(100);
-        if (isStunned >= 25) {
-            if (player.getMoveSpeed() < enemy.getMoveSpeed()) {
-                player.takeDamage(enemyWeapon);
-                if ((rand.nextInt(100) + enemy.getExtraCrit()) > 75) {
-                    System.out.println(enemy.getName() + " lands a critical strike!");
-                    player.takeDamage(enemyWeapon);
-                }
+        boolean isStunned = rand.nextInt(100) < 25;
 
-                enemy.takeDamage(playerWeapon);
+        if (player.getMoveSpeed() < enemy.getMoveSpeed()) {
+            player.takeDamage(enemyWeapon);
+            critDmg(enemy, player, rand);
+
+            enemy.takeDamage(playerWeapon);
+            if (player.hasLifeSteal() && !isStunned) {
+                player.addHealth(playerWeapon.getDamages() / 4);
+            }
+            if (critDmg(player, enemy, rand) && !isStunned) {
                 if (player.hasLifeSteal()) {
                     player.addHealth(playerWeapon.getDamages() / 4);
-                }
-                if ((rand.nextInt(100) + player.getExtraCrit()) > 75) {
-                    System.out.println(player.getName() + " lands a critical strike!");
-                    enemy.takeDamage(playerWeapon);
-                    if (player.hasLifeSteal()) {
-                        player.addHealth(playerWeapon.getDamages() / 4);
-                    }
-                }
-
-            } else {
-                enemy.takeDamage(playerWeapon);
-                if (player.hasLifeSteal()) {
-                    player.addHealth(playerWeapon.getDamages() / 4);
-                }
-                if ((rand.nextInt(100) + player.getExtraCrit()) > 75) {
-                    System.out.println(player.getName() + " lands a critical strike!");
-                    enemy.takeDamage(playerWeapon);
-                    if (player.hasLifeSteal()) {
-                        player.addHealth(playerWeapon.getDamages() / 4);
-                    }
-                }
-
-                player.takeDamage(enemyWeapon);
-                if ((rand.nextInt(100) + enemy.getExtraCrit()) > 75) {
-                    System.out.println(enemy.getName() + " lands a critical strike!");
-                    player.takeDamage(enemyWeapon);
                 }
             }
-        } else {
+
+        } else { // player strikes first
             enemy.takeDamage(playerWeapon);
-            if ((rand.nextInt(100) + player.getExtraCrit()) > 75) {
-                System.out.println(player.getName() + " lands a critical strike!");
-                enemy.takeDamage(playerWeapon);
+            if (player.hasLifeSteal() && !isStunned) {
+                player.addHealth(playerWeapon.getDamages() / 4);
+            }
+            if (critDmg(player, enemy, rand) && !isStunned) {
+                if (player.hasLifeSteal()) {
+                    player.addHealth(playerWeapon.getDamages() / 4);
+                }
             }
 
             player.takeDamage(enemyWeapon);
-            if ((rand.nextInt(100) + enemy.getExtraCrit()) > 75) {
-                System.out.println(enemy.getName() + " lands a critical strike!");
-                player.takeDamage(enemyWeapon);
-            }
+            critDmg(enemy, player, rand);
         }
-
         playerWeapon.gainXp();
+    }
+
+    /**
+     * Determines if an attack is a critical hit and applies damage accordingly.
+     * 
+     * @param attacker The champion who is attacking.
+     * @param defender The champion who is defending.
+     * @param rand     The random number generator.
+     * @return true if the attack was a critical hit, false otherwise.
+     */
+    private static boolean critDmg(Champion attacker, Champion defender, Random rand) {
+        if ((rand.nextInt(100) + attacker.getExtraCrit()) > 75) {
+            System.out.println(attacker.getName() + " lands a critical strike!");
+            defender.takeDamage(attacker.getWeapon());
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -201,11 +194,11 @@ public class Fight {
                 System.out.println("  No potions in the inventory");
             } else {
                 System.out.println("Potions:");
-                String[] potionNames = {"Health", "Gambling", "Critical Strike", "Labyrinth Mithy Soup", 
-                                       "Slime Pudding", "Soul Elixir", "Bone Skin", "Berserk", "Stone Golem"};
-                int[] potionCounts = {healthCount, gamblingCount, criticalCount, labyrinthMithySoupCount,
-                                     slimePuddingCount, soulElixirCount, boneSkinCount, berserkCount, stoneGolemCount};
-                
+                String[] potionNames = { "Health", "Gambling", "Critical Strike", "Labyrinth Mithy Soup",
+                        "Slime Pudding", "Soul Elixir", "Bone Skin", "Berserk", "Stone Golem" };
+                int[] potionCounts = { healthCount, gamblingCount, criticalCount, labyrinthMithySoupCount,
+                        slimePuddingCount, soulElixirCount, boneSkinCount, berserkCount, stoneGolemCount };
+
                 for (int i = 0; i < potionNames.length; i++) {
                     if (potionCounts[i] > 0) {
                         System.out.println("  " + potionNames[i] + ": " + potionCounts[i]);
