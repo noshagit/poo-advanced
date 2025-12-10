@@ -39,12 +39,12 @@ public class Player extends Champion {
         this.setHealth(Math.min(this.getHealth() + health, this.maxHealth));
     }
 
-    public boolean hasNextInt() {
-        return this.lifeSteal;
-    }
-
     public boolean hasLifeSteal() {
         return lifeSteal;
+    }
+
+    public void setLifeSteal(boolean lifeSteal) {
+        this.lifeSteal = lifeSteal;
     }
 
     public boolean hasChanceToStun() {
@@ -52,18 +52,6 @@ public class Player extends Champion {
     }
 
     public void setChanceToStun(boolean chancetostun) {
-        this.chancetostun = chancetostun;
-    }
-
-    public void setLifeSteal(boolean lifeSteal) {
-        this.lifeSteal = lifeSteal;
-    }
-
-    public boolean chancetostun() {
-        return chancetostun;
-    }
-
-    public void chancetostun(boolean chancetostun) {
         this.chancetostun = chancetostun;
     }
 

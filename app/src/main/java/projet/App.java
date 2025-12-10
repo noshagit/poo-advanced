@@ -108,7 +108,7 @@ public class App {
                 fightCount++;
                 player.setWeapon(player.getOldWeapon());
                 player.setLifeSteal(false);
-                player.chancetostun(false);
+                player.setChanceToStun(false);
                 player.extraDamageMightySoup(0);
                 player.setExtraArmorGolem(0);
             }
