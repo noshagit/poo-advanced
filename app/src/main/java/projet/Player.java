@@ -2,6 +2,7 @@ package projet;
 
 /* IMPORTS */
 
+import java.util.List;
 import java.util.Scanner;
 
 import projet.armors.Armor;
@@ -171,8 +172,7 @@ public class Player extends Champion {
      * options.
      */
     public void checkInventory(Scanner scanner) {
-        boolean back = false;
-        while (!back) {
+        while (true) {
             System.out.println("What would you like to see?"
                     + "\n 1. Potions"
                     + "\n 2. Weapons"
@@ -196,119 +196,137 @@ public class Player extends Champion {
                     break;
                 }
                 case 2: {
-                    System.out.println();
-                    if (inventory.getWeapons().isEmpty()) {
-                        System.out.println("You don't have any weapons in your backpack"
-                                + "\nPress Enter to return to the menu...");
-                        scanner.nextLine();
-                        break;
-                    }
-
-                    System.out.println("Weapons:");
-
-                    while (true) {
-                        System.out.println("Weapons in backpack:");
-                        for (int i = 0; i < inventory.getWeapons().size(); i++) {
-                            Weapon w = inventory.getWeapons().get(i);
-                            System.out.println("  " + i + ": " + w.getName() + " (lvl " + w.getLevel() + ", xp "
-                                    + w.getXp() + ")");
-                        }
-                        System.out.println(
-                                "Current weapon: "
-                                        + (this.getOldWeapon() != null ? this.getOldWeapon().getName() : "none")
-
-                                        + "Enter the index of the weapon to swap with the current weapon, or type 'back' to cancel:");
-                        String input = scanner.nextLine().trim();
-
-                        if ("back".equalsIgnoreCase(input)) {
-                            break;
-                        }
-
-                        try {
-                            int idx = Integer.parseInt(input);
-                            if (idx < 0 || idx >= inventory.getWeapons().size()) {
-                                System.out.println("Invalid index.");
-                                continue;
-                            }
-
-                            Weapon selected = inventory.getWeapons().get(idx);
-                            Weapon currentOld = this.getOldWeapon();
-
-                            if (currentOld != null) {
-                                inventory.getWeapons().set(idx, currentOld);
-                            } else {
-                                inventory.getWeapons().remove(idx);
-                            }
-
-                            this.oldWeapon = selected;
-
-                            System.out.println("Swapped " + selected.getName() + " into oldWeapon.");
-                            break;
-                        } catch (NumberFormatException e) {
-                            System.out.println("Please enter a valid number or 'back'.");
-                        }
-                    }
-                    System.out.println();
+                    checkWeapons(scanner);
                     break;
                 }
                 case 3: {
-                    System.out.println();
-                    if (inventory.getArmors().isEmpty()) {
-                        System.out.println("You don't have any armors in your backpack"
-                                + "\nPress Enter to return to the menu...");
-                        scanner.nextLine();
-                        break;
-                    }
-
-                    System.out.println("Armors:");
-
-                    while (true) {
-                        System.out.println("Armors in backpack:");
-                        for (int i = 0; i < inventory.getArmors().size(); i++) {
-                            Armor a = inventory.getArmors().get(i);
-                            System.out.println("  " + i + ": " + a.getName());
-                        }
-                        System.out.println(
-                                "Current armor: " + (this.getArmor() != null ? this.getArmor().getName() : "none")
-                                        + "\nEnter the index of the armor to equip, or type 'back' to cancel:");
-                        String input = scanner.nextLine().trim();
-
-                        if ("back".equalsIgnoreCase(input)) {
-                            break;
-                        }
-
-                        try {
-                            int idx = Integer.parseInt(input);
-                            if (idx < 0 || idx >= inventory.getArmors().size()) {
-                                System.out.println("Invalid index.");
-                                continue;
-                            }
-
-                            Armor selected = inventory.getArmors().remove(idx);
-                            Armor current = this.getArmor();
-
-                            if (current != null) {
-                                inventory.getArmors().add(current);
-                            }
-                            this.setArmor(selected);
-
-                            System.out.println("Equipped " + selected.getName());
-                            break;
-                        } catch (NumberFormatException e) {
-                            System.out.println("Please enter a valid number or 'back'.");
-                        }
-                    }
-                    System.out.println();
+                    checkArmors(scanner);
                     break;
                 }
                 case 4:
-                    back = true;
                     System.out.println();
-                    break;
+                    return;
                 default:
                     System.out.println("Invalid choice.\n");
             }
         }
+    }
+
+    /**
+     * Checks and displays the armors in the player's inventory.
+     * 
+     * @param scanner The scanner to read user input.
+     */
+    public void checkArmors(Scanner scanner) {
+        System.out.println();
+        List<Armor> armors = inventory.getArmors();
+
+        if (armors.isEmpty()) {
+            System.out.println("You don't have any armors in your backpack"
+                    + "\nPress Enter to return to the menu...");
+            scanner.nextLine();
+            return;
+        }
+
+        while (true) {
+            System.out.println("Armors in backpack:");
+            for (int i = 0; i < armors.size(); i++) {
+                Armor a = armors.get(i);
+                System.out.println("  " + i + ": " + a.getName() + " (resistance " + a.getResistance() + ", weight "
+                        + a.getWeight() + ")");
+            }
+            System.out.println(
+                    "Current armor: "
+                            + (this.getArmor() != null ? this.getArmor().getName() : "none")
+                            + "\nEnter the index of the armor to equip, or type 'back' to cancel:");
+            String input = scanner.nextLine().trim();
+
+            if ("back".equalsIgnoreCase(input)) {
+                break;
+            }
+
+            try {
+                int idx = Integer.parseInt(input);
+                if (idx < 0 || idx >= inventory.getArmors().size()) {
+                    System.out.println("Invalid index.");
+                    continue;
+                }
+
+                Armor selected = inventory.getArmors().remove(idx);
+                Armor current = this.getArmor();
+
+                if (current != null) {
+                    inventory.getArmors().add(current);
+                }
+                this.setArmor(selected);
+
+                System.out.println("Equipped " + selected.getName());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number or 'back'.");
+            }
+        }
+        System.out.println();
+    }
+
+    /**
+     * Checks and displays the weapons in the player's inventory.
+     * 
+     * @param scanner The scanner to read user input.
+     */
+    public void checkWeapons(Scanner scanner) {
+        System.out.println();
+        List<Weapon> weapons = inventory.getWeapons();
+
+        if (weapons.isEmpty()) {
+            System.out.println("You don't have any weapons in your backpack"
+                    + "\nPress Enter to return to the menu...");
+            scanner.nextLine();
+            return;
+        }
+
+        while (true) {
+            System.out.println("Weapons in backpack:");
+            for (int i = 0; i < weapons.size(); i++) {
+                Weapon w = weapons.get(i);
+                System.out.println("  " + i + ": " + w.getName() + " (lvl " + w.getLevel() + ", xp "
+                        + w.getXp() + ")");
+            }
+            System.out.println(
+                    "Current weapon: "
+                            + (this.getOldWeapon() != null ? this.getOldWeapon().getName() : "none")
+                            + "\nEnter the index of the weapon to swap with the current weapon, or type 'back' to cancel:");
+            String input = scanner.nextLine().trim();
+
+            if ("back".equalsIgnoreCase(input)) {
+                break;
+            }
+
+            try {
+                int idx = Integer.parseInt(input);
+                if (idx < 0 || idx >= inventory.getWeapons().size()) {
+                    System.out.println("Invalid index.");
+                    continue;
+                }
+
+                Weapon selected = inventory.getWeapons().get(idx);
+                Weapon currentOld = this.getOldWeapon();
+
+                if (currentOld != null) {
+                    inventory.getWeapons().set(idx, currentOld);
+                } else {
+                    inventory.getWeapons().remove(idx);
+                }
+
+                this.oldWeapon = selected;
+
+                System.out.println("Swapped " + selected.getName() + " into oldWeapon.");
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number or 'back'.");
+            }
+        }
+        System.out.println();
     }
 
     /**
