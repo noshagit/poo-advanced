@@ -1,5 +1,6 @@
 package projet.weapons;
 
+/** Class representing a weapon. */
 public class Weapon{
     private final String nom;
     private int degats;

@@ -1,7 +1,7 @@
 package projet.armors;
 
-/** Class representing armor equipment. */
-public class Armor {
+/** Abstract class representing armor equipment. */
+public abstract class Armor {
     private String name;
     private int resistance;
     private int weight;
