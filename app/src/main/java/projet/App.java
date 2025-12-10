@@ -46,10 +46,8 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         Player player = createPlayer(scanner);
 
-        System.out.println("Welcome " + player.getName() + "! Let the battles begin!");
-        System.out.println();
-        System.out.println("============================");
-        System.out.println();
+        System.out.println("Welcome " + player.getName() + "! Let the battles begin!"
+                + "\n============================\n");
 
         while (true) {
             while (player.getHealth() > 0) {
@@ -62,8 +60,7 @@ public class App {
                     e.resetHealth();
                 }
 
-                System.out.println("\n--- Fight number " + fightCount + ": " + enemy.getName() + " ---");
-                System.out.println();
+                System.out.println("\n--- Fight number " + ++fightCount + ": " + enemy.getName() + " ---\n");
 
                 while (player.getHealth() > 0 && enemy.getHealth() > 0) {
 
@@ -71,22 +68,18 @@ public class App {
                     if (!isFight) { // skip post-fight updates if no fight occurred
                         continue;
                     }
-                    System.out.println("============================\n");
-
-                    System.out.println("After the exchange: " + player.getName() + "'s Health = " + player.getHealth()
-                            + " | " + enemy.getName() + " Health = " + enemy.getHealth());
-
-                    System.out.println("\n============================\n");
+                    System.out.println("============================\n"
+                            + "After the exchange: " + player.getName() + "'s Health = " + player.getHealth()
+                            + " | " + enemy.getName() + " Health = " + enemy.getHealth()
+                            + "\n\n============================\n\n");
 
                     if (player.getHealth() <= 0) {
                         if (revival == true) {
-                            System.out.println("You have been given a second chance !");
-                            System.out.println();
+                            System.out.println("You have been given a second chance !\n");
                             player.setHealth(player.getBaseHealth() / 2);
                             revival = false;
                         } else {
-                            System.out.println("\nYou are dead. Game over.");
-                            System.out.println();
+                            System.out.println("\nYou are dead. Game over.\n");
                             scanner.close();
 
                             Leaderboard leaderboard = new Leaderboard();
@@ -108,8 +101,7 @@ public class App {
 
                 if (player.getHealth() > 0) {
                     System.out.println("\nEnd of battles. " + player.getName() + " survives with " + player.getHealth()
-                            + " health points.");
-                    System.out.println();
+                            + " health points.\n");
                 }
 
                 System.out.println();
@@ -147,8 +139,7 @@ public class App {
                 }
                 case "3" -> {
                     while (true) {
-                        System.out.println();
-                        System.out.print("Are you sure? Your score will be saved in the leaderboard. (y/n): ");
+                        System.out.print("\nAre you sure? Your score will be saved in the leaderboard. (y/n): ");
                         String confirmation = scanner.nextLine().trim();
                         if ("y".equalsIgnoreCase(confirmation)) {
                             System.out.println("Exiting game...");
@@ -157,9 +148,8 @@ public class App {
                             Leaderboard leaderboard = new Leaderboard();
                             leaderboard.load();
                             leaderboard.setScore(player.getName(), player.getXp());
-                            System.out
-                                    .println("Your score has been recorded in the leaderboard."
-                                            + "\nTotal XP gained: " + player.getTotalXp());
+                            System.out.println("Your score has been recorded in the leaderboard."
+                                    + "\nTotal XP gained: " + player.getTotalXp());
 
                             System.exit(0);
                         } else if ("n".equalsIgnoreCase(confirmation)) {
@@ -316,7 +306,7 @@ public class App {
      * @param scanner The scanner for user input.
      * @return true if the action was successful, false otherwise.
      */
-    public static boolean chooseAction(Player player, Enemy enemy, Fight fight, Scanner scanner) {
+    public static boolean chooseAction(Player player, Enemy enemy, Scanner scanner) {
         System.out.println("1. Attack \n2. Use Potion \n3. Display statistics \nChoose an action: ");
         System.out.print("> ");
 
@@ -325,27 +315,21 @@ public class App {
 
         switch (action) {
             case "1":
-                fight.attack(player, enemy);
+                Fight.attack(player, enemy);
                 break;
             case "2":
-                System.out.println();
-                System.out.println("============================");
-                System.out.println();
-                System.out.println("Your pockets: ");
+                System.out.println("\n============================\n"
+                        + "Your pockets: ");
                 java.util.List<Potion> potions = player.getInventory().getPotions();
                 int healthCount = 0;
                 int gamblingCount = 0;
                 if (potions == null || potions.isEmpty()) {
 
-                    System.out.println("No potions available");
-                    System.out.println();
-                    System.out.println("============================");
-                    System.out.println();
+                    System.out.println("No potions available"
+                            + "\n============================\n");
                     return true;
                 } else {
-                    System.out.println();
-                    System.out.println("============================");
-                    System.out.println();
+                    System.out.println("\n============================\n\n");
                     int criticalCount = 0;
                     int labyrinthMithySoupCount = 0;
                     int slimePuddingCount = 0;
@@ -356,7 +340,8 @@ public class App {
 
                     for (int i = 0; i < potions.size(); i++) {
                         Potion p = potions.get(i);
-                        if (p == null || p.getName() == null) continue;
+                        if (p == null || p.getName() == null)
+                            continue;
                         String name = p.getName().trim();
 
                         if ("Health".equalsIgnoreCase(name)) {
@@ -460,26 +445,22 @@ public class App {
                         player.usePotion(selectedPotion);
                         player.getInventory().removePotion(selectedPotion);
 
-                        System.out.println();
-                        System.out.println("============================");
-                        System.out.println();
+                        System.out.println("\n============================\n");
 
                         break;
                     }
                 }
                 break;
             case "3":
-                System.out.println("============================");
-                System.out.println();
-                System.out.println(player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: "
+                System.out.println("============================\n"
+                        + player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: "
                         + player.getHealth() + " | Weapon: "
                         + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
-                        + player.getXp() + " | Level: " + player.getLevel());
-                System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "
-                        + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName());
-                System.out.println();
-                System.out.println("============================");
-                System.out.println();
+                        + player.getXp() + " | Level: " + player.getLevel()
+
+                        + "\n" + enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "
+                        + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName()
+                        + "\n\n============================\n");
                 return true;
             default:
                 System.out.println("Invalid action, try again.");
@@ -548,10 +529,10 @@ public class App {
                 }
             }
             // case "Goblin" -> {
-            //     if (newPotion < 20) {
-            //         System.out.println("You found a !");
-            //         player.getInventory().addPotion(new ());
-            //     }
+            // if (newPotion < 20) {
+            // System.out.println("You found a !");
+            // player.getInventory().addPotion(new ());
+            // }
             // }
             case "Orc" -> {
                 if (newPotion < 20) {
@@ -560,10 +541,10 @@ public class App {
                 }
             }
             // case "Troll" -> {
-            //     if (newPotion < 15) {
-            //         System.out.println("You found a ");
-            //         player.getInventory().addPotion(new ());
-            //     }
+            // if (newPotion < 15) {
+            // System.out.println("You found a ");
+            // player.getInventory().addPotion(new ());
+            // }
             // }
             case "Reaper" -> {
                 if (newPotion < 25) {
