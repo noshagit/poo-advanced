@@ -126,27 +126,36 @@ public class Player extends Champion {
         this.totalXp += (int) actualXp;
 
         if (this.xp >= 100) {
-            this.level += 1;
-            this.xp = 0;
-            System.out.println("\nYou leveled up!\n"
-                    + "\nWould you like to :"
-                    + "\n 1. Increase your max health by 10"
-                    + "\n 2. Heal 40 health points\n");
-            System.out.print("> ");
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-                    this.maxHealth += 10;
-                    this.setHealth(this.getHealth() + 10);
-                    System.out.println("Your max health increased to " + this.maxHealth);
-                    break;
-                case 2:
-                    this.setHealth(Math.min(this.getHealth() + 40, this.maxHealth));
-                    System.out.println("You healed 40 health points. Current health: " + this.getHealth());
-            }
-            System.out.println();
+            levelUp(scanner);
         }
+    }
+
+    /**
+     * Levels up the player and asks them to choose an upgrade.
+     * 
+     * @param scanner The scanner to read user input.
+     */
+    public void levelUp(Scanner scanner) {
+        this.level += 1;
+        this.xp = 0;
+        System.out.println("\nYou leveled up!\n"
+                + "\nWould you like to :"
+                + "\n 1. Increase your max health by 10"
+                + "\n 2. Heal 40 health points\n");
+        System.out.print("> ");
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                this.maxHealth += 10;
+                this.setHealth(this.getHealth() + 10);
+                System.out.println("Your max health increased to " + this.maxHealth);
+                break;
+            case 2:
+                this.setHealth(Math.min(this.getHealth() + 40, this.maxHealth));
+                System.out.println("You healed 40 health points. Current health: " + this.getHealth());
+        }
+        System.out.println();
     }
 
     public Weapon getOldWeapon() {
