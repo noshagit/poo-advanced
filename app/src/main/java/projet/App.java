@@ -4,6 +4,7 @@ package projet;
 
 /* IMPORTS */
 
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -34,6 +35,13 @@ import projet.weapon.Weapon;
  */
 public class App {
     public static void main(String[] args) {
+        Leaderboard leaderboard = new Leaderboard();
+        Map<String, Integer> scores = leaderboard.getScores();
+        leaderboard.load();
+        System.out.println("Current Leaderboard:");
+        for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
         gameLoop();
     }
 
