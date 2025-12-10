@@ -1,15 +1,14 @@
 package projet;
 
-/* TODO : Modify randEnemy with new enemies selection logic */
-
 /* IMPORTS */
 
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import projet.potions.*;
 import projet.armor.*;
 import projet.enemies.*;
-import projet.potions.*;
 import projet.weapon.*;
 
 /**
@@ -17,6 +16,13 @@ import projet.weapon.*;
  */
 public class App {
     public static void main(String[] args) {
+        Leaderboard leaderboard = new Leaderboard();
+        Map<String, Integer> scores = leaderboard.getScores();
+        leaderboard.load();
+        System.out.println("Current Leaderboard:");
+        for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
         gameLoop();
     }
 
@@ -56,7 +62,8 @@ public class App {
                     e.resetHealth();
                 }
 
-                System.out.println("\n--- Fight number " + ++fightCount + ": " + enemy.getName() + " ---\n");
+                System.out.println("\n--- Fight number " + fightCount + ": " + enemy.getName() + " ---");
+                System.out.println();
 
                 while (player.getHealth() > 0 && enemy.getHealth() > 0) {
 
@@ -81,6 +88,12 @@ public class App {
                             System.out.println("\nYou are dead. Game over.");
                             System.out.println();
                             scanner.close();
+
+                            Leaderboard leaderboard = new Leaderboard();
+                            leaderboard.load();
+                            leaderboard.setScore(player.getName(), player.getXp());
+                            System.out.println("Your score has been recorded in the leaderboard."
+                                    + "\nTotal XP gained: " + player.getTotalXp());
                             return;
                         }
                     }
@@ -104,6 +117,10 @@ public class App {
                 System.out.println();
                 fightCount++;
                 player.setWeapon(player.getOldWeapon());
+                player.setLifeSteal(false);
+                player.chancetostun(false);
+                player.extraDamageMightySoup(0);
+                player.setExtraArmorGolem(0);
             }
         }
     }
@@ -130,11 +147,20 @@ public class App {
                 }
                 case "3" -> {
                     while (true) {
-                        System.out.print("\nAre you sure? There is no save option. (y/n): ");
+                        System.out.println();
+                        System.out.print("Are you sure? Your score will be saved in the leaderboard. (y/n): ");
                         String confirmation = scanner.nextLine().trim();
                         if ("y".equalsIgnoreCase(confirmation)) {
                             System.out.println("Exiting game...");
                             scanner.close();
+
+                            Leaderboard leaderboard = new Leaderboard();
+                            leaderboard.load();
+                            leaderboard.setScore(player.getName(), player.getXp());
+                            System.out
+                                    .println("Your score has been recorded in the leaderboard."
+                                            + "\nTotal XP gained: " + player.getTotalXp());
+
                             System.exit(0);
                         } else if ("n".equalsIgnoreCase(confirmation)) {
                             break;
@@ -239,6 +265,230 @@ public class App {
     }
 
     /**
+     * randEnemy selects a random enemy based on the player's level.
+     * 
+     * @param player  The player whose level is considered.
+     * @param enemies The array of possible enemies.
+     * @param rand    The random number generator.
+     * @return A randomly selected enemy.
+     */
+    public static Enemy randEnemy(Player player, Random rand) {
+        int lvl = player.getLevel();
+        int randomIndex;
+
+        if (lvl < 2) {
+            return new Slime();
+        } else if (lvl >= 2 && lvl < 5) {
+            Enemy[] possibleEnemies = { new Goblin(), new Slime() };
+            randomIndex = rand.nextInt(possibleEnemies.length);
+            return possibleEnemies[randomIndex];
+        } else if (lvl >= 5 && lvl < 9) {
+            Enemy[] possibleEnemies = { new Goblin(), new Skeleton(), new Slime() };
+            randomIndex = rand.nextInt(possibleEnemies.length);
+            return possibleEnemies[randomIndex];
+        } else if (lvl >= 9 && lvl < 15) {
+            Enemy[] possibleEnemies = { new Goblin(), new Orc(), new Skeleton() };
+            randomIndex = rand.nextInt(possibleEnemies.length);
+            return possibleEnemies[randomIndex];
+        } else if (lvl >= 15 && lvl < 20) {
+            Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Skeleton() };
+            randomIndex = rand.nextInt(possibleEnemies.length);
+            return possibleEnemies[randomIndex];
+        } else if (lvl >= 20 && lvl < 30) {
+            Enemy[] possibleEnemies = { new Reaper(), new Orc(), new Troll() };
+            randomIndex = rand.nextInt(possibleEnemies.length);
+            return possibleEnemies[randomIndex];
+        } else if (lvl >= 30 && lvl < 50) {
+            Enemy[] possibleEnemies = { new Troll(), new StoneGolem(), new Minotaur() };
+            randomIndex = rand.nextInt(possibleEnemies.length);
+            return possibleEnemies[randomIndex];
+        } else {
+            return new Minotaur();
+        }
+    }
+
+    /**
+     * chooseAction allows the player to choose an action during a fight.
+     * 
+     * @param player  The player who is fighting.
+     * @param enemy   The enemy being fought.
+     * @param fight   The fight instance.
+     * @param scanner The scanner for user input.
+     * @return true if the action was successful, false otherwise.
+     */
+    public static boolean chooseAction(Player player, Enemy enemy, Fight fight, Scanner scanner) {
+        System.out.println("1. Attack \n2. Use Potion \n3. Display statistics \nChoose an action: ");
+        System.out.print("> ");
+
+        String action = scanner.nextLine().trim();
+        System.out.println();
+
+        switch (action) {
+            case "1":
+                fight.attack(player, enemy);
+                break;
+            case "2":
+                System.out.println();
+                System.out.println("============================");
+                System.out.println();
+                System.out.println("Your pockets: ");
+                java.util.List<Potion> potions = player.getInventory().getPotions();
+                int healthCount = 0;
+                int gamblingCount = 0;
+                if (potions == null || potions.isEmpty()) {
+
+                    System.out.println("No potions available");
+                    System.out.println();
+                    System.out.println("============================");
+                    System.out.println();
+                    return true;
+                } else {
+                    System.out.println();
+                    System.out.println("============================");
+                    System.out.println();
+                    int criticalCount = 0;
+                    int labyrinthMithySoupCount = 0;
+                    int slimePuddingCount = 0;
+                    int soulElixirCount = 0;
+                    int boneSkinCount = 0;
+                    int berserkCount = 0;
+                    int stoneGolemCount = 0;
+
+                    for (int i = 0; i < potions.size(); i++) {
+                        Potion p = potions.get(i);
+                        if (p == null || p.getName() == null) continue;
+                        String name = p.getName().trim();
+
+                        if ("Health".equalsIgnoreCase(name)) {
+                            healthCount++;
+                        } else if ("Gambling".equalsIgnoreCase(name)) {
+                            gamblingCount++;
+                        } else if ("Critical".equalsIgnoreCase(name)) {
+                            criticalCount++;
+                        } else if ("Labyrinth Mithy Soup".equalsIgnoreCase(name)
+                                || "Labyrinthe Mighty Soup".equalsIgnoreCase(name)
+                                || "LabyrintheMightySoup".equalsIgnoreCase(name)) {
+                            labyrinthMithySoupCount++;
+                        } else if ("Slime Pudding".equalsIgnoreCase(name)) {
+                            slimePuddingCount++;
+                        } else if ("Soul Elixir".equalsIgnoreCase(name)) {
+                            soulElixirCount++;
+                        } else if ("Bone Skin".equalsIgnoreCase(name)
+                                || "Bone Skin Potion".equalsIgnoreCase(name)
+                                || "BoneSkinPotion".equalsIgnoreCase(name)) {
+                            boneSkinCount++;
+                        } else if ("Berserk".equalsIgnoreCase(name) || "Berserk Potion".equalsIgnoreCase(name)) {
+                            berserkCount++;
+                        } else if ("Stone Golem".equalsIgnoreCase(name)
+                                || "Stone Golem Potion".equalsIgnoreCase(name)
+                                || "StoneGolemPotion".equalsIgnoreCase(name)) {
+                            stoneGolemCount++;
+                        }
+                    }
+
+                    int totalPotions = healthCount + gamblingCount + criticalCount + labyrinthMithySoupCount
+                            + slimePuddingCount + soulElixirCount + boneSkinCount + berserkCount + stoneGolemCount;
+
+                    if (totalPotions == 0) {
+                        System.out.println("  No potions in the inventory");
+                    } else {
+                        System.out.println("Potions:");
+                        if (healthCount > 0) {
+                            System.out.println("  Health : " + healthCount);
+                        }
+                        if (gamblingCount > 0) {
+                            System.out.println("  Gambling : " + gamblingCount);
+                        }
+                        if (criticalCount > 0) {
+                            System.out.println("  Critical Strike : " + criticalCount);
+                        }
+                        if (labyrinthMithySoupCount > 0) {
+                            System.out.println("  Labyrinth Mithy Soup : " + labyrinthMithySoupCount);
+                        }
+                        if (slimePuddingCount > 0) {
+                            System.out.println("  Slime Pudding: " + slimePuddingCount);
+                        }
+                        if (soulElixirCount > 0) {
+                            System.out.println("  Soul Elixir: " + soulElixirCount);
+                        }
+                        if (boneSkinCount > 0) {
+                            System.out.println("  Bone Skin: " + boneSkinCount);
+                        }
+                        if (berserkCount > 0) {
+                            System.out.println("  Berserk: " + berserkCount);
+                        }
+                        if (stoneGolemCount > 0) {
+                            System.out.println("  Stone Golem: " + stoneGolemCount);
+                        }
+                    }
+
+                    System.out.println("Choose a potion by name or index, or enter 'b' to go back:");
+                    System.out.print("> ");
+                    System.out.println();
+
+                    while (true) {
+                        String potionChoice = scanner.nextLine().trim();
+                        if (potionChoice.equalsIgnoreCase("b") || potionChoice.equalsIgnoreCase("back")) {
+                            return true;
+                        }
+
+                        Potion selectedPotion = null;
+                        for (Potion p : potions) {
+                            if (p.getName().equalsIgnoreCase(potionChoice)) {
+                                selectedPotion = p;
+                                break;
+                            }
+                        }
+
+                        if (selectedPotion == null) {
+                            try {
+                                int index = Integer.parseInt(potionChoice);
+                                if (index >= 1 && index <= potions.size()) {
+                                    selectedPotion = potions.get(index - 1);
+                                } else {
+                                    System.out.println("Invalid index. Try again or enter 'b' to go back:");
+                                    System.out.print("> ");
+                                    System.out.println();
+                                    continue;
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid potion name. Try again or enter 'b' to go back:");
+                                continue;
+                            }
+                        }
+
+                        player.usePotion(selectedPotion);
+                        player.getInventory().removePotion(selectedPotion);
+
+                        System.out.println();
+                        System.out.println("============================");
+                        System.out.println();
+
+                        break;
+                    }
+                }
+                break;
+            case "3":
+                System.out.println("============================");
+                System.out.println();
+                System.out.println(player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: "
+                        + player.getHealth() + " | Weapon: "
+                        + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
+                        + player.getXp() + " | Level: " + player.getLevel());
+                System.out.println(enemy.getName() + " - Health: " + enemy.getHealth() + " | Weapon: "
+                        + enemy.getWeapon().getName() + " | Armor: " + enemy.getArmor().getName());
+                System.out.println();
+                System.out.println("============================");
+                System.out.println();
+                return true;
+            default:
+                System.out.println("Invalid action, try again.");
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * defeatEnemy handles the actions to take when an enemy is defeated.
      * 
      * @param enemy   The enemy that was defeated.
@@ -250,7 +500,7 @@ public class App {
         player.gainXp(enemy.getXpReward(), scanner);
         System.out.println("New XP points: " + player.getXp() + " | Level: " + player.getLevel() + "\n");
 
-        NewPotion(player);
+        NewPotion(player, enemy);
 
         NewWeapon(player, enemy, scanner);
 
@@ -262,15 +512,65 @@ public class App {
      * 
      * @param player The player to receive the potion.
      */
-    public static void NewPotion(Player player) {
+    public static void NewPotion(Player player, Enemy enemy) {
         Random randpotion = new Random();
         int newPotion = randpotion.nextInt(100);
-        if (newPotion < 40) {
+        if (newPotion < 30) {
             System.out.println("You found a health potion!");
             player.getInventory().addPotion(new HealthPotion());
-        } else if (newPotion >= 40 && newPotion < 60) {
+        } else if (newPotion >= 30 && newPotion < 50) {
             System.out.println("You found a gambling potion");
             player.getInventory().addPotion(new GamblingPotion());
+        } else if (newPotion >= 50 && newPotion < 70) {
+            System.out
+                    .println("You found a critical potion and a health potion!");
+            player.getInventory().addPotion(new CriticalPotion());
+            player.getInventory().addPotion(new HealthPotion());
+        }
+
+        switch (enemy.getName()) {
+            case "Skeleton" -> {
+                if (newPotion < 30) {
+                    System.out.println("You found a bone skin potion!");
+                    player.getInventory().addPotion(new BoneSkinPotion());
+                }
+            }
+            case "Minotaur" -> {
+                if (newPotion < 15) {
+                    System.out.println("You found a Labyrinth Mighty Soup!");
+                    player.getInventory().addPotion(new LabyrintheMightySoup());
+                }
+            }
+            case "Slime" -> {
+                if (newPotion < 30) {
+                    System.out.println("You found a Slime Pudding!");
+                    player.getInventory().addPotion(new SlimePudding());
+                }
+            }
+            // case "Goblin" -> {
+            //     if (newPotion < 20) {
+            //         System.out.println("You found a !");
+            //         player.getInventory().addPotion(new ());
+            //     }
+            // }
+            case "Orc" -> {
+                if (newPotion < 20) {
+                    System.out.println("You found a Berserk Potion!");
+                    player.getInventory().addPotion(new BerserkPotion());
+                }
+            }
+            // case "Troll" -> {
+            //     if (newPotion < 15) {
+            //         System.out.println("You found a ");
+            //         player.getInventory().addPotion(new ());
+            //     }
+            // }
+            case "Reaper" -> {
+                if (newPotion < 25) {
+                    System.out.println("You found a Soul Elixir!");
+                    player.getInventory().addPotion(new SoulElixir());
+                }
+            }
         }
         System.out.println();
     }
