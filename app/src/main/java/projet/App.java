@@ -50,15 +50,15 @@ public class App {
                 + "\n============================\n");
 
         while (true) {
+            int fightCount = 1;
             while (player.getHealth() > 0) {
-                int fightCount = 0;
                 Enemy enemy;
 
                 enemy = Fight.randEnemy(player, enemies);
 
                 enemy.resetHealth();
 
-                System.out.println("\n--- Fight number " + ++fightCount + ": " + enemy.getName() + " ---\n");
+                System.out.println("\n--- Fight number " + fightCount + ": " + enemy.getName() + " ---\n");
 
                 while (player.getHealth() > 0 && enemy.getHealth() > 0) {
 
@@ -98,8 +98,8 @@ public class App {
                 }
 
                 if (player.getHealth() > 0) {
-                    System.out.println("\nEnd of battles. " + player.getName() + " survives with " + player.getHealth()
-                            + " health points.\n");
+                    System.out.println("\nEnd of battle. " + player.getName() + " survives with "
+                            + player.getHealth() + " health points.\n");
                 }
 
                 System.out.println();
@@ -126,14 +126,16 @@ public class App {
         System.out.print("> ");
         String actionChoice = scanner.nextLine();
 
-        while (!"1".equals(actionChoice)) {
+        while (true) {
             switch (actionChoice) {
                 case "1" -> {
                     System.out.println("Continuing the fight...");
+                    return;
                 }
                 case "2" -> {
                     System.out.println();
                     player.checkInventory(scanner);
+                    break;
                 }
                 case "3" -> {
                     while (true) {
@@ -156,6 +158,7 @@ public class App {
                             System.out.println("Invalid input. Please enter 'y' or 'n'.");
                         }
                     }
+                    break;
                 }
                 default -> System.out.println("Invalid choice. Please choose again.");
             }
@@ -352,6 +355,9 @@ public class App {
 
         if (newWeapon < 20) {
             Weapon droppedWeapon = enemy.getWeapon();
+            if (droppedWeapon instanceof Fist) {
+                return;
+            }
             System.out.println("The enemy dropped a " + droppedWeapon.getName() + "!"
                     + "\nDo you want to take it? (y/n): ");
             System.out.print("> ");
@@ -387,6 +393,9 @@ public class App {
 
         if (newArmor < 20) {
             Armor droppedArmor = enemy.getArmor();
+            if (droppedArmor instanceof Naked) {
+                return;
+            }
             System.out.println("The enemy dropped a " + droppedArmor.getName() + "!"
                     + "\nDo you want to take it? (y/n): ");
             String choice;
