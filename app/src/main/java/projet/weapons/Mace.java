@@ -1,4 +1,4 @@
-package projet.weapon;
+package projet.weapons;
 
 public class Mace extends Weapon {
     public Mace() {

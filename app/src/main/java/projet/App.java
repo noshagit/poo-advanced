@@ -7,9 +7,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 import projet.potions.*;
-import projet.armor.*;
+import projet.weapons.*;
+import projet.armors.*;
 import projet.enemies.*;
-import projet.weapon.*;
 
 /**
  * The main application class for the game.
@@ -218,8 +218,8 @@ public class App {
         System.out.println("============================\n"
                 + "\nChoose your armor:\n"
                 + "\n1. Naked"
-                + "\n2. WoodenArmour"
-                + "\n3. IronArmour");
+                + "\n2. WoodenArmor"
+                + "\n3. IronArmor");
         System.out.print("> ");
 
         String armorChoice = scanner.nextLine();
@@ -228,8 +228,8 @@ public class App {
         while (!"1".equals(armorChoice) && !"2".equals(armorChoice) && !"3".equals(armorChoice)) {
             System.out.println("Invalid armor choice. Choose your armor:"
                     + "\n 1. Naked"
-                    + "\n 2. WoodenArmour"
-                    + "\n 3. IronArmour: ");
+                    + "\n 2. WoodenArmor"
+                    + "\n 3. IronArmor: ");
             System.out.print("> ");
             armorChoice = scanner.nextLine();
             System.out.println();
@@ -241,10 +241,10 @@ public class App {
                 playerArmor = new Naked();
                 break;
             case "2":
-                playerArmor = new WoodenArmour();
+                playerArmor = new WoodenArmor();
                 break;
             case "3":
-                playerArmor = new IronArmour();
+                playerArmor = new IronArmor();
         }
 
         System.out.println("\n============================\n");

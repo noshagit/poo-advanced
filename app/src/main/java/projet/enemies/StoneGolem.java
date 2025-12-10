@@ -1,7 +1,7 @@
 package projet.enemies;
 
-import projet.weapon.StoneFist;
-import projet.armor.StoneArmor;
+import projet.armors.StoneArmor;
+import projet.weapons.StoneFist;
 
 public class StoneGolem extends Enemy {
     public StoneGolem() {

@@ -7,11 +7,12 @@ package projet;
 import java.util.List;
 import java.util.ArrayList;
 
+import projet.armors.Armor;
+
 /* GAME CLASSES */
 
 import projet.potions.Potion;
-import projet.armor.Armor;
-import projet.weapon.Weapon;
+import projet.weapons.Weapon;
 
 public class Inventory {
     private final List<Potion> potions;

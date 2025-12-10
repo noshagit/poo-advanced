@@ -1,4 +1,4 @@
-package projet.weapon;
+package projet.weapons;
 
 public class Cancer extends Weapon {
     public Cancer() {

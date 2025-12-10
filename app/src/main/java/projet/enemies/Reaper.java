@@ -1,7 +1,7 @@
 package projet.enemies;
 
-import projet.armor.*;
-import projet.weapon.*;
+import projet.armors.*;
+import projet.weapons.*;
 
 public class Reaper extends Enemy {
 

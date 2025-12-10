@@ -4,9 +4,9 @@ package projet;
 
 import java.util.Scanner;
 
-import projet.armor.Armor;
+import projet.armors.Armor;
 import projet.potions.Potion;
-import projet.weapon.Weapon;
+import projet.weapons.Weapon;
 
 /**
  * The player class representing the user in the game.

@@ -2,8 +2,8 @@ package projet.enemies;
 
 import java.util.List;
 
-import projet.armor.*;
-import projet.weapon.*;
+import projet.armors.*;
+import projet.weapons.*;
 
 public class Skeleton extends Enemy {
     List<Weapon> possibleWeapons = List.of(
@@ -15,7 +15,7 @@ public class Skeleton extends Enemy {
     
     public Skeleton() {
         super("Skeleton", 65, new Fist(), new BoneArmor());
-        this.setWeapon(RandomWeaponDrop(possibleWeapons));
+        this.setWeapon(super.RandomWeaponDrop(possibleWeapons));
         this.getWeapon().setLevel(3);
         this.setXpReward(15);
     }

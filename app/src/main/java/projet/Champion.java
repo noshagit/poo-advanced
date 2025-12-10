@@ -4,10 +4,8 @@ package projet;
 
 import java.util.Random;
 
-/* GAME CLASSES */
-
-import projet.armor.Armor;
-import projet.weapon.Weapon;
+import projet.armors.Armor;
+import projet.weapons.Weapon;
 
 /**
  * The base class for all champions (players and enemies).

@@ -1,11 +1,11 @@
 package projet.enemies;
 
-import projet.weapon.Cancer;
-import projet.armor.IronArmour;
+import projet.armors.IronArmor;
+import projet.weapons.Cancer;
 
 public class Kawaleck extends Enemy {
     public Kawaleck() {
-        super("Kawaleck", 200, new Cancer(), new IronArmour());
+        super("Kawaleck", 200, new Cancer(), new IronArmor());
         this.setXpReward(50);
     }
 

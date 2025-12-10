@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import projet.enemies.*;
 import projet.potions.Potion;
-import projet.weapon.Weapon;
+import projet.weapons.Weapon;
 
 /**
  * The class responsible for handling fights between champions.

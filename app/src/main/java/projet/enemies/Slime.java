@@ -1,7 +1,7 @@
 package projet.enemies;
 
-import projet.armor.Naked;
-import projet.weapon.Fist;
+import projet.armors.Naked;
+import projet.weapons.Fist;
 
 public class Slime extends Enemy {
 

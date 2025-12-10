@@ -4,8 +4,8 @@ package projet.enemies;
 
 import java.util.List;
 
-import projet.armor.*;
-import projet.weapon.*;
+import projet.armors.*;
+import projet.weapons.*;
 
 public class Goblin extends Enemy {
     List<Weapon> possibleWeapons = List.of(
@@ -17,13 +17,13 @@ public class Goblin extends Enemy {
     List<Armor> possibleArmors = List.of(
         new LeatherArmor(),
         new Naked(),
-        new IronArmour()
+        new IronArmor()
     );
     
     public Goblin() {
         super("Goblin", 30, new Fist(), new LeatherArmor());
-        this.setWeapon(RandomWeaponDrop(possibleWeapons));
-        this.setArmor(RandomArmorDrop(possibleArmors));
+        this.setWeapon(super.RandomWeaponDrop(possibleWeapons));
+        this.setArmor(super.RandomArmorDrop(possibleArmors));
         this.getWeapon().setLevel(1);
         this.setXpReward(10);
     }

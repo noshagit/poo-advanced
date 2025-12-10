@@ -1,4 +1,4 @@
-package projet.armor;
+package projet.armors;
 
 public class MythrilArmor extends Armor {
     public MythrilArmor() {

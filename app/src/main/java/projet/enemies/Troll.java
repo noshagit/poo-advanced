@@ -2,21 +2,21 @@ package projet.enemies;
 
 import java.util.List;
 
-import projet.armor.*;
-import projet.weapon.*;
+import projet.armors.*;
+import projet.weapons.*;
 
 public class Troll extends Enemy {
 
     List<Armor> possibleArmors = List.of(
         new LeatherArmor(), 
         new ChainmailArmor(),
-        new IronArmour(),
-        new WoodenArmour()
+        new IronArmor(),
+        new WoodenArmor()
     );
 
     public Troll() {
         super("Troll", 120, new Log(), new LeatherArmor());
-        this.setArmor(RandomArmorDrop(possibleArmors));
+        this.setArmor(super.RandomArmorDrop(possibleArmors));
         this.getWeapon().setLevel(10);
         this.setXpReward(30);
     }

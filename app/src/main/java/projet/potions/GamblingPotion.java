@@ -5,7 +5,7 @@ package projet.potions;
 import java.util.Random;
 
 import projet.Player;
-import projet.weapon.Weapon;
+import projet.weapons.Weapon;
 
 /** Class representing a gambling potion. */
 public class GamblingPotion extends Potion {

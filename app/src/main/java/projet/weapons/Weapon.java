@@ -1,4 +1,4 @@
-package projet.weapon;
+package projet.weapons;
 
 public class Weapon{
     private final String nom;

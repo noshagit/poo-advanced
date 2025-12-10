@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import projet.Champion;
-import projet.armor.Armor;
-import projet.weapon.Weapon;
+import projet.armors.Armor;
+import projet.weapons.Weapon;
 
 /** Abstract class representing an enemy. */
 public abstract class Enemy extends Champion {

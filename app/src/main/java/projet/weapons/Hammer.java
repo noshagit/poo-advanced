@@ -1,4 +1,4 @@
-package projet.weapon;
+package projet.weapons;
 
 public class Hammer extends Weapon {
     public Hammer() {

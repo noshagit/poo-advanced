@@ -1,4 +1,4 @@
-package projet.armor;
+package projet.armors;
 
 /** Class representing armor equipment. */
 public class Armor {
