@@ -6,6 +6,7 @@ import java.util.Random;
 
 import projet.armors.Armor;
 import projet.weapons.Weapon;
+import projet.view.Views;
 
 /**
  * The base class for all champions (players and enemies).
@@ -86,7 +87,7 @@ public abstract class Champion {
         boolean critChance = rand.nextInt(100) > 85;
         int critDefense = 0;
         if (critChance) {
-            System.out.println(this.getName() + " blocks part of the damage!");
+            Views.println(this.getName() + " blocks part of the damage!");
             critDefense = weapon.getDamages() / 4;
         }
         int damageAfterArmor = weapon.getDamages() - this.armor.getResistance() - critDefense;

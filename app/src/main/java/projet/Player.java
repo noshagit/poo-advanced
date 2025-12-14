@@ -8,6 +8,7 @@ import java.util.Scanner;
 import projet.armors.Armor;
 import projet.potions.Potion;
 import projet.weapons.Weapon;
+import projet.view.Views;
 
 /**
  * The player class representing the user in the game.
@@ -127,24 +128,25 @@ public class Player extends Champion {
     public void levelUp(Scanner scanner) {
         this.level += 1;
         this.xp = 0;
-        System.out.println("\nYou leveled up!\n"
+        Views.println("\nYou leveled up!\n"
                 + "\nWould you like to :"
                 + "\n 1. Increase your max health by 10"
                 + "\n 2. Heal 40 health points\n");
-        System.out.print("> ");
+        Views.print("> ");
         int choice = scanner.nextInt();
+        scanner.nextLine();
 
         switch (choice) {
             case 1:
                 this.maxHealth += 10;
                 this.setHealth(this.getHealth() + 10);
-                System.out.println("Your max health increased to " + this.maxHealth);
+                Views.println("Your max health increased to " + this.maxHealth);
                 break;
             case 2:
                 this.setHealth(Math.min(this.getHealth() + 40, this.maxHealth));
-                System.out.println("You healed 40 health points. Current health: " + this.getHealth());
+                Views.println("You healed 40 health points. Current health: " + this.getHealth());
         }
-        System.out.println();
+        Views.println();
     }
 
     public Weapon getOldWeapon() {
@@ -161,12 +163,12 @@ public class Player extends Champion {
      */
     public void checkInventory(Scanner scanner) {
         while (true) {
-            System.out.println("What would you like to see?"
+            Views.println("What would you like to see?"
                     + "\n 1. Potions"
                     + "\n 2. Weapons"
                     + "\n 3. Armors"
                     + "\n 4. Back");
-            System.out.print("> ");
+            Views.print("> ");
 
             int choice;
             if (scanner.hasNextInt()) {
@@ -174,7 +176,7 @@ public class Player extends Champion {
                 scanner.nextLine();
             } else {
                 scanner.nextLine();
-                System.out.println("Invalid input.");
+                Views.println("Invalid input.");
                 continue;
             }
 
@@ -192,10 +194,10 @@ public class Player extends Champion {
                     break;
                 }
                 case 4:
-                    System.out.println();
+                    Views.println();
                     return;
                 default:
-                    System.out.println("Invalid choice.\n");
+                    Views.println("Invalid choice.\n");
             }
         }
     }
@@ -206,24 +208,24 @@ public class Player extends Champion {
      * @param scanner The scanner to read user input.
      */
     public void checkArmors(Scanner scanner) {
-        System.out.println();
+        Views.println();
         List<Armor> armors = inventory.getArmors();
 
         if (armors.isEmpty()) {
-            System.out.println("You don't have any armors in your backpack"
+            Views.println("You don't have any armors in your backpack"
                     + "\nPress Enter to return to the menu...");
             scanner.nextLine();
             return;
         }
 
         while (true) {
-            System.out.println("Armors in backpack:");
+            Views.println("Armors in backpack:");
             for (int i = 0; i < armors.size(); i++) {
                 Armor a = armors.get(i);
-                System.out.println("  " + i + ": " + a.getName() + " (resistance " + a.getResistance() + ", weight "
+                Views.println("  " + i + ": " + a.getName() + " (resistance " + a.getResistance() + ", weight "
                         + a.getWeight() + ")");
             }
-            System.out.println(
+            Views.println(
                     "Current armor: "
                             + (this.getArmor() != null ? this.getArmor().getName() : "none")
                             + "\nEnter the index of the armor to equip, or type 'back' to cancel:");
@@ -236,7 +238,7 @@ public class Player extends Champion {
             try {
                 int idx = Integer.parseInt(input);
                 if (idx < 0 || idx >= inventory.getArmors().size()) {
-                    System.out.println("Invalid index.");
+                    Views.println("Invalid index.");
                     continue;
                 }
 
@@ -248,13 +250,13 @@ public class Player extends Champion {
                 }
                 this.setArmor(selected);
 
-                System.out.println("Equipped " + selected.getName());
+                Views.println("Equipped " + selected.getName());
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number or 'back'.");
+                Views.println("Please enter a valid number or 'back'.");
             }
         }
-        System.out.println();
+        Views.println();
     }
 
     /**
@@ -263,24 +265,24 @@ public class Player extends Champion {
      * @param scanner The scanner to read user input.
      */
     public void checkWeapons(Scanner scanner) {
-        System.out.println();
+        Views.println();
         List<Weapon> weapons = inventory.getWeapons();
 
         if (weapons.isEmpty()) {
-            System.out.println("You don't have any weapons in your backpack"
+            Views.println("You don't have any weapons in your backpack"
                     + "\nPress Enter to return to the menu...");
             scanner.nextLine();
             return;
         }
 
         while (true) {
-            System.out.println("Weapons in backpack:");
+            Views.println("Weapons in backpack:");
             for (int i = 0; i < weapons.size(); i++) {
                 Weapon w = weapons.get(i);
-                System.out.println("  " + i + ": " + w.getName() + " (lvl " + w.getLevel() + ", xp "
+                Views.println("  " + i + ": " + w.getName() + " (lvl " + w.getLevel() + ", xp "
                         + w.getXp() + ")");
             }
-            System.out.println(
+            Views.println(
                     "Current weapon: "
                             + (this.getOldWeapon() != null ? this.getOldWeapon().getName() : "none")
                             + "\nEnter the index of the weapon to swap with the current weapon, or type 'back' to cancel:");
@@ -293,7 +295,7 @@ public class Player extends Champion {
             try {
                 int idx = Integer.parseInt(input);
                 if (idx < 0 || idx >= inventory.getWeapons().size()) {
-                    System.out.println("Invalid index.");
+                    Views.println("Invalid index.");
                     continue;
                 }
 
@@ -308,13 +310,13 @@ public class Player extends Champion {
 
                 this.oldWeapon = selected;
 
-                System.out.println("Swapped " + selected.getName() + " into oldWeapon.");
+                Views.println("Swapped " + selected.getName() + " into oldWeapon.");
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number or 'back'.");
+                Views.println("Please enter a valid number or 'back'.");
             }
         }
-        System.out.println();
+        Views.println();
     }
 
     /**
@@ -338,13 +340,13 @@ public class Player extends Champion {
      */
     public void checkPotions(Scanner scanner) {
         if (inventory.getPotions().isEmpty()) {
-            System.out.println("\nYou don't have any potions in your backpack\n");
+            Views.println("\nYou don't have any potions in your backpack\n");
         } else {
             java.util.Map<String, Integer> potionCounts = countPotions();
-            System.out.println("\nPotions:");
-            potionCounts.forEach((name, count) -> System.out.println("  " + name + ": " + count));
+            Views.println("\nPotions:");
+            potionCounts.forEach((name, count) -> Views.println("  " + name + ": " + count));
         }
-        System.out.println("Press Enter to return to the menu...");
+        Views.println("Press Enter to return to the menu...");
         scanner.nextLine();
     }
 

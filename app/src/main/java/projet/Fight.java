@@ -7,6 +7,7 @@ import java.util.Scanner;
 import projet.enemies.*;
 import projet.potions.Potion;
 import projet.weapons.Weapon;
+import projet.view.Views;
 
 /**
  * The class responsible for handling fights between champions.
@@ -70,7 +71,7 @@ public class Fight {
      */
     private static boolean critDmg(Champion attacker, Champion defender, Random rand) {
         if ((rand.nextInt(100) + attacker.getExtraCrit()) > 75) {
-            System.out.println(attacker.getName() + " lands a critical strike!");
+            Views.println(attacker.getName() + " lands a critical strike!");
             defender.takeDamage(attacker.getWeapon());
             return true;
         }
@@ -86,11 +87,11 @@ public class Fight {
      * @return true if the player chose to fight, false otherwise.
      */
     public static boolean chooseAction(Player player, Enemy enemy, Scanner scanner) {
-        System.out.println("1. Attack \n2. Use Potion \n3. Display statistics \nChoose an action: ");
-        System.out.print("> ");
+        Views.println("1. Attack \n2. Use Potion \n3. Display statistics \nChoose an action: ");
+        Views.print("> ");
 
         String action = scanner.nextLine().trim();
-        System.out.println();
+        Views.println();
 
         switch (action) {
             case "1":
@@ -100,7 +101,7 @@ public class Fight {
                 usePotion(player, scanner);
                 return false;
             case "3":
-                System.out.println("============================\n"
+                Views.println("============================\n"
                         + player.getName() + " - Max Health: " + player.getMaxHealth() + " - Health: "
                         + player.getHealth() + " | Weapon: "
                         + player.getWeapon().getName() + " | Armor: " + player.getArmor().getName() + " | XP: "
@@ -111,7 +112,7 @@ public class Fight {
                         + "\n\n============================\n");
                 return false;
             default:
-                System.out.println("Invalid action, try again.");
+                Views.println("Invalid action, try again.");
                 return false;
         }
     }
@@ -123,24 +124,24 @@ public class Fight {
      * @param scanner The scanner to read user input.
      */
     public static void usePotion(Player player, Scanner scanner) {
-        System.out.println("\n============================\n"
+        Views.println("\n============================\n"
                 + "Your pockets: ");
         java.util.List<Potion> potions = player.getInventory().getPotions();
 
         if (potions == null || potions.isEmpty()) {
-            System.out.println("No potions available"
+            Views.println("No potions available"
                     + "\n============================\n");
             return;
         }
 
         java.util.Map<String, Integer> potionCounts = player.countPotions();
 
-        System.out.println("\nPotions:");
-        potionCounts.forEach((name, count) -> System.out.println("  " + name + ": " + count));
+        Views.println("\nPotions:");
+        potionCounts.forEach((name, count) -> Views.println("  " + name + ": " + count));
 
-        System.out.println("Choose a potion by name or index, or enter 'b' to go back:");
-        System.out.print("> ");
-        System.out.println();
+        Views.println("Choose a potion by name or index, or enter 'b' to go back:");
+        Views.print("> ");
+        Views.println();
 
         while (true) {
             String potionChoice = scanner.nextLine().trim();
@@ -162,13 +163,13 @@ public class Fight {
                     if (index >= 1 && index <= potions.size()) {
                         selectedPotion = potions.get(index - 1);
                     } else {
-                        System.out.println("Invalid index. Try again or enter 'b' to go back:");
-                        System.out.print("> ");
-                        System.out.println();
+                        Views.println("Invalid index. Try again or enter 'b' to go back:");
+                        Views.print("> ");
+                        Views.println();
                         continue;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid potion name. Try again or enter 'b' to go back:");
+                    Views.println("Invalid potion name. Try again or enter 'b' to go back:");
                     continue;
                 }
             }
@@ -176,7 +177,7 @@ public class Fight {
             player.usePotion(selectedPotion);
             player.getInventory().removePotion(selectedPotion);
 
-            System.out.println("\n============================\n");
+            Views.println("\n============================\n");
 
             break;
         }
