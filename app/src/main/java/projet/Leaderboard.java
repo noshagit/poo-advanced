@@ -44,11 +44,17 @@ public class Leaderboard {
 
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write("{\n");
-            int count = 0;
-            int size = this.board.size();
-            for (Map.Entry<String, Integer> entry : this.board.entrySet()) {
+
+            // sort entries by score descending for stable output
+            java.util.List<Map.Entry<String, Integer>> entries = new java.util.ArrayList<>(this.board.entrySet());
+            entries.sort(java.util.Map.Entry.<String, Integer>comparingByValue().reversed()
+                    .thenComparing(java.util.Map.Entry.comparingByKey()));
+
+            int size = Math.min(entries.size(), 10);
+            for (int i = 0; i < size; i++) {
+                Map.Entry<String, Integer> entry = entries.get(i);
                 writer.write("  \"" + entry.getKey() + "\": " + entry.getValue());
-                if (++count < size) {
+                if (i + 1 < size) {
                     writer.write(",");
                 }
                 writer.write("\n");

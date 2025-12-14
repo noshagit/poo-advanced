@@ -82,7 +82,7 @@ public class App {
 
                             Leaderboard leaderboard = new Leaderboard();
                             leaderboard.load();
-                            leaderboard.setScore(player.getName(), player.getXp());
+                            leaderboard.setScore(player.getName(), player.getTotalXp());
                             System.out.println("Your score has been recorded in the leaderboard."
                                     + "\nTotal XP gained: " + player.getTotalXp());
                             return;
@@ -147,7 +147,7 @@ public class App {
 
                             Leaderboard leaderboard = new Leaderboard();
                             leaderboard.load();
-                            leaderboard.setScore(player.getName(), player.getXp());
+                            leaderboard.setScore(player.getName(), player.getTotalXp());
                             System.out.println("Your score has been recorded in the leaderboard."
                                     + "\nTotal XP gained: " + player.getTotalXp());
 
