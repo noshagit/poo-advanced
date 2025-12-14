@@ -1,6 +1,10 @@
 package projet.model.enemies;
 
+/* IMPORTS */
+
 import java.util.List;
+
+/* CLASS IMPORTS */
 
 import projet.model.armors.*;
 import projet.model.weapons.*;

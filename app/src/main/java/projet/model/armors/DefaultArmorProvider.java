@@ -1,8 +1,11 @@
 package projet.model.armors;
 
+/* IMPORTS */
+
 import java.util.ArrayList;
 import java.util.List;
 
+/**Class providing a default list of armor equipment.*/
 public class DefaultArmorProvider implements IArmorProvider {
     @Override
     public List<Armor> getArmors() {

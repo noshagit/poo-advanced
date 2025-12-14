@@ -1,8 +1,9 @@
 package projet.model.potions;
 
+/* CLASS IMPORTS */
+
 import projet.model.Player;
 
-/** Class representing a BoneSkinPotion potion. */
 public class BerserkPotion extends Potion {
 
     public BerserkPotion() {

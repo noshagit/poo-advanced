@@ -1,5 +1,7 @@
 package projet.model.enemies;
 
+/* IMPORTS */
+
 import java.util.ArrayList;
 import java.util.List;
 

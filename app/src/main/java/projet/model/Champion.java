@@ -4,13 +4,12 @@ package projet.model;
 
 import java.util.Random;
 
+/* CLASS IMPORTS */
+
 import projet.model.armors.Armor;
 import projet.model.weapons.Weapon;
 import projet.view.Views;
 
-/**
- * The base class for all champions (players and enemies).
- */
 public abstract class Champion {
     private String name;
     private int health;

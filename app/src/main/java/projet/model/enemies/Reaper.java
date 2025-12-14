@@ -1,5 +1,7 @@
 package projet.model.enemies;
 
+/* CLASS IMPORTS */
+
 import projet.model.armors.*;
 import projet.model.weapons.*;
 

@@ -5,8 +5,7 @@ package projet.controller;
 import java.util.List;
 import java.util.ArrayList;
 
-
-/* GAME CLASSES */
+/* CLASS IMPORTS */
 
 import projet.model.potions.Potion;
 import projet.model.weapons.Weapon;

@@ -1,5 +1,7 @@
 package projet.model;
 
+/* IMPORTS */
+
 import java.time.Instant;
 
 public class Score {

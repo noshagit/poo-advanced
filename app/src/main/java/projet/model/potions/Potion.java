@@ -1,8 +1,9 @@
 package projet.model.potions;
 
+/* CLASS IMPORTS */
+
 import projet.model.Player;
 
-/** Abstract class representing a potion. */
 public abstract class Potion {
     private final String name;
 

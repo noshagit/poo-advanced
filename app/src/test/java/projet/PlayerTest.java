@@ -1,7 +1,12 @@
 package projet;
 
+/* IMPORTS */
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+/* CLASS IMPORTS */
 
 import projet.controller.Inventory;
 import projet.model.Player;
@@ -12,8 +17,6 @@ import projet.model.enemies.DefaultEnemyProvider;
 import projet.model.weapons.DefaultWeaponProvider;
 import projet.model.armors.DefaultArmorProvider;
 import projet.model.potions.DefaultPotionProvider;
-
-import java.util.List;
 
 public class PlayerTest {
     @Test

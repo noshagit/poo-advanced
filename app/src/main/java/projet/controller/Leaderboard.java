@@ -1,5 +1,7 @@
 package projet.controller;
 
+/* IMPORTS */
+
 import java.util.Map;
 import java.util.HashMap;
 import java.io.File;
@@ -16,6 +18,10 @@ public class Leaderboard {
         return this.board;
     }
 
+    /**Sets the score for a player in the leaderboard.
+    * @param player The name of the player.
+    * @param score  The score to set.
+    */
     public void setScore(String player, int score) {
         this.board.put(player, score);
         
@@ -32,6 +38,7 @@ public class Leaderboard {
         this.save();
     }
 
+    /**Saves the leaderboard to a JSON file.*/
     public void save() {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -65,6 +72,7 @@ public class Leaderboard {
         }
     }
 
+    /**Loads the leaderboard from a JSON file.*/
     public void load() {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -101,6 +109,9 @@ public class Leaderboard {
         }
     }
 
+    /**Returns the scores sorted from highest to lowest.
+    * @return A map of player names to scores, sorted from highest to lowest.
+    */
     public Map<String, Integer> getScoresSorted() {
         // Retourne les scores triés du plus grand au plus petit
         java.util.List<Map.Entry<String, Integer>> entries = new java.util.ArrayList<>(this.board.entrySet());

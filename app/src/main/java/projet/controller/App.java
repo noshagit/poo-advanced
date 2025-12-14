@@ -5,14 +5,16 @@ package projet.controller;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-import projet.model.enemies.IEnemyProvider;
-import projet.model.enemies.DefaultEnemyProvider;
 import java.util.List;
+
+/* CLASS IMPORTS */
+
 import projet.model.weapons.IWeaponProvider;
 import projet.model.weapons.DefaultWeaponProvider;
 import projet.model.armors.IArmorProvider;
 import projet.model.armors.DefaultArmorProvider;
-
+import projet.model.enemies.IEnemyProvider;
+import projet.model.enemies.DefaultEnemyProvider;
 import projet.model.potions.*;
 import projet.model.weapons.*;
 import projet.model.armors.*;
@@ -21,9 +23,6 @@ import projet.model.Player;
 import projet.view.View;
 import projet.view.ConsoleView;
 
-/**
- * The main application class for the game.
- */
 public class App {
     public static void main(String[] args) {
         View view = new ConsoleView();

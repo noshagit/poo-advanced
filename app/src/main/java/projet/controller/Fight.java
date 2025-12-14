@@ -1,8 +1,11 @@
 package projet.controller;
 
 /* IMPORTS */
+
 import java.util.Random;
 import java.util.Scanner;
+
+/* CLASS IMPORTS */
 
 import projet.model.enemies.*;
 import projet.model.Champion;
@@ -11,9 +14,6 @@ import projet.model.potions.Potion;
 import projet.model.weapons.Weapon;
 import projet.view.Views;
 
-/**
- * The class responsible for handling fights between champions.
- */
 public class Fight {
     /**
      * Executes an attack sequence between two champions.

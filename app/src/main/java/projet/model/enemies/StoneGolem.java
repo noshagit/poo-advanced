@@ -1,5 +1,7 @@
 package projet.model.enemies;
 
+/* CLASS IMPORTS */
+
 import projet.model.armors.StoneArmor;
 import projet.model.weapons.StoneFist;
 

@@ -6,12 +6,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/* CLASS IMPORTS */
+
 import projet.model.armors.Armor;
 import projet.model.Champion;
 import projet.model.weapons.Weapon;
 import projet.model.potions.Potion;
 
-/** Abstract class representing an enemy. */
 public abstract class Enemy extends Champion {
     private int xpReward;
 

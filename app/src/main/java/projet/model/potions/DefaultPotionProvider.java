@@ -1,5 +1,7 @@
 package projet.model.potions;
 
+/* IMPORTS */
+
 import java.util.ArrayList;
 import java.util.List;
 

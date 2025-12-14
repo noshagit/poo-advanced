@@ -4,11 +4,12 @@ package projet.model.potions;
 
 import java.util.Random;
 
+/* CLASS IMPORTS */
+
 import projet.model.weapons.Weapon;
 import projet.model.Player;
 import projet.view.Views;
 
-/** Class representing a gambling potion. */
 public class GamblingPotion extends Potion {
 
     public GamblingPotion() {

@@ -5,15 +5,14 @@ package projet.model;
 import java.util.List;
 import java.util.Scanner;
 
+/* CLASS IMPORTS */
+
 import projet.controller.Inventory;
 import projet.model.armors.Armor;
 import projet.model.potions.Potion;
 import projet.model.weapons.Weapon;
 import projet.view.Views;
 
-/**
- * The player class representing the user in the game.
- */
 public class Player extends Champion {
     private int xp;
     private int totalXp;

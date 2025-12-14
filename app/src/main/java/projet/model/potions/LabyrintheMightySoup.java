@@ -1,8 +1,9 @@
 package projet.model.potions;
 
+/* CLASS IMPORTS */
+
 import projet.model.Player;
 
-/** Class representing a health potion. */
 public class LabyrintheMightySoup extends Potion {
 
     public LabyrintheMightySoup() {

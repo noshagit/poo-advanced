@@ -1,5 +1,7 @@
 package projet.model.enemies;
 
+/* IMPORTS */
+
 import projet.model.armors.IronArmor;
 import projet.model.weapons.Cancer;
 
