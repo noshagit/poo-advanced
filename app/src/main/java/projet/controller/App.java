@@ -5,6 +5,15 @@ package projet.controller;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import projet.model.enemies.IEnemyProvider;
+import projet.model.enemies.DefaultEnemyProvider;
+import java.util.List;
+import projet.model.weapons.IWeaponProvider;
+import projet.model.weapons.DefaultWeaponProvider;
+import projet.model.armors.IArmorProvider;
+import projet.model.armors.DefaultArmorProvider;
+import projet.model.potions.IPotionProvider;
+import projet.model.potions.DefaultPotionProvider;
 
 import projet.model.potions.*;
 import projet.model.weapons.*;
@@ -36,19 +45,17 @@ public class App {
     public static void gameLoop(View view) {
         boolean revival = true;
 
-        Enemy[] enemies = {
-                new Slime(),
-                new Goblin(),
-                new Skeleton(),
-                new Orc(),
-                new Reaper(),
-                new Troll(),
-                new StoneGolem(),
-                new Minotaur()
-        };
+        IEnemyProvider enemyProvider = new DefaultEnemyProvider();
+        List<Enemy> enemies = enemyProvider.getEnemies();
+        IWeaponProvider weaponProvider = new DefaultWeaponProvider();
+        List<Weapon> weapons = weaponProvider.getWeapons();
+        IArmorProvider armorProvider = new DefaultArmorProvider();
+        List<Armor> armors = armorProvider.getArmors();
+        IPotionProvider potionProvider = new DefaultPotionProvider();
+        List<Potion> potions = potionProvider.getPotions();
 
         Scanner scanner = new Scanner(System.in);
-        Player player = createPlayer(scanner, view);
+        Player player = createPlayer(scanner, view, weapons, armors);
 
         view.println("Welcome " + player.getName() + "! Let the battles begin!"
                 + "\n============================\n");
@@ -58,7 +65,7 @@ public class App {
             while (player.getHealth() > 0) {
                 Enemy enemy;
 
-                enemy = Fight.randEnemy(player, enemies);
+                enemy = Fight.randEnemy(player, enemies.toArray(new Enemy[0]));
 
                 enemy.resetHealth();
 
@@ -84,9 +91,9 @@ public class App {
                             view.println("\nYou are dead. Game over.\n");
                             scanner.close();
 
-                            Leaderboard leaderboard = new Leaderboard();
-                            leaderboard.load();
-                            leaderboard.setScore(player.getName(), player.getTotalXp());
+                            Leaderboard leaderboard1 = new Leaderboard();
+                            leaderboard1.load();
+                            leaderboard1.setScore(player.getName(), player.getTotalXp());
                             view.println("Your score has been recorded in the leaderboard."
                                     + "\nTotal XP gained: " + player.getTotalXp());
                             return;
@@ -179,7 +186,7 @@ public class App {
      * @param scanner The scanner to read user input.
      * @return The created Player object.
      */
-    public static Player createPlayer(Scanner scanner, View view) {
+    public static Player createPlayer(Scanner scanner, View view, List<Weapon> weapons, List<Armor> armors) {
         view.println("\n\n============================\n"
                 + "Enter username: ");
         view.print("> ");

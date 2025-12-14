@@ -3,10 +3,13 @@ package projet.controller;
 /* IMPORTS */
 import java.util.Random;
 import java.util.Scanner;
+import java.util.List;
 
 import projet.model.enemies.*;
 import projet.model.Champion;
 import projet.model.Player;
+import projet.model.potions.IPotionProvider;
+import projet.model.potions.DefaultPotionProvider;
 import projet.model.potions.Potion;
 import projet.model.weapons.Weapon;
 import projet.view.Views;
@@ -126,6 +129,8 @@ public class Fight {
      * @param scanner The scanner to read user input.
      */
     public static void usePotion(Player player, Scanner scanner) {
+        IPotionProvider potionProvider = new DefaultPotionProvider();
+        List<Potion> allPotions = potionProvider.getPotions();
         Views.println("\n============================\n"
                 + "Your pockets: ");
         java.util.List<Potion> potions = player.getInventory().getPotions();
