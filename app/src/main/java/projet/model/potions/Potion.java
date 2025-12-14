@@ -1,0 +1,18 @@
+package projet.model.potions;
+
+import projet.model.Player;
+
+/** Abstract class representing a potion. */
+public abstract class Potion {
+    private final String name;
+
+    public Potion(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public abstract void use(Player player);
+}
