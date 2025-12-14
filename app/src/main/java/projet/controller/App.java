@@ -12,8 +12,6 @@ import projet.model.weapons.IWeaponProvider;
 import projet.model.weapons.DefaultWeaponProvider;
 import projet.model.armors.IArmorProvider;
 import projet.model.armors.DefaultArmorProvider;
-import projet.model.potions.IPotionProvider;
-import projet.model.potions.DefaultPotionProvider;
 
 import projet.model.potions.*;
 import projet.model.weapons.*;
@@ -33,7 +31,7 @@ public class App {
         Leaderboard leaderboard = new Leaderboard();
         leaderboard.load();
         view.println("Current Leaderboard:");
-        for (Map.Entry<String, Integer> entry : leaderboard.getScores().entrySet()) {
+        for (Map.Entry<String, Integer> entry : leaderboard.getScoresSorted().entrySet()) {
             view.println(entry.getKey() + ": " + entry.getValue());
         }
         gameLoop(view);
@@ -51,8 +49,6 @@ public class App {
         List<Weapon> weapons = weaponProvider.getWeapons();
         IArmorProvider armorProvider = new DefaultArmorProvider();
         List<Armor> armors = armorProvider.getArmors();
-        IPotionProvider potionProvider = new DefaultPotionProvider();
-        List<Potion> potions = potionProvider.getPotions();
 
         Scanner scanner = new Scanner(System.in);
         Player player = createPlayer(scanner, view, weapons, armors);

@@ -100,4 +100,16 @@ public class Leaderboard {
             e.printStackTrace();
         }
     }
+
+    public Map<String, Integer> getScoresSorted() {
+        // Retourne les scores triés du plus grand au plus petit
+        java.util.List<Map.Entry<String, Integer>> entries = new java.util.ArrayList<>(this.board.entrySet());
+        entries.sort(java.util.Map.Entry.<String, Integer>comparingByValue().reversed()
+                .thenComparing(java.util.Map.Entry.comparingByKey()));
+        Map<String, Integer> sorted = new java.util.LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : entries) {
+            sorted.put(entry.getKey(), entry.getValue());
+        }
+        return sorted;
+    }
 }
